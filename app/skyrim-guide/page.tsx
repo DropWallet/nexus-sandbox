@@ -225,6 +225,7 @@ function QuickLinksList({ activeSectionId, onSectionChange, className }: QuickLi
   )
 }
 
+
 const SECTION_STORAGE_KEY = 'skyrim-guide-section'
 
 export default function SkyrimGuidePage() {
@@ -263,43 +264,37 @@ export default function SkyrimGuidePage() {
         >
           {/* Left column: main content + mobile quick links */}
           <div className="min-w-0 flex-1 flex flex-col gap-6">
-            {/* Mobile: collapsed Quick links at top - sticky flush under nav, no gap */}
-            <div className="sm:hidden sticky top-16 z-10 bg-surface-base">
+            {/* Mobile: sticky Steps block below fixed nav */}
+            <div className="sm:hidden sticky top-24 z-10 bg-surface-base">
               <div className="bg-surface-low rounded-lg overflow-hidden">
-              <button
-                type="button"
-                onClick={() => setQuickLinksOpen((o) => !o)}
-                className="w-full flex items-center justify-between gap-2 px-4 py-3 text-left hover:bg-surface-translucent-low transition-colors"
-                aria-expanded={quickLinksOpen}
-                aria-controls="mobile-quicklinks-list"
-                id="mobile-quicklinks-toggle"
-              >
-                <Typography variant="body-md-semibold" className="text-neutral-strong">
-                  Steps
-                </Typography>
-                <Icon
-                  name="keyboardArrowDown"
-                  size="sm"
-                  className={cn(
-                    'text-neutral-moderate transition-transform',
-                    quickLinksOpen && 'rotate-180'
-                  )}
-                />
-              </button>
-              <div
-                id="mobile-quicklinks-list"
-                role="region"
-                aria-labelledby="mobile-quicklinks-toggle"
-                className={cn(
-                  'border-t border-stroke-neutral-translucent-weak',
-                  !quickLinksOpen && 'hidden'
-                )}
-              >
-                <div className="px-1 py-1">
-                  <QuickLinksList activeSectionId={activeSectionId} onSectionChange={setActiveSectionId} />
+                <button
+                  type="button"
+                  onClick={() => setQuickLinksOpen((o) => !o)}
+                  className="w-full flex items-center justify-between gap-2 px-4 py-3 text-left hover:bg-surface-translucent-low transition-colors"
+                  aria-expanded={quickLinksOpen}
+                  aria-controls="mobile-quicklinks-list"
+                  id="mobile-quicklinks-toggle"
+                >
+                  <Typography variant="body-md-semibold" className="text-neutral-strong">
+                    Steps
+                  </Typography>
+                  <Icon
+                    name="keyboardArrowDown"
+                    size="sm"
+                    className={cn('text-neutral-moderate transition-transform', quickLinksOpen && 'rotate-180')}
+                  />
+                </button>
+                <div
+                  id="mobile-quicklinks-list"
+                  role="region"
+                  aria-labelledby="mobile-quicklinks-toggle"
+                  className={cn('border-t border-stroke-neutral-translucent-weak', !quickLinksOpen && 'hidden')}
+                >
+                  <div className="px-1 py-1">
+                    <QuickLinksList activeSectionId={activeSectionId} onSectionChange={setActiveSectionId} />
+                  </div>
                 </div>
               </div>
-            </div>
             </div>
 
             {/* Main content area: persistent title + current section content + next/prev */}
@@ -924,7 +919,7 @@ export default function SkyrimGuidePage() {
 
           {/* Right column: sticky Quick links (visible from sm) */}
           <aside className="hidden md:block shrink-0 self-stretch">
-            <div className="sticky top-6">
+            <div className="sticky top-6 lg:top-24">
               <QuickLinksList activeSectionId={activeSectionId} onSectionChange={setActiveSectionId} />
             </div>
           </aside>

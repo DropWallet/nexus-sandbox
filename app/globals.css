@@ -86,6 +86,7 @@
   --spacing-11: 44px;
   --spacing-12: 48px;
   --spacing-14: 56px;
+  --nav-height: 57px; /* h-14 + 1px border, for sticky offset below fixed nav */
   --spacing-16: 64px;
   --spacing-20: 80px;
   --spacing-24: 96px;
@@ -344,10 +345,14 @@
     margin: 0;
   }
 
-  html,
+  html {
+    max-width: 100vw;
+  }
+
   body {
     max-width: 100vw;
-    /* overflow-x: clip prevents horizontal scroll like hidden but does not break position: sticky */
+    /* overflow-x: clip prevents horizontal scroll like hidden but does not break position: sticky.
+       Only set on body (not html) — setting it on html changes scroll propagation and breaks sticky. */
     overflow-x: clip;
   }
 
