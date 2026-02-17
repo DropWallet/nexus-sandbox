@@ -140,7 +140,7 @@ function StepNavControls({ activeSectionId, onSectionChange, className }: StepNa
           <ArrowCircle direction="left" aria-hidden />
           <div className="flex flex-col justify-start items-start flex-grow min-w-0 gap-0 xs:gap-1">
             <Typography variant="title-sm" className="text-neutral-subdued uppercase self-stretch">
-              Previous step
+              Previous
             </Typography>
             <Typography variant="body-lg" className="text-neutral-moderate self-stretch hidden xs:block">
               {prevSection.label}
@@ -160,7 +160,7 @@ function StepNavControls({ activeSectionId, onSectionChange, className }: StepNa
         >
           <div className="flex flex-col justify-start items-start flex-grow min-w-0 gap-0 xs:gap-1">
             <Typography variant="title-sm" className="text-neutral-subdued uppercase self-stretch">
-              Next step
+              Next
             </Typography>
             <Typography variant="body-lg" className="text-neutral-moderate self-stretch hidden xs:block">
               {nextSection.label}
@@ -183,7 +183,7 @@ function QuickLinksList({ activeSectionId, onSectionChange, className }: QuickLi
   return (
     <div
       className={cn(
-        'flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 gap-3 pl-4 pr-7 py-4 rounded-lg bg-surface-low',
+        'flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 gap-3 pl-4 pr-7 py-4 rounded-lg bg-surface-low border-0 md:border md:border-stroke-neutral-translucent-weak',
         className
       )}
       role="navigation"
@@ -249,8 +249,8 @@ export default function SkyrimGuidePage() {
     <div className="min-h-screen bg-surface-base">
       <NavigationBar />
 
-      <div className="max-w-[1024px] mx-auto w-full">
-        <div className="px-4 xs:px-5 sm:px-6 pt-6 pb-[var(--spacing-10)]">
+      <div className="max-w-[1024px] mx-auto w-full pt-14">
+        <div className="px-4 xs:px-5 sm:px-6 pt-6 pb-[calc(var(--spacing-10)-24px)]">
           <Breadcrumb items={guideBreadcrumbItems} />
         </div>
 
@@ -263,8 +263,9 @@ export default function SkyrimGuidePage() {
         >
           {/* Left column: main content + mobile quick links */}
           <div className="min-w-0 flex-1 flex flex-col gap-6">
-            {/* Mobile: collapsed Quick links at top */}
-            <div className="sm:hidden bg-surface-low border border-stroke-neutral-translucent-weak rounded-lg overflow-hidden">
+            {/* Mobile: collapsed Quick links at top - sticky flush under nav, no gap */}
+            <div className="sm:hidden sticky top-16 z-10 bg-surface-base">
+              <div className="bg-surface-low rounded-lg overflow-hidden">
               <button
                 type="button"
                 onClick={() => setQuickLinksOpen((o) => !o)}
@@ -294,17 +295,23 @@ export default function SkyrimGuidePage() {
                   !quickLinksOpen && 'hidden'
                 )}
               >
-                <div className="px-4 py-3">
+                <div className="px-1 py-1">
                   <QuickLinksList activeSectionId={activeSectionId} onSectionChange={setActiveSectionId} />
                 </div>
               </div>
             </div>
+            </div>
 
             {/* Main content area: persistent title + current section content + next/prev */}
             <div className="min-h-[400px] flex flex-col">
-              <Typography variant="heading-xl" className="text-neutral-strong mb-[var(--spacing-10)]" as="h1">
-                Getting started with Skyrim
-              </Typography>
+              <h1 className="text-neutral-strong mb-[var(--spacing-10)]">
+                <Typography variant="heading-lg" as="span" className="sm:hidden">
+                  Getting started with Skyrim
+                </Typography>
+                <Typography variant="heading-xl" as="span" className="hidden sm:inline">
+                  Getting started with Skyrim
+                </Typography>
+              </h1>
 
               {(() => {
                 const section = guideSections.find((s) => s.id === activeSectionId)

@@ -38,9 +38,10 @@ export default function NavigationBar({ className }: NavigationBarProps) {
   return (
     <nav
       className={cn(
+        'fixed top-0 left-0 right-0 z-50',
         'bg-surface-base',
         'border-b border-stroke-neutral-translucent-weak',
-        'relative w-full h-14',
+        'w-full h-14',
         className
       )}
     >
@@ -56,7 +57,7 @@ export default function NavigationBar({ className }: NavigationBarProps) {
 
         <a
           href="/"
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 shrink-0"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center shrink-0"
           aria-label="Nexus Mods Home"
         >
           <img
@@ -64,34 +65,30 @@ export default function NavigationBar({ className }: NavigationBarProps) {
             alt=""
             className="size-8 object-contain"
           />
-          <span className="flex items-baseline font-semibold uppercase tracking-tight text-base">
-            <span className="text-neutral-strong">NEXUS</span>
-            <span className="text-primary-moderate">MODS</span>
-          </span>
         </a>
 
-        <div className="flex shrink-0 items-center gap-0.5 bg-surface-translucent-low rounded-base border border-stroke-neutral-translucent-weak p-1">
+        <div className="flex shrink-0 items-center gap-1">
           <button
             type="button"
-            className="p-2 rounded-sm hover:bg-surface-translucent-mid transition-colors"
+            className="p-2 hover:opacity-80 transition-opacity"
             aria-label="Search"
           >
-            <Icon name="search" size="md" className="text-neutral-strong" />
+            <Icon name="search" size="lg" className="text-neutral-strong" />
           </button>
           <button
             type="button"
-            className="p-2 rounded-sm hover:bg-surface-translucent-mid transition-colors relative"
+            className="p-2 hover:opacity-80 transition-opacity relative"
             aria-label="Notifications"
           >
-            <Icon name="notification" size="md" className="text-neutral-strong" />
+            <Icon name="notification" size="lg" className="text-neutral-strong" />
             <span className="absolute top-1.5 right-1.5 size-2 rounded-full bg-primary-moderate" aria-hidden />
           </button>
           <button
             type="button"
-            className="p-2 rounded-sm hover:bg-surface-translucent-mid transition-colors"
+            className="p-2 hover:opacity-80 transition-opacity"
             aria-label="Profile"
           >
-            <Icon name="account" size="md" className="text-neutral-strong" />
+            <Icon name="account" size="lg" className="text-neutral-strong" />
           </button>
         </div>
       </div>

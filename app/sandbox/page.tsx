@@ -14,7 +14,7 @@ export default function SandboxPage() {
       <NavigationBar />
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto p-6">
+      <main className="max-w-7xl mx-auto pt-14 p-6">
         <div className="space-y-8">
           {/* Header */}
           <div>
