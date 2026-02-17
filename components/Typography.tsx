@@ -36,7 +36,7 @@ export function Typography({
     lineHeight: `var(${lineHeightVar})`,
     ...(variant === 'heading-2xl' || variant === 'heading-xl' || variant === 'heading-lg' ||
        variant.startsWith('title-') || variant === 'body-sm' || variant === 'body-sm-semibold' ||
-       variant === 'xs' || variant === 'xl' 
+       variant.endsWith('xs') || variant.endsWith('xl')
        ? { letterSpacing: `var(${letterSpacingVar})` }
        : {}),
   }
