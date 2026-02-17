@@ -1,0 +1,15 @@
+{
+  "colors": {
+    "surface": {
+      "base": "#0f0f10",
+      "low": "#1d1d21",
+      "mid": "#29292e",
+      "high": "#3e3e47"
+    },
+    "neutral": {
+      "strong": "#f4f4f5",
+      "moderate": "#d4d4d8",
+      "subdued": "#a1a1aa"
+    }
+  }
+}
