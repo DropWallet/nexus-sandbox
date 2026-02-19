@@ -574,6 +574,8 @@ export default function SkyrimGuidePage() {
                               <strong>The Skyrim Script Extender (SKSE)</strong> is a vital tool that allows more advanced mods to function by expanding the game's core capabilities.
                               <br /><br />
                               Many modern mods rely on <strong>SKSE plugins</strong> to interact directly with the game engine. Because these plugins are version-specific, always check that a mod supports your current game version before installing.
+                              <br /><br />
+                              Modern SKSE plugins often use the <strong>Address Library</strong> to stay compatible with game updates—which is why we install it next.
                             </Typography>
                           </GuideInfoBlock>
                         </div>
