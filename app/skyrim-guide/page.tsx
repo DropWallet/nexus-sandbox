@@ -29,7 +29,7 @@ const guideSections = [
 
 const sectionPlaceholders: Record<string, string> = {
   introduction:
-    "Welcome to Skyrim Modding. This guide is designed to take you from a fresh 'vanilla' installation to a modern, stable modding base. We've focused on the essential tools that every Skyrim Special Edition player needs to get started.",
+    "Get from vanilla Skyrim to a modded setup in one guide. We'll install Vortex and the essentials: SkyUI, Engine Fixes, bug fixes, and more. You'll have a stable base ready to play or add more mods.",
   'install-vortex':
     'Vortex is Nexus Mods’ official mod manager. It handles downloading, installing, and enabling mods so you can focus on playing. Download Vortex from the Nexus Mods site and run the installer.',
   'install-address-library':
