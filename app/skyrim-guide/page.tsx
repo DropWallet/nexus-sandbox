@@ -340,7 +340,7 @@ export default function SkyrimGuidePage() {
 <Typography variant="body-xl-semibold" as="p" className="text-neutral-strong">
                           What you'll achieve:
                         </Typography>
-                          <ul className="list-none flex flex-col gap-1 mt-2">
+                          <ul className="list-disc list-inside flex flex-col gap-1 mt-2 text-neutral-subdued">
                             {[
                               'Set up Vortex as your primary Mod Manager',
                               'Install the Skyrim Script Extender (SKSE)',
@@ -348,7 +348,7 @@ export default function SkyrimGuidePage() {
                               'Modernise the user interface with SkyUI',
                             ].map((item, i) => (
                               <li key={i}>
-                                <Typography variant="body-xl" className="text-neutral-subdued">
+                                <Typography variant="body-xl" as="span" className="text-neutral-subdued">
                                   {item}
                                 </Typography>
                               </li>
@@ -555,11 +555,20 @@ export default function SkyrimGuidePage() {
                         <div className="flex flex-col gap-5 pt-0">
                           <Typography variant="body-xl" className="text-neutral-subdued">
                             Next we're going to install “Address Library”. This is a common requirement for Skyrim
-                            Script Extender (SKSE) plugins. You can grab it{' '}
-                            <Link href="https://www.nexusmods.com/skyrimspecialedition/mods/32444" target="_blank" rel="noopener noreferrer" className="text-neutral-strong underline hover:text-primary-moderate">
-                              here.
-                            </Link>
+                            Script Extender (SKSE) plugins. Download it from the button below.
                           </Typography>
+                          <Link
+                            href="https://www.nexusmods.com/skyrimspecialedition/mods/32444"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={cn(
+                              'self-start inline-flex rounded-base font-medium px-4 py-2 text-base transition-colors',
+                              'focus:outline-none focus:ring-2 focus:ring-primary-moderate focus:ring-offset-2',
+                              'bg-primary-moderate text-neutral-inverted hover:bg-primary-strong'
+                            )}
+                          >
+                            Get Address Library
+                          </Link>
                           <GuideInfoBlock title="What is SKSE?">
                             <Typography variant="body-md" as="p" className="text-neutral-subdued [&_strong]:font-semibold [&_strong]:text-neutral-moderate">
                               <strong>The Skyrim Script Extender (SKSE)</strong> is a vital tool that allows more advanced mods to function by expanding the game's core capabilities.
@@ -611,10 +620,23 @@ export default function SkyrimGuidePage() {
                             {' '}is an SKSE64 plugin to fix various issues with the Skyrim Special Edition engine which fixes
                             many critical game engine bugs. Additionally, it enables receiving Steam/GOG achievements
                             when using mods.
-                            <br /><br />
+                          </Typography>
+                          <Typography variant="body-xl" className="text-neutral-subdued">
                             Engine Fixes consists of an SKSE64 file, which can be installed directly with Vortex. It
                             also requires installing the SKSE64 Preloader available on the same page.
                           </Typography>
+                          <Link
+                            href="https://www.nexusmods.com/skyrimspecialedition/mods/17230"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={cn(
+                              'self-start inline-flex rounded-base font-medium px-4 py-2 text-base transition-colors mt-[var(--spacing-4)]',
+                              'focus:outline-none focus:ring-2 focus:ring-primary-moderate focus:ring-offset-2',
+                              'bg-primary-moderate text-neutral-inverted hover:bg-primary-strong'
+                            )}
+                          >
+                            Get Engine Fixes
+                          </Link>
                         </div>
                         <div className="flex flex-col gap-2 py-6">
                           <GuideImage
@@ -674,11 +696,23 @@ export default function SkyrimGuidePage() {
                         </div>
                         <div className="flex flex-col gap-2 pt-0">
                           <Typography variant="body-xl" className="text-neutral-subdued">
-                            <span className="text-neutral-strong">SkyUI</span>
-                            {' '}adds a pc-friendly user interface with new advanced features such as the Mod Configuration Menu.
-                            <br /><br />
+                            SkyUI adds a pc-friendly user interface with new advanced features such as the Mod Configuration Menu.
+                          </Typography>
+                          <Typography variant="body-xl" className="text-neutral-subdued">
                             Select the Vortex button to automatically download and install SkyUI.
                           </Typography>
+                          <Link
+                            href="https://www.nexusmods.com/skyrimspecialedition/mods/12604"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={cn(
+                              'self-start inline-flex rounded-base font-medium px-4 py-2 text-base transition-colors mt-[var(--spacing-4)]',
+                              'focus:outline-none focus:ring-2 focus:ring-primary-moderate focus:ring-offset-2',
+                              'bg-primary-moderate text-neutral-inverted hover:bg-primary-strong'
+                            )}
+                          >
+                            Get SkyUI
+                          </Link>
                         </div>
                         <div className="flex flex-col gap-2 py-6">
                           <GuideImage
@@ -736,7 +770,20 @@ export default function SkyrimGuidePage() {
                             The Unofficial Skyrim Special Edition Patch, also known as USSEP, is a comprehensive bug
                             fixing mod which is a common requirement for many other mods. This is important for fixing
                             scripting errors, which could otherwise cause problems with completing quests in the game.
-                            <br /><br />
+                          </Typography>
+                          <Link
+                            href="https://www.nexusmods.com/skyrimspecialedition/mods/266"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={cn(
+                              'self-start inline-flex rounded-base font-medium px-4 py-2 text-base transition-colors my-[var(--spacing-4)]',
+                              'focus:outline-none focus:ring-2 focus:ring-primary-moderate focus:ring-offset-2',
+                              'bg-primary-moderate text-neutral-inverted hover:bg-primary-strong'
+                            )}
+                          >
+                            Get USSE Patch
+                          </Link>
+                          <Typography variant="body-xl" className="text-neutral-subdued">
                             Similar to installing SkyUI, just select the Vortex button on the top right corner of the
                             page to automatically download and install. This file may take longer to download than the
                             previous mods as a free user.
@@ -756,13 +803,16 @@ export default function SkyrimGuidePage() {
                             “unofficial skyrim special edition patch.esp” has been added as a plugin file. Mods that
                             require USSEP will likely require this plugin as a “master file”, which means that the
                             changes to the game will be overwritten in this order:
-                            <br /><br />
-                            Skyrim Base Game
-                            <br />Skyrim DLCs
-                            <br />Creation Club
-                            <br />USSEP
-                            <br />Mods which require USSEP
                           </Typography>
+                          <ul className="list-disc list-inside flex flex-col gap-1 mt-2 text-neutral-subdued">
+                            {['Skyrim Base Game', 'Skyrim DLCs', 'Creation Club', 'USSEP', 'Mods which require USSEP'].map((item, i) => (
+                              <li key={i}>
+                                <Typography variant="body-xl" as="span" className="text-neutral-subdued">
+                                  {item}
+                                </Typography>
+                              </li>
+                            ))}
+                          </ul>
                         </div>
                         <div className="flex flex-col gap-2 py-6">
                           <GuideImage
