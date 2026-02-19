@@ -429,7 +429,7 @@ export default function SkyrimGuidePage() {
                             'bg-primary-moderate text-neutral-inverted hover:bg-primary-strong'
                           )}
                         >
-                          Get VC++ AIO
+                          Get VC++
                         </Link>
                       </div>
                       <StepNavControls activeSectionId={activeSectionId} onSectionChange={setActiveSectionId} />
@@ -978,7 +978,7 @@ export default function SkyrimGuidePage() {
                           <Typography variant="body-xl-semibold" as="h3" className="text-neutral-strong pb-4">
                             Get started with these collections
                           </Typography>
-                          <div className="flex flex-col justify-center items-center self-stretch flex-grow-0 flex-shrink-0 gap-2 pb-6">
+                          <div className="flex flex-col justify-center items-center self-stretch flex-grow-0 flex-shrink-0 gap-3 pb-6">
                             {[
                               {
                                 href: 'https://www.nexusmods.com/games/skyrimspecialedition/collections/qdurkx',
@@ -1023,11 +1023,11 @@ export default function SkyrimGuidePage() {
                             ))}
                           </div>
                         </div>
-                        <div className="flex flex-col gap-2 pt-6">
+                        <div className="flex flex-col gap-1 pt-6">
                           <Typography variant="body-xl-semibold" as="h3" className="text-neutral-moderate">
                             Communities which are great for new modders
                           </Typography>
-                          <div className="flex flex-col gap-2 pt-4">
+                          <div className="flex flex-col gap-3 pt-4">
                             {discordCommunities.map((community) => (
                               <a
                                 key={community.name}
