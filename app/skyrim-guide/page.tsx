@@ -18,12 +18,13 @@ const guideBreadcrumbItems = [
 
 const guideSections = [
   { id: 'introduction', step: 1, label: 'Introduction' },
-  { id: 'install-vortex', step: 2, label: 'Install Vortex' },
-  { id: 'install-address-library', step: 3, label: 'Install address library' },
-  { id: 'install-engine-fixes', step: 4, label: 'Install engine fixes' },
-  { id: 'install-skyui', step: 5, label: 'Install SkyUI' },
-  { id: 'install-ussep', step: 6, label: 'Install USSEP' },
-  { id: 'wrapping-up', step: 7, label: 'Wrapping up' },
+  { id: 'setup', step: 2, label: 'Setup and requirements' },
+  { id: 'install-vortex', step: 3, label: 'Install Vortex' },
+  { id: 'install-address-library', step: 4, label: 'Install address library' },
+  { id: 'install-engine-fixes', step: 5, label: 'Install engine fixes' },
+  { id: 'install-skyui', step: 6, label: 'Install SkyUI' },
+  { id: 'install-ussep', step: 7, label: 'Install USSEP' },
+  { id: 'wrapping-up', step: 8, label: 'Wrapping up' },
 ]
 
 const sectionPlaceholders: Record<string, string> = {
@@ -189,7 +190,7 @@ function QuickLinksList({ activeSectionId, onSectionChange, className }: QuickLi
       role="navigation"
       aria-label="Steps"
     >
-      <div className="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 gap-2 px-1.5">
+      <div className="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0">
         <Typography variant="title-sm" className="text-neutral-moderate uppercase">
           Steps
         </Typography>
@@ -206,15 +207,13 @@ function QuickLinksList({ activeSectionId, onSectionChange, className }: QuickLi
               key={section.id}
               href={`#${section.id}`}
               onClick={() => onSectionChange?.(section.id)}
-              className="flex justify-start items-end self-stretch pb-1 flex-grow-0 flex-shrink-0 gap-1"
+              className="flex justify-start items-baseline self-stretch pb-1 flex-grow-0 flex-shrink-0 gap-1"
               aria-current={isActive ? 'location' : undefined}
             >
-              <div className="flex flex-col justify-center items-center flex-grow-0 flex-shrink-0 h-5 min-w-5 relative gap-2 rounded-full">
-                <Typography variant="body-md" as="span" className={cn('text-center', textClass)}>
-                  {section.step}
-                </Typography>
-              </div>
-              <Typography variant="body-md" as="span" className={cn('flex-grow-0 flex-shrink-0 text-left', textClass)}>
+              <Typography variant="body-md" as="span" className={cn('flex-shrink-0 w-4 tabular-nums', textClass)}>
+                {section.step}
+              </Typography>
+              <Typography variant="body-md" as="span" className={cn('flex-1 min-w-0 text-left', textClass)}>
                 {section.label}
               </Typography>
             </a>
@@ -340,7 +339,7 @@ export default function SkyrimGuidePage() {
 <Typography variant="body-xl-semibold" as="p" className="text-neutral-strong">
                           What you'll achieve:
                         </Typography>
-                          <ul className="list-disc list-inside flex flex-col gap-1 mt-2 text-neutral-subdued">
+                          <ul className="list-disc list-outside flex flex-col gap-1 mt-2 pl-6 text-neutral-subdued">
                             {[
                               'Set up Vortex as your primary Mod Manager',
                               'Install the Skyrim Script Extender (SKSE)',
@@ -355,6 +354,83 @@ export default function SkyrimGuidePage() {
                             ))}
                           </ul>
                         </div>
+                      </div>
+                      <StepNavControls activeSectionId={activeSectionId} onSectionChange={setActiveSectionId} />
+                    </>
+                  )
+                }
+
+                if (section.id === 'setup') {
+                  return (
+                    <>
+                      <div className="pb-[var(--spacing-10)]">
+                        <div className="flex flex-col gap-0.5 mb-4">
+                          <Typography variant="title-sm" as="span" className="text-primary-moderate uppercase">
+                            step {section.step}
+                          </Typography>
+                          <Typography variant="heading-sm" as="h2" className="text-neutral-strong">
+                            {section.label}
+                          </Typography>
+                        </div>
+                        <ul className="list-disc list-outside flex flex-col gap-1 mt-2 pl-6 pb-[var(--spacing-8)] text-neutral-subdued">
+                          {[
+                            'Skyrim should be installed only from Steam or GOG. Versions from other stores have issues which means they cannot work properly with some mods.',
+                            'These guides assume you are using the English version of the game.',
+                            'Skyrim should be installed on a Solid State Hard Drive (SSD) if possible, otherwise the game can take a particularly long time to load if modded.',
+                            'Windows 10/11 is required.',
+                          ].map((item, i) => (
+                            <li key={i}>
+                              <Typography variant="body-xl" as="span" className="text-neutral-subdued">
+                                {item}
+                              </Typography>
+                            </li>
+                          ))}
+                        </ul>
+
+                        <Typography variant="body-xl-semibold" as="h3" className="text-neutral-strong pt-6 pb-[var(--spacing-2)]">
+                          Installing VC++ Redistributables
+                        </Typography>
+                        <div className="flex flex-col gap-2 pt-0">
+                          <Typography variant="body-xl" className="text-neutral-subdued">
+                            Most engine mods and tools require the latest Visual C++ Redistributables to be installed. We will use an all-in-one package that will install all possible versions. Failure to have latest versions installed will result in an immediate crash when launching the game or modding tools.
+                          </Typography>
+                          <Typography variant="body-xl" className="text-neutral-subdued">
+                            Please install the redistributables even if you have them installed already, as they are often outdated.
+                          </Typography>
+                        </div>
+                        <div className="flex flex-col gap-2 py-6">
+                          <GuideImage
+                            src="/guides/section-setup-image1.png"
+                            alt="VC++ Redistributable AIO download page on TechPowerUp"
+                            caption="Download VC++ Redistributables from TechPowerUp"
+                          />
+                        </div>
+                        <ol className="list-decimal list-outside flex flex-col gap-1 mt-2 pl-6 text-neutral-subdued">
+                          <li>
+                            <Typography variant="body-xl" as="span" className="text-neutral-subdued">
+                              Download VC++ AIO from TechPowerUp.
+                            </Typography>
+                          </li>
+                          <li>
+                            <Typography variant="body-xl" as="span" className="text-neutral-subdued">
+                              Extract the archive and run the included{' '}
+                              <span className="text-neutral-moderate italic font-semibold">install_all.bat</span>
+                              {' '}as an administrator.
+                            </Typography>
+                          </li>
+                        </ol>
+                        <Link
+                          href="https://www.techpowerup.com/download/visual-c-redistributable-runtime-package-all-in-one/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={cn(
+                            'self-start inline-flex rounded-base font-medium px-4 py-2 text-base transition-colors mt-[var(--spacing-4)]',
+                            'focus:outline-none focus:ring-2 focus:ring-primary-moderate focus:ring-offset-2',
+                            'bg-primary-moderate text-neutral-inverted hover:bg-primary-strong'
+                          )}
+                        >
+                          Get VC++ AIO
+                        </Link>
                       </div>
                       <StepNavControls activeSectionId={activeSectionId} onSectionChange={setActiveSectionId} />
                     </>
@@ -405,8 +481,7 @@ export default function SkyrimGuidePage() {
                         </div>
                         <div className="flex flex-col gap-2 pt-0">
                           <Typography variant="body-xl" className="text-neutral-subdued">
-                            Vortex will automatically handle Nexus Download links. This means that clicking “Mod
-                            manager download” will download and install mods inside of Vortex.
+                            Vortex will automatically handle Nexus Download links. This means that clicking <span className="text-neutral-moderate italic font-semibold">Mod manager download</span> will download and install mods inside of Vortex.
                             <br /><br />
                             After first installing Vortex, the app will look something like this:
                           </Typography>
@@ -418,7 +493,7 @@ export default function SkyrimGuidePage() {
                             caption="This is what Vortex looks like after installation"
                           />
                         </div>
-                        <Typography variant="heading-sm" as="h3" className="text-neutral-strong pt-0">
+                        <Typography variant="heading-sm" as="h3" className="text-neutral-strong pt-0 pb-[var(--spacing-2)]">
                           Linking your Nexus Mods account
                         </Typography>
                         <div className="flex flex-col gap-2 pt-0">
@@ -448,7 +523,7 @@ export default function SkyrimGuidePage() {
                           />
                         </div>
                         <div className="flex flex-col gap-2 pt-0">
-                          <Typography variant="body-xl" className="text-neutral-subdued [&_em]:italic [&_em]:text-neutral-moderate">
+                          <Typography variant="body-xl" className="text-neutral-subdued [&_em]:italic [&_em]:text-neutral-moderate [&_em]:font-semibold">
                             Select <em>authorise</em>, then select <em>continue</em>. You have now successfully linked your account, and can return to the Vortex app.
                             <br /><br />
                             Next, click on <em>Select a game to manage</em>.
@@ -462,7 +537,7 @@ export default function SkyrimGuidePage() {
                           />
                         </div>
                         <div className="flex flex-col gap-2 pt-0">
-                          <Typography variant="body-xl" className="text-neutral-subdued [&_em]:italic [&_em]:text-neutral-moderate">
+                          <Typography variant="body-xl" className="text-neutral-subdued [&_em]:italic [&_em]:text-neutral-moderate [&_em]:font-semibold">
                             Search for Skyrim, select <em>Skyrim Special Edition</em>.
                           </Typography>
                         </div>
@@ -474,12 +549,11 @@ export default function SkyrimGuidePage() {
                           />
                         </div>
                         <div className="flex flex-col gap-2 pt-0">
-                          <Typography variant="body-xl" className="text-neutral-subdued [&_em]:italic [&_em]:text-neutral-moderate">
+                          <Typography variant="body-xl" className="text-neutral-subdued [&_em]:italic [&_em]:text-neutral-moderate [&_em]:font-semibold">
                             Vortex is now managing Skyrim Special Edition mods. On the left sidebar is now a section
-                            titled “SSE”. You will be using this section for modding Skyrim.
+                            titled <span className="text-neutral-moderate italic font-semibold">SSE</span>. You will be using this section for modding Skyrim.
                             <br /><br />
-                            First, view the notification on the top right corner which says “Skyrim Script Extender 64
-                            (SKSE64) is not installed”. Selecting the <em>fix</em> option will automatically install Skyrim Script Extender, which is an important mod loader
+                            First, view the notification on the top right corner which says <span className="text-neutral-moderate italic font-semibold">Skyrim Script Extender 64 (SKSE64) is not installed</span>. Selecting the <em>fix</em> option will automatically install Skyrim Script Extender, which is an important mod loader
                             for Skyrim.
                           </Typography>
                         </div>
@@ -491,7 +565,7 @@ export default function SkyrimGuidePage() {
                           />
                         </div>
                         <div className="flex flex-col gap-2 pt-0">
-                          <Typography variant="body-xl" className="text-neutral-subdued [&_em]:italic [&_em]:text-neutral-moderate">
+                          <Typography variant="body-xl" className="text-neutral-subdued [&_em]:italic [&_em]:text-neutral-moderate [&_em]:font-semibold">
                             Select <em>download manually</em>.
                           </Typography>
                         </div>
@@ -503,7 +577,7 @@ export default function SkyrimGuidePage() {
                           />
                         </div>
                         <div className="flex flex-col gap-2 pt-0">
-                          <Typography variant="body-xl" className="text-neutral-subdued [&_em]:italic [&_em]:text-neutral-moderate">
+                          <Typography variant="body-xl" className="text-neutral-subdued [&_em]:italic [&_em]:text-neutral-moderate [&_em]:font-semibold">
                             Please note that the version of SKSE64 will depend on the game version. Vortex will
                             automatically recommend the correct SKSE64 version for your game.
                             <br /><br />
@@ -618,8 +692,7 @@ export default function SkyrimGuidePage() {
                         </div>
                         <div className="flex flex-col gap-2 pt-0">
                           <Typography variant="body-xl" className="text-neutral-subdued">
-                            <span className="text-neutral-strong">Engine Fixes</span>
-                            {' '}is an SKSE64 plugin to fix various issues with the Skyrim Special Edition engine which fixes
+                            Engine Fixes is an SKSE64 plugin to fix various issues with the Skyrim Special Edition engine which fixes
                             many critical game engine bugs. Additionally, it enables receiving Steam/GOG achievements
                             when using mods.
                           </Typography>
@@ -649,7 +722,7 @@ export default function SkyrimGuidePage() {
                         </div>
                         <div className="flex flex-col gap-2 pt-0">
                           <Typography variant="body-xl" className="text-neutral-subdued">
-                            First, download and install “Engine Fixes - Main File” by selecting “Mod Manager download”.
+                            First, download and install <span className="text-neutral-moderate italic font-semibold">Engine Fixes - Main File</span> by selecting <span className="text-neutral-moderate italic font-semibold">Mod Manager download</span>.
                             Select the latest available option in the mod installer and press Finish. Mod installers are
                             often called FOMODs.
                           </Typography>
@@ -663,7 +736,7 @@ export default function SkyrimGuidePage() {
                         </div>
                         <div className="flex flex-col gap-2 pt-0">
                           <Typography variant="body-xl" className="text-neutral-subdued">
-                            Next, download and install “Engine Fixes - SKSE64 Preloader - Vortex Easy Install”.
+                            Next, download and install <span className="text-neutral-moderate italic font-semibold">Engine Fixes - SKSE64 Preloader - Vortex Easy Install</span>.
                           </Typography>
                         </div>
                         <div className="flex flex-col gap-2 py-6">
@@ -802,11 +875,11 @@ export default function SkyrimGuidePage() {
                         </div>
                         <div className="flex flex-col gap-2 pt-0">
                           <Typography variant="body-xl" className="text-neutral-subdued">
-                            “unofficial skyrim special edition patch.esp” has been added as a plugin file. Mods that
-                            require USSEP will likely require this plugin as a “master file”, which means that the
+                            <span className="text-neutral-moderate italic font-semibold">unofficial skyrim special edition patch.esp</span> has been added as a plugin file. Mods that
+                            require USSEP will likely require this plugin as a <span className="text-neutral-moderate italic font-semibold">master file</span>, which means that the
                             changes to the game will be overwritten in this order:
                           </Typography>
-                          <ul className="list-disc list-inside flex flex-col gap-1 mt-2 text-neutral-subdued">
+                          <ul className="list-disc list-outside flex flex-col gap-1 mt-2 pl-6 text-neutral-subdued">
                             {['Skyrim Base Game', 'Skyrim DLCs', 'Creation Club', 'USSEP', 'Mods which require USSEP'].map((item, i) => (
                               <li key={i}>
                                 <Typography variant="body-xl" as="span" className="text-neutral-subdued">
@@ -899,15 +972,59 @@ export default function SkyrimGuidePage() {
                             playing the game, browsing the plethora of content on Nexus Mods, or play a curated
                             experience through a collection or modding guide. Below are some of the highest
                             recommendations from the Skyrim modding community.
-                            <br /><br />
-                            When setting up a highly modded game, we recommend you try our{' '}
-                            <Link href="#" className="text-violet-300 hover:underline">
-                              Premium free trial.
-                            </Link>
                           </Typography>
                         </div>
+                        <div className="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 pt-6">
+                          <Typography variant="body-xl-semibold" as="h3" className="text-neutral-strong pb-4">
+                            Get started with these collections
+                          </Typography>
+                          <div className="flex flex-col justify-center items-center self-stretch flex-grow-0 flex-shrink-0 gap-2 pb-6">
+                            {[
+                              {
+                                href: 'https://www.nexusmods.com/games/skyrimspecialedition/collections/qdurkx',
+                                title: "Gate to Sovengarde",
+                                description: "One of the most comprehensive Skyrim collections around, improving gameplay, graphics and quests.",
+                                image: '/guides/section7-collection1.png',
+                              },
+                              {
+                                href: 'https://dragonbornsfate.moddinglinked.com/',
+                                title: "A Dragonborn's Fate",
+                                description: "This Wabbajack list offers stability, performance enhancements, and better gameplay without straying from the original Skyrim experience.",
+                                image: '/guides/section7-collection2.png',
+                              },
+                              {
+                                href: 'https://colinswrath.github.io/WindsOfTheNorth/',
+                                title: "Winds Of The North",
+                                description: "Forge your destiny in the frigid north with this modlist, designed to overhaul gameplay and enhance graphics while preserving Skyrim's original charm.",
+                                image: '/guides/section7-collection3.png',
+                              },
+                            ].map((collection) => (
+                              <Link
+                                key={collection.href}
+                                href={collection.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 overflow-hidden gap-4 p-2 rounded-lg bg-surface-mid border border-stroke-neutral-translucent-subdued transition-colors hover:bg-surface-high hover:border-stroke-neutral-translucent-moderate"
+                              >
+                                <img
+                                  src={collection.image}
+                                  alt=""
+                                  className="flex-shrink-0 w-16 h-20 object-cover rounded"
+                                />
+                                <div className="flex flex-col justify-center items-start flex-1 min-w-0 gap-0.5">
+                                  <Typography variant="body-lg-semibold" className="text-neutral-strong">
+                                    {collection.title}
+                                  </Typography>
+                                  <Typography variant="body-md" className="text-neutral-subdued">
+                                    {collection.description}
+                                  </Typography>
+                                </div>
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
                         <div className="flex flex-col gap-2 pt-6">
-                          <Typography variant="heading-sm" as="h3" className="text-neutral-moderate">
+                          <Typography variant="body-xl-semibold" as="h3" className="text-neutral-moderate">
                             Communities which are great for new modders
                           </Typography>
                           <div className="flex flex-col gap-2 pt-4">
