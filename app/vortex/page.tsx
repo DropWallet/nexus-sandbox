@@ -36,7 +36,7 @@ export default function VortexPage() {
                 as="h1"
                 className="text-neutral-strong tracking-[-0.9px] opacity-0 animate-[blur-fade-in_0.8s_ease-out_forwards]"
               >
-                Vortex is the best way to manage your mods, so you can spend more time playing.
+                Vortex is the easiest way to manage your mods, so you can spend more time playing.
               </Typography>
               <Link
                 href="https://www.nexusmods.com/site/mods/1"
