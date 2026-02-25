@@ -254,7 +254,7 @@ export default function VortexPage() {
         </section>
 
         {/* Get started resources — from Figma node 1166:1628 */}
-        <section className="flex flex-col items-center w-full py-[var(--spacing-24)]">
+        <section className="flex flex-col items-center w-full pt-[var(--spacing-2)] pb-[var(--spacing-24)]">
           <div className="flex flex-col gap-[var(--spacing-8)] max-w-[1268px] w-full px-4 xs:px-5 sm:px-6">
             <Typography
               variant="heading-md"
