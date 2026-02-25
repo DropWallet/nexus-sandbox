@@ -1,0 +1,366 @@
+'use client'
+
+import NavigationBar from '@/components/Navigation'
+import { Typography } from '@/components/Typography'
+import Link from 'next/link'
+import { cn } from '@/lib/utils'
+
+const GAME_IMAGES = [
+  '/vortex/game-image10.webp',
+  '/vortex/game-image11.webp',
+  '/vortex/game-image12.webp',
+  '/vortex/game-image13.webp',
+  '/vortex/game-image14.webp',
+  '/vortex/game-image15.webp',
+  '/vortex/game-image16.webp',
+  '/vortex/game-image01.png',
+  '/vortex/game-image02.png',
+  '/vortex/game-image03.png',
+  '/vortex/game-image04.png',
+  '/vortex/game-image05.png',
+]
+
+export default function VortexPage() {
+  return (
+    <div className="min-h-screen bg-surface-base">
+      <NavigationBar />
+
+      <main className="w-full pt-14">
+        {/* Hero Section - from Figma node 1166:1532 */}
+        <section className="flex flex-col items-center isolate w-full pb-0 pt-[var(--spacing-20)]">
+          <div className="flex flex-col items-start gap-[var(--spacing-16)] max-w-[1268px] w-full px-4 xs:px-5 sm:px-6">
+            {/* Title area */}
+            <div className="flex flex-col gap-[var(--spacing-6)] items-start max-w-[786px]">
+              <Typography
+                variant="heading-lg"
+                as="h1"
+                className="text-neutral-strong tracking-[-0.9px] opacity-0 animate-[blur-fade-in_0.8s_ease-out_forwards]"
+              >
+                Vortex is the best way to manage your mods, so you can spend more time playing.
+              </Typography>
+              <Link
+                href="https://www.nexusmods.com/site/mods/1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  'inline-flex justify-center items-center gap-2 px-4 py-2 text-base font-medium rounded-base transition-colors',
+                  'bg-primary-moderate text-neutral-inverted hover:bg-primary-strong',
+                  'focus:outline-none focus:ring-2 focus:ring-primary-moderate focus:ring-offset-2',
+                  'opacity-0 animate-[blur-fade-in_0.8s_ease-out_0.1s_forwards]'
+                )}
+              >
+                <img src="/vortex/windows.svg" alt="" className="shrink-0 w-5 h-5" aria-hidden />
+                Download for Windows
+              </Link>
+            </div>
+
+            {/* Screenshot / app mockup - Raycast-style frame */}
+            <div className="hero-outer-frame relative w-full p-2 rounded-2xl opacity-0 animate-[blur-fade-in_0.8s_ease-out_0.2s_forwards]">
+              {/* Colored ambient glow — spills out top, sides, and bottom, z-0 so frame (z-10) sits on top */}
+              <div
+                className="hero-glow-blue absolute z-0 rounded-2xl blur-3xl pointer-events-none animate-[hero-glow-blue_8s_ease-in-out_infinite]"
+                style={{ top: '-80px', left: '-20px', right: '-20px', bottom: '-10px' }}
+                aria-hidden
+              />
+              <div
+                className="hero-glow-green absolute z-0 rounded-2xl blur-3xl pointer-events-none animate-[hero-glow-green_8s_ease-in-out_infinite]"
+                style={{ top: '-80px', left: '-20px', right: '-20px', bottom: '-10px' }}
+                aria-hidden
+              />
+              {/* Frame — p-px exposes gradient bg as border. z-10 above glow so image sits on top */}
+              <div className="hero-image-frame relative z-10 rounded-xl p-px">
+                {/* bg-surface-base fills content area so only the 1px gradient ring shows as border */}
+                <div className="rounded-[11px] overflow-hidden bg-surface-base relative">
+                  <div className="aspect-[1207/542] w-full relative">
+                    <img
+                      src="/vortex/hero-app.png"
+                      alt="Vortex mod manager interface"
+                      className="absolute inset-0 w-full h-full object-cover object-top"
+                    />
+                  </div>
+                </div>
+              </div>
+              {/* Gradient overlay — extends beyond hero on all sides to cover glow spill, fades to surface-base */}
+              <div
+                className="absolute top-0 z-20 pointer-events-none rounded-2xl"
+                style={{
+                  left: '-80px',
+                  right: '-80px',
+                  bottom: '-120px',
+                  background: `linear-gradient(to bottom, transparent 0%, transparent 35%, var(--color-surface-base) 80%, var(--color-surface-base) 100%)`,
+                }}
+                aria-hidden
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Games section - from Figma node 1166:1546 */}
+        <section className="flex flex-col items-center w-full pt-[var(--spacing-16)] pb-0 px-4 xs:px-5 sm:px-6">
+          <Typography
+            variant="body-xl-semibold"
+            as="p"
+            className="text-neutral-subdued text-center max-w-[1024px] w-full opacity-0 animate-[blur-fade-in_0.8s_ease-out_1s_forwards]"
+          >
+            Over 800 games supported
+          </Typography>
+          <div className="games-carousel-wrapper games-carousel-mask relative w-full max-w-[1100px] mt-[var(--spacing-6)] overflow-hidden pb-2 opacity-0 animate-[blur-fade-in_0.8s_ease-out_1.15s_forwards]">
+            <div className="games-carousel-track flex gap-[var(--spacing-4)] items-center w-max">
+              {[...GAME_IMAGES, ...GAME_IMAGES].map((src, i) => (
+                <div
+                  key={`${src}-${i}`}
+                  className="shrink-0 w-[80px] p-[2px] rounded-lg border border-stroke-neutral-translucent-weak overflow-hidden"
+                >
+                  <div className="aspect-[400/600] w-full relative rounded-md overflow-hidden">
+                    <img
+                      src={src}
+                      alt="Game cover"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* Gradient border below game artwork — per Figma 1169:3592 */}
+          <div className="games-gradient-border mt-[var(--spacing-14)] w-full max-w-[1024px] h-px shrink-0" aria-hidden />
+        </section>
+
+        {/* Transform section - from Figma node 1166:1555 */}
+        <section className="flex flex-col items-center w-full py-[var(--spacing-24)]">
+          <div className="flex flex-col gap-[var(--spacing-14)] max-w-[1268px] w-full px-4 xs:px-5 sm:px-6">
+            <Typography
+              variant="heading-md"
+              as="h2"
+              className="text-neutral-strong max-w-[1024px]"
+            >
+              <span className="leading-[1.25]">Transform your games.</span>
+              <span className="text-neutral-weak font-semi">{` Vortex lets you easily manage complex mod lists to make your old games feel like new.`}</span>
+            </Typography>
+
+            {/* Block 1: Manage mods - text left, image right */}
+            <div className="flex flex-col sm:flex-row gap-[var(--spacing-10)] p-[var(--spacing-6)] rounded-lg bg-surface-low overflow-hidden">
+              <div className="flex flex-col gap-[var(--spacing-4)] justify-center sm:max-w-[448px]">
+                <div className="flex flex-col gap-[var(--spacing-4)] pl-[var(--spacing-2)]">
+                  <img src="/vortex/Pictogram-mods.svg" alt="" className="w-14 h-14 shrink-0" aria-hidden />
+                  <div className="flex flex-col gap-[var(--spacing-2)]">
+                    <Typography variant="heading-xs" as="p" className="text-neutral-strong">
+                      Manage your mods effortlessly
+                    </Typography>
+                    <Typography variant="heading-xs" as="p" className="text-neutral-subdued">
+                      Our app gives you one place to manage your mods. No more manual drag-and-drop complexity.
+                    </Typography>
+                  </div>
+                </div>
+                <Link
+                  href="#"
+                  className={cn(
+                    'inline-flex items-center gap-2 self-start px-3 py-1 text-sm font-medium rounded-base transition-colors',
+                    'bg-transparent text-primary-moderate hover:bg-surface-translucent-low hover:text-primary-strong',
+                    'focus:outline-none focus:ring-2 focus:ring-primary-moderate focus:ring-offset-2'
+                  )}
+                >
+                  Learn how to get started
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M9 18l6-6-6-6" /></svg>
+                </Link>
+              </div>
+              <div className="flex-1 min-w-0 h-[320px] sm:h-[532px] rounded-base overflow-hidden bg-surface-mid border border-stroke-neutral-translucent-weak relative">
+                <div className="absolute left-[var(--spacing-14)] top-[var(--spacing-14)] right-0 bottom-0 rounded-tl-lg overflow-hidden transform-image-shadow">
+                  <img
+                    src="/vortex/image-manage.png"
+                    alt="Vortex mod manager interface"
+                    className="absolute inset-0 w-full h-full object-cover object-top"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Block 2: Collections - image left, text right */}
+            <div className="flex flex-col sm:flex-row gap-[var(--spacing-10)] p-[var(--spacing-6)] rounded-lg bg-surface-low overflow-hidden">
+              <div className="flex-1 min-w-0 h-[320px] sm:h-[532px] rounded-base overflow-hidden bg-surface-mid border border-stroke-neutral-translucent-weak relative order-2 sm:order-1">
+                <div className="absolute left-[var(--spacing-14)] top-[var(--spacing-14)] right-0 bottom-0 rounded-lg overflow-hidden transform-image-shadow">
+                  <img
+                    src="/vortex/image-manage.png"
+                    alt="Vortex Collections interface"
+                    className="absolute inset-0 w-full h-full object-cover object-top"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-[var(--spacing-6)] justify-center sm:max-w-[448px] order-1 sm:order-2">
+                <div className="flex flex-col gap-[var(--spacing-4)] pl-[var(--spacing-2)]">
+                  <img src="/vortex/Pictogram-collections.svg" alt="" className="w-14 h-14 shrink-0" aria-hidden />
+                  <div className="flex flex-col gap-[var(--spacing-2)]">
+                    <Typography variant="heading-xs" as="p" className="text-neutral-strong">
+                      Auto-install 100s of mods with Collections
+                    </Typography>
+                    <Typography variant="heading-xs" as="p" className="text-neutral-subdued">
+                      Easily install curated mod groups or create your own to share with friends or the world.
+                    </Typography>
+                  </div>
+                </div>
+                <Link
+                  href="#"
+                  className={cn(
+                    'inline-flex items-center gap-2 self-start px-3 py-1 text-sm font-medium rounded-base transition-colors',
+                    'bg-transparent text-primary-moderate hover:bg-surface-translucent-low hover:text-primary-strong',
+                    'focus:outline-none focus:ring-2 focus:ring-primary-moderate focus:ring-offset-2'
+                  )}
+                >
+                  Browse Collections
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M9 18l6-6-6-6" /></svg>
+                </Link>
+              </div>
+            </div>
+
+            {/* Block 3: Perfect mod list - text left, image right with two overlapped screens */}
+            <div className="flex flex-col sm:flex-row gap-[var(--spacing-10)] p-[var(--spacing-6)] rounded-lg bg-surface-low overflow-hidden">
+              <div className="flex flex-col gap-[var(--spacing-6)] justify-center sm:max-w-[448px]">
+                <div className="flex flex-col gap-[var(--spacing-4)] pl-[var(--spacing-2)]">
+                  <img src="/vortex/Pictogram-health-check.svg" alt="" className="w-14 h-14 shrink-0" aria-hidden />
+                  <div className="flex flex-col gap-[var(--spacing-2)]">
+                    <Typography variant="heading-xs" as="p" className="text-neutral-strong">
+                      Perfect your mod list
+                    </Typography>
+                    <Typography variant="heading-xs" as="p" className="text-neutral-subdued">
+                      We&apos;ll let you know if there&apos;s any issues with your setup to keep everything running smoothly.
+                    </Typography>
+                  </div>
+                </div>
+                <Link
+                  href="https://www.nexusmods.com/site/mods/1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(
+                    'inline-flex items-center gap-2 self-start px-3 py-1 text-sm font-medium rounded-base transition-colors',
+                    'bg-transparent text-primary-moderate hover:bg-surface-translucent-low hover:text-primary-strong',
+                    'focus:outline-none focus:ring-2 focus:ring-primary-moderate focus:ring-offset-2'
+                  )}
+                >
+                  Download Vortex
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M9 18l6-6-6-6" /></svg>
+                </Link>
+              </div>
+              <div className="flex-1 min-w-0 h-[320px] sm:h-[567px] rounded-base overflow-hidden bg-surface-mid border border-stroke-neutral-translucent-weak relative">
+                {/* Two overlapped screens per Figma 1166:1612 — app (back), main content (front) */}
+                <div className="absolute left-[var(--spacing-8)] top-[var(--spacing-8)] w-[calc(100%-var(--spacing-16))] sm:left-8 sm:top-8 sm:w-[517px] sm:h-[411px] aspect-[517/411] sm:aspect-auto rounded-lg overflow-hidden transform-block3-app-shadow">
+                  <img src="/vortex/image-perfect-1.png" alt="Vortex app interface" className="absolute inset-0 w-full h-full object-cover object-top" />
+                </div>
+                <div className="absolute left-[32%] top-[27%] sm:left-[181px] sm:top-[151px] w-[92%] sm:w-[523px] sm:h-[384px] aspect-[523/384] rounded-lg overflow-hidden border border-stroke-neutral-translucent-weak transform-block3-main-shadow z-10">
+                  <img src="/vortex/image-perfect-2.png" alt="Health Check modal" className="absolute inset-0 w-full h-full object-cover object-top" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Get started resources — from Figma node 1166:1628 */}
+        <section className="flex flex-col items-center w-full py-[var(--spacing-24)]">
+          <div className="flex flex-col gap-[var(--spacing-8)] max-w-[1268px] w-full px-4 xs:px-5 sm:px-6">
+            <Typography
+              variant="heading-md"
+              as="h2"
+              className="text-neutral-strong max-w-[1024px]"
+            >
+              Get started with these resources
+            </Typography>
+
+            <div className="flex flex-col gap-[var(--spacing-8)]">
+              {/* Top row: 3 resource cards */}
+              <div className="flex flex-col sm:flex-row gap-[var(--spacing-6)]">
+                <Link
+                  href="https://www.youtube.com/@NexusMods"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex flex-col gap-[var(--spacing-4)] p-[var(--spacing-5)] rounded-lg bg-surface-low border border-stroke-neutral-translucent-weak hover:border-stroke-neutral-translucent-subdued transition-colors"
+                >
+                  <span className="w-6 h-6 shrink-0 [&>svg]:w-full [&>svg]:h-full text-neutral-subdued" aria-hidden>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                  </span>
+                  <div className="flex flex-col gap-[var(--spacing-2)]">
+                    <Typography variant="heading-xs" as="p" className="text-primary-moderate">
+                      YouTube
+                    </Typography>
+                    <Typography variant="body-xl-semibold" as="p" className="text-neutral-weak">
+                      Watch our YouTube Guides to quickly get started
+                    </Typography>
+                  </div>
+                </Link>
+                <Link
+                  href="https://wiki.nexusmods.com/index.php/Vortex"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex flex-col gap-[var(--spacing-4)] p-[var(--spacing-5)] rounded-lg bg-surface-low border border-stroke-neutral-translucent-weak hover:border-stroke-neutral-translucent-subdued transition-colors"
+                >
+                  <span className="w-6 h-6 shrink-0 [&>svg]:w-full [&>svg]:h-full text-neutral-subdued" aria-hidden>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+                  </span>
+                  <div className="flex flex-col gap-[var(--spacing-2)]">
+                    <Typography variant="heading-xs" as="p" className="text-primary-moderate">
+                      Vortex Wiki
+                    </Typography>
+                    <Typography variant="body-xl-semibold" as="p" className="text-neutral-weak">
+                      Get guides and resources for using the app and modding specific games
+                    </Typography>
+                  </div>
+                </Link>
+                <Link
+                  href="https://discord.gg/nexusmods"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex flex-col gap-[var(--spacing-4)] p-[var(--spacing-5)] rounded-lg bg-surface-low border border-stroke-neutral-translucent-weak hover:border-stroke-neutral-translucent-subdued transition-colors"
+                >
+                  <span className="w-6 h-6 shrink-0 [&>svg]:w-full [&>svg]:h-full text-neutral-subdued" aria-hidden>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                  </span>
+                  <div className="flex flex-col gap-[var(--spacing-2)]">
+                    <Typography variant="heading-xs" as="p" className="text-primary-moderate">
+                      Discord
+                    </Typography>
+                    <Typography variant="body-xl-semibold" as="p" className="text-neutral-weak">
+                      Join the Nexus Mods Discord server to chat with other modders
+                    </Typography>
+                  </div>
+                </Link>
+              </div>
+
+              {/* Skyrim guide card */}
+              <Link
+                href="/skyrim-guide"
+                className="group flex flex-col sm:flex-row gap-[var(--spacing-6)] items-center p-[var(--spacing-6)] rounded-lg bg-surface-low border border-stroke-neutral-translucent-subdued overflow-hidden resources-skyrim-pattern hover:border-stroke-neutral-translucent-moderate transition-colors"
+              >
+                <div className="w-20 h-[120px] shrink-0 rounded-base overflow-hidden bg-surface-mid flex-shrink-0 resources-skyrim-image">
+                  <img
+                    src="/vortex/game-image02.png"
+                    alt=""
+                    className="w-full h-full object-cover"
+                    aria-hidden
+                  />
+                </div>
+                <div className="flex-1 flex flex-col gap-[var(--spacing-2)] min-w-0 max-w-[576px]">
+                  <Typography variant="heading-sm" as="p" className="text-neutral-strong">
+                    Start modding Skyrim with Vortex
+                  </Typography>
+                  <Typography variant="body-xl" as="p" className="text-neutral-subdued">
+                    View our simple guide to get all the essential mods and tools to start modding Skyrim using Vortex.
+                  </Typography>
+                </div>
+                <span
+                  className={cn(
+                    'inline-flex items-center gap-2 shrink-0 ml-auto px-4 py-2 text-base font-medium rounded-base transition-colors',
+                    'bg-[var(--color-button-secondary-filled)] border border-[var(--color-button-secondary-filled-border)] text-[var(--color-button-secondary-filled-text)]',
+                    'group-hover:bg-[var(--color-button-secondary-filled-hover)]'
+                  )}
+                >
+                  View guide
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                    <path d="M9 18l6-6-6-6" />
+                  </svg>
+                </span>
+              </Link>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  )
+}

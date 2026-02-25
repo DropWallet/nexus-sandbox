@@ -67,6 +67,12 @@
   --color-stroke-neutral-translucent-moderate: rgba(255, 255, 255, 0.3000);
   --color-stroke-neutral-translucent-strong: rgba(255, 255, 255, 0.6000);
 
+  /* Button secondary-filled — per Figma 1166:1667 */
+  --color-button-secondary-filled: var(--color-neutral-strong);
+  --color-button-secondary-filled-hover: var(--color-neutral-moderate);
+  --color-button-secondary-filled-border: var(--color-stroke-neutral-translucent-subdued);
+  --color-button-secondary-filled-text: var(--color-neutral-inverted);
+
   /* Spacing */
   --spacing-0: 0px;
   --spacing-0-5: 2px;
@@ -196,6 +202,155 @@
   --translucent-light-200: rgba(255, 255, 255, 0.2);
 }
 
+@keyframes blur-fade-in {
+  0% {
+    filter: blur(10px);
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    filter: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes gradient-bg-pulse {
+  0%, 100% {
+    background: radial-gradient(ellipse 80% 50% at 50% 50%, rgba(30, 58, 138, 0.04) 0%, transparent 70%);
+  }
+  50% {
+    background: radial-gradient(ellipse 80% 50% at 50% 50%, rgba(22, 101, 52, 0.04) 0%, transparent 70%);
+  }
+}
+
+@keyframes hero-glow-blue {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+@keyframes hero-glow-green {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+.hero-glow-blue {
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(96, 165, 250, 0.8) 0%, transparent 70%);
+}
+.hero-glow-green {
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(74, 222, 128, 0.8) 0%, transparent 70%);
+}
+
+/* Outer wrapper — gradient fills the p-1.5 gap visible as the outer border ring */
+.hero-outer-frame {
+  background: linear-gradient(180deg,
+    rgba(255,255,255,0.04) 0%,
+    rgba(255,255,255,0.02) 60%,
+    rgba(255,255,255,0.04) 100%
+  );
+  box-shadow: inset 0 0.5px 0 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Transform section image — shadow per Figma 1166:1566 */
+.transform-image-shadow {
+  box-shadow:
+    44px 650px 183px 0 rgba(0, 0, 0, 0.01),
+    28px 416px 167px 0 rgba(0, 0, 0, 0.08),
+    16px 234px 141px 0 rgba(0, 0, 0, 0.27),
+    7px 104px 104px 0 rgba(0, 0, 0, 0.46),
+    2px 26px 57px 0 rgba(0, 0, 0, 0.53);
+}
+
+/* Block 3 (Perfect mod list) — shadows per Figma 1166:1626, 1166:1627 */
+.transform-block3-app-shadow {
+  box-shadow:
+    0 205px 57px 0 rgba(0, 0, 0, 0.01),
+    0 131px 52px 0 rgba(0, 0, 0, 0.04),
+    0 74px 44px 0 rgba(0, 0, 0, 0.14),
+    0 33px 33px 0 rgba(0, 0, 0, 0.24),
+    0 8px 18px 0 rgba(0, 0, 0, 0.28);
+}
+.transform-block3-main-shadow {
+  box-shadow:
+    0 495px 138px 0 rgba(0, 0, 0, 0.01),
+    0 317px 127px 0 rgba(0, 0, 0, 0.09),
+    0 178px 107px 0 rgba(0, 0, 0, 0.29),
+    0 79px 79px 0 rgba(0, 0, 0, 0.49),
+    0 20px 44px 0 rgba(0, 0, 0, 0.57);
+}
+
+/* Games carousel — infinite scroll right-to-left, per Logto blog pattern */
+@keyframes games-carousel-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.games-carousel-track {
+  animation: games-carousel-scroll 120s linear infinite;
+}
+.games-carousel-wrapper:hover .games-carousel-track {
+  animation-play-state: paused;
+}
+.games-carousel-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 12%,
+    black 72%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 12%,
+    black 72%,
+    transparent 100%
+  );
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/* Resources Skyrim card — tiled texture bg, 2x retina, preserve aspect ratio */
+.resources-skyrim-pattern {
+  background-color: var(--color-surface-base);
+  background-image: url('/vortex/texture-bg.png');
+  background-repeat: repeat;
+  background-size: 50% auto; /* 2x retina, aspect ratio preserved */
+}
+
+/* Resources Skyrim game art — shadow per Figma 1166:1663 */
+.resources-skyrim-image {
+  box-shadow:
+    0 87px 24px 0 rgba(1, 12, 14, 0.01),
+    0 56px 22px 0 rgba(1, 12, 14, 0.1),
+    0 31px 19px 0 rgba(1, 12, 14, 0.35),
+    0 14px 14px 0 rgba(1, 12, 14, 0.6),
+    0 3px 8px 0 rgba(1, 12, 14, 0.69);
+}
+
+/* Games section — gradient border below game artwork (per Figma 1169:3592) */
+.games-gradient-border {
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,0.06) 25%,
+    rgba(255,255,255,0.12) 50%,
+    rgba(255,255,255,0.06) 75%,
+    transparent 100%
+  );
+}
+
+/* Inner frame — gradient fills the p-px gap as the inner border ring */
+.hero-image-frame {
+  background: linear-gradient(180deg,
+    rgba(255,255,255,0.15) 0%,
+    rgba(255,255,255,0.05) 60%,
+    rgba(255,255,255,0.08) 100%
+  );
+  box-shadow:
+    0 0 50px 30px rgba(255, 255, 255, 0.01),    /* white outer glow */
+    inset 0 0.5px 0 0 rgba(255, 255, 255, 0.02); /* 0.5px inner top highlight */
+}
+
 @layer base {
   /* Theme-dependent semantic colors - defined here so they can be overridden */
   /* Default (Dark Theme) */
@@ -309,6 +464,12 @@
     --color-stroke-neutral-translucent-subdued: rgba(255, 255, 255, 0.2000);
     --color-stroke-neutral-translucent-moderate: rgba(255, 255, 255, 0.3000);
     --color-stroke-neutral-translucent-strong: rgba(255, 255, 255, 0.6000);
+
+    /* Button secondary-filled */
+    --color-button-secondary-filled: var(--color-neutral-strong);
+    --color-button-secondary-filled-hover: var(--color-neutral-moderate);
+    --color-button-secondary-filled-border: var(--color-stroke-neutral-translucent-subdued);
+    --color-button-secondary-filled-text: var(--color-neutral-inverted);
   }
 
   /* Light Theme - Invert shade values for neutral and surface colors */
@@ -336,6 +497,12 @@
     --color-stroke-neutral-translucent-subdued: rgba(0, 0, 0, 0.2500);
     --color-stroke-neutral-translucent-moderate: rgba(0, 0, 0, 0.3500);
     --color-stroke-neutral-translucent-strong: rgba(0, 0, 0, 0.6500);
+
+    /* Button secondary-filled — light theme */
+    --color-button-secondary-filled: var(--color-neutral-strong);
+    --color-button-secondary-filled-hover: var(--color-neutral-moderate);
+    --color-button-secondary-filled-border: var(--color-stroke-neutral-translucent-subdued);
+    --color-button-secondary-filled-text: var(--color-neutral-inverted);
   }
 
 

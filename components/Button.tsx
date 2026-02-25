@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'tertiary'
+  variant?: 'primary' | 'secondary' | 'secondary-filled' | 'tertiary'
   size?: 'sm' | 'md' | 'lg'
   children: React.ReactNode
 }
@@ -26,6 +26,7 @@ export function Button({
         {
           'bg-primary-moderate text-neutral-inverted hover:bg-primary-strong': variant === 'primary',
           'bg-surface-translucent-mid border border-stroke-neutral-translucent-subdued text-neutral-strong hover:bg-surface-translucent-low': variant === 'secondary',
+          'bg-[var(--color-button-secondary-filled)] border border-[var(--color-button-secondary-filled-border)] text-[var(--color-button-secondary-filled-text)] hover:bg-[var(--color-button-secondary-filled-hover)]': variant === 'secondary-filled',
           'bg-transparent text-neutral-strong hover:bg-surface-translucent-low': variant === 'tertiary',
         },
         // Size styles using design tokens
