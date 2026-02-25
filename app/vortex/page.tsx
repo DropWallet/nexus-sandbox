@@ -161,7 +161,7 @@ export default function VortexPage() {
                   )}
                 >
                   Learn how to get started
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M9 18l6-6-6-6" /></svg>
+                  <img src="/vortex/arrow_forward.svg" alt="" className="w-4 h-4 shrink-0" aria-hidden />
                 </Link>
               </div>
               <div className="flex-1 min-w-0 h-[320px] sm:h-[532px] rounded-base overflow-hidden bg-surface-mid border border-stroke-neutral-translucent-weak relative">
@@ -207,7 +207,7 @@ export default function VortexPage() {
                   )}
                 >
                   Browse Collections
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M9 18l6-6-6-6" /></svg>
+                  <img src="/vortex/arrow_forward.svg" alt="" className="w-4 h-4 shrink-0" aria-hidden />
                 </Link>
               </div>
             </div>
@@ -237,7 +237,7 @@ export default function VortexPage() {
                   )}
                 >
                   Download Vortex
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M9 18l6-6-6-6" /></svg>
+                  <img src="/vortex/arrow_forward.svg" alt="" className="w-4 h-4 shrink-0" aria-hidden />
                 </Link>
               </div>
               <div className="flex-1 min-w-0 h-[320px] sm:h-[567px] rounded-base overflow-hidden bg-surface-mid border border-stroke-neutral-translucent-weak relative">
@@ -280,7 +280,7 @@ export default function VortexPage() {
                     <Typography variant="heading-xs" as="p" className="text-primary-moderate">
                       YouTube
                     </Typography>
-                    <Typography variant="body-xl-semibold" as="p" className="text-neutral-weak">
+                    <Typography variant="body-xl-semibold" as="p" className="text-neutral-subdued">
                       Watch our YouTube Guides to quickly get started
                     </Typography>
                   </div>
@@ -298,7 +298,7 @@ export default function VortexPage() {
                     <Typography variant="heading-xs" as="p" className="text-primary-moderate">
                       Vortex Wiki
                     </Typography>
-                    <Typography variant="body-xl-semibold" as="p" className="text-neutral-weak">
+                    <Typography variant="body-xl-semibold" as="p" className="text-neutral-subdued">
                       Get guides and resources for using the app and modding specific games
                     </Typography>
                   </div>
@@ -316,7 +316,7 @@ export default function VortexPage() {
                     <Typography variant="heading-xs" as="p" className="text-primary-moderate">
                       Discord
                     </Typography>
-                    <Typography variant="body-xl-semibold" as="p" className="text-neutral-weak">
+                    <Typography variant="body-xl-semibold" as="p" className="text-neutral-subdued">
                       Join the Nexus Mods Discord server to chat with other modders
                     </Typography>
                   </div>
@@ -325,7 +325,7 @@ export default function VortexPage() {
 
               {/* Skyrim guide card */}
               <Link
-                href="/skyrim-guide"
+                href="https://nexus-sandbox.vercel.app/skyrim-guide#introduction"
                 className="group flex flex-col sm:flex-row gap-[var(--spacing-6)] items-center p-[var(--spacing-6)] rounded-lg bg-surface-low border border-stroke-neutral-translucent-subdued overflow-hidden resources-skyrim-pattern hover:border-stroke-neutral-translucent-moderate transition-colors"
               >
                 <div className="w-20 h-[120px] shrink-0 rounded-base overflow-hidden bg-surface-mid flex-shrink-0 resources-skyrim-image">
