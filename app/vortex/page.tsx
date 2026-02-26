@@ -30,13 +30,13 @@ export default function VortexPage() {
         <section className="flex flex-col items-center isolate w-full pb-0 pt-[var(--spacing-20)]">
           <div className="flex flex-col items-start gap-[var(--spacing-16)] max-w-[1268px] w-full px-4 xs:px-5 sm:px-6">
             {/* Title area */}
-            <div className="flex flex-col gap-[var(--spacing-6)] items-start max-w-[786px]">
+            <div className="flex flex-col gap-[var(--spacing-6)] items-start max-w-[768px]">
               <Typography
                 variant="heading-lg"
                 as="h1"
                 className="text-neutral-strong tracking-[-0.9px] opacity-0 animate-[blur-fade-in_0.8s_ease-out_forwards]"
               >
-                Vortex is the easiest way to manage your mods, so you can spend more time playing.
+                Vortex is the best way to manage your mods, so you can spend more time playing.
               </Typography>
               <Link
                 href="https://www.nexusmods.com/site/mods/1"
