@@ -120,19 +120,19 @@ function PopularCommunityCard({
   )
 }
 
-const GAME_IMAGES = [
-  '/vortex/game-image10.webp',
-  '/vortex/game-image11.webp',
-  '/vortex/game-image12.webp',
-  '/vortex/game-image13.webp',
-  '/vortex/game-image14.webp',
-  '/vortex/game-image15.webp',
-  '/vortex/game-image16.webp',
-  '/vortex/game-image01.png',
-  '/vortex/game-image02.png',
-  '/vortex/game-image03.png',
-  '/vortex/game-image04.png',
-  '/vortex/game-image05.png',
+const GAMES = [
+  { src: '/vortex/game-image10.webp', href: 'https://www.nexusmods.com/games/', alt: 'Game cover' },
+  { src: '/vortex/game-image11.webp', href: 'https://www.nexusmods.com/games/', alt: 'Game cover' },
+  { src: '/vortex/game-image12.webp', href: 'https://www.nexusmods.com/games/', alt: 'Game cover' },
+  { src: '/vortex/game-image13.webp', href: 'https://www.nexusmods.com/games/', alt: 'Game cover' },
+  { src: '/vortex/game-image14.webp', href: 'https://www.nexusmods.com/games/', alt: 'Game cover' },
+  { src: '/vortex/game-image15.webp', href: 'https://www.nexusmods.com/games/', alt: 'Game cover' },
+  { src: '/vortex/game-image16.webp', href: 'https://www.nexusmods.com/games/', alt: 'Game cover' },
+  { src: '/vortex/game-image01.png', href: 'https://www.nexusmods.com/games/', alt: 'Game cover' },
+  { src: '/vortex/game-image02.png', href: 'https://www.nexusmods.com/games/skyrimspecialedition', alt: 'Skyrim Special Edition' },
+  { src: '/vortex/game-image03.png', href: 'https://www.nexusmods.com/games/fallout4', alt: 'Fallout 4' },
+  { src: '/vortex/game-image04.png', href: 'https://www.nexusmods.com/games/baldursgate3', alt: "Baldur's Gate 3" },
+  { src: '/vortex/game-image05.png', href: 'https://www.nexusmods.com/games/cyberpunk2077', alt: 'Cyberpunk 2077' },
 ]
 
 export default function VortexPage() {
@@ -219,19 +219,23 @@ export default function VortexPage() {
           {/* Games carousel */}
           <div className="games-carousel-wrapper games-carousel-mask relative w-full max-w-[1100px] mt-[var(--spacing-6)] overflow-hidden pb-2 opacity-0 animate-[blur-fade-in_0.8s_ease-out_1.15s_forwards]">
             <div className="games-carousel-track flex gap-[var(--spacing-4)] items-center w-max">
-              {[...GAME_IMAGES, ...GAME_IMAGES].map((src, i) => (
-                <div
-                  key={`${src}-${i}`}
-                  className="shrink-0 w-[80px] p-[2px] rounded-lg border border-stroke-neutral-translucent-weak overflow-hidden"
+              {[...GAMES, ...GAMES].map((game, i) => (
+                <Link
+                  key={`${game.src}-${i}`}
+                  href={game.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group shrink-0 w-[80px] p-[2px] rounded-lg border border-stroke-neutral-translucent-weak overflow-hidden block transition-colors hover:border-stroke-neutral-translucent-subdued"
                 >
                   <div className="aspect-[400/600] w-full relative rounded-md overflow-hidden">
                     <img
-                      src={src}
-                      alt="Game cover"
+                      src={game.src}
+                      alt={game.alt}
                       className="absolute inset-0 w-full h-full object-cover"
                     />
+                    <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" aria-hidden />
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
@@ -266,7 +270,9 @@ export default function VortexPage() {
                   </div>
                 </div>
                 <Link
-                  href="#"
+                  href="https://wiki.nexusmods.com/index.php/Category:Vortex"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={cn(
                     'group inline-flex items-center gap-2 self-start text-sm font-medium transition-colors',
                     'text-primary-moderate hover:text-[color-mix(in_srgb,white_20%,var(--color-primary-moderate))]',
@@ -312,7 +318,9 @@ export default function VortexPage() {
                   </div>
                 </div>
                 <Link
-                  href="#"
+                  href="https://www.nexusmods.com/collections?sort=downloads"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={cn(
                     'group inline-flex md:pl-[var(--spacing-2)] items-center gap-2 self-start text-sm font-medium transition-colors',
                     'text-primary-moderate hover:text-[color-mix(in_srgb,white_20%,var(--color-primary-moderate))]',
@@ -340,7 +348,7 @@ export default function VortexPage() {
                   </div>
                 </div>
                 <Link
-                  href="https://www.nexusmods.com/site/mods/1"
+                  href="https://www.nexusmods.com/games"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={cn(
