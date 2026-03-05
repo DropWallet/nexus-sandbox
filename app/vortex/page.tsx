@@ -2,6 +2,7 @@
 
 import NavigationBar from '@/components/Navigation'
 import { Typography } from '@/components/Typography'
+import { HeroUnicornScene } from '@/components/HeroUnicornScene'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
@@ -137,10 +138,17 @@ const GAMES = [
 
 export default function VortexPage() {
   return (
-    <div className="min-h-screen bg-surface-base w-full">
+    <div className="relative min-h-screen bg-surface-base w-full">
+      {/* Unicorn Studio WebGL — absolutely positioned at top of page */}
+      <div className="absolute top-0 left-0 right-0 z-0 w-full px-4 xs:px-5 sm:px-6">
+        <div className="mx-auto max-w-[1920px] aspect-[1920/799] w-full bg-surface-base opacity-0 animate-[blur-fade-in_0.8s_ease-out_0.2s_forwards]">
+          <HeroUnicornScene />
+        </div>
+      </div>
+
       <NavigationBar />
 
-      <main className="w-full pt-14">
+      <main className="relative z-10 w-full pt-14">
         {/* Hero Section - from Figma node 1166:1532 */}
         <section className="flex flex-col items-center isolate w-full pb-0 pt-[var(--spacing-20)]">
           <div className="flex flex-col items-center sm:items-start gap-[var(--spacing-16)] max-w-[1268px] w-full px-4 xs:px-5 sm:px-6">
@@ -297,9 +305,9 @@ export default function VortexPage() {
             {/* Block 2: Collections - image left, text right */}
             <div className="flex flex-col md:flex-row gap-[var(--spacing-10)] md:gap-[var(--spacing-6)] lg:gap-[var(--spacing-10)] p-[var(--spacing-4)] pt-[var(--spacing-5)] md:p-[var(--spacing-6)] rounded-lg bg-surface-low overflow-hidden">
               <div className="flex-1 min-w-0 min-h-[320px] lg:flex-none lg:w-[684px] lg:shrink-0 h-[320px] sm:h-[532px] md:h-[320px] lg:h-[532px] rounded-base overflow-hidden bg-surface-mid border border-stroke-neutral-translucent-weak relative order-2 md:order-1">
-                <div className="absolute left-[var(--spacing-8)] top-[var(--spacing-8)] md:left-[var(--spacing-10)] md:top-[var(--spacing-10)] lg:left-[var(--spacing-14)] lg:top-[var(--spacing-14)] right-0 bottom-0 rounded-lg overflow-hidden transform-image-shadow">
+                <div className="absolute left-[var(--spacing-8)] top-[var(--spacing-8)] md:left-[var(--spacing-10)] md:top-[var(--spacing-10)] lg:left-[var(--spacing-14)] lg:top-[var(--spacing-14)] right-0 bottom-0 rounded-tl-lg overflow-hidden transform-image-shadow">
                   <img
-                    src="/vortex/image-manage.png"
+                    src="/vortex/image-collections.png"
                     alt="Vortex Collections interface"
                     className="absolute inset-0 w-full h-full object-cover object-top"
                   />
@@ -333,7 +341,7 @@ export default function VortexPage() {
               </div>
             </div>
 
-            {/* Block 3: Perfect mod list - text left, image right with two overlapped screens */}
+            {/* Block 3: Perfect mod list - text left, image right */}
             <div className="flex flex-col md:flex-row gap-[var(--spacing-10)] md:gap-[var(--spacing-6)] lg:gap-[var(--spacing-10)] p-[var(--spacing-4)] pt-[var(--spacing-5)] md:p-[var(--spacing-6)] rounded-lg bg-surface-low overflow-hidden">
               <div className="flex flex-col gap-[var(--spacing-6)] justify-center sm:max-w-[448px] md:max-w-none md:flex-1 md:min-w-0 lg:flex-1 lg:min-w-0">
                 <div className="flex flex-col gap-[var(--spacing-4)] md:pl-[var(--spacing-2)]">
@@ -361,14 +369,51 @@ export default function VortexPage() {
                   <img src="/vortex/arrow_forward.svg" alt="" className="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1" aria-hidden />
                 </Link>
               </div>
-              <div className="flex-1 min-w-0 min-h-[320px] lg:flex-none lg:w-[684px] lg:shrink-0 h-[320px] sm:h-[567px] md:h-[320px] lg:h-[567px] rounded-base overflow-hidden bg-surface-mid border border-stroke-neutral-translucent-weak relative">
-                {/* Two overlapped screens per Figma 1166:1612 — app (back), main content (front) */}
-                <div className="absolute left-[var(--spacing-8)] top-[var(--spacing-8)] md:left-[var(--spacing-10)] md:top-[var(--spacing-10)] lg:left-[var(--spacing-14)] lg:top-[var(--spacing-14)] w-[calc(100%-var(--spacing-16))] sm:left-8 sm:top-8 sm:w-[517px] sm:h-[411px] aspect-[517/411] sm:aspect-auto rounded-lg overflow-hidden transform-block3-app-shadow">
-                  <img src="/vortex/image-perfect-1.png" alt="Vortex app interface" className="absolute inset-0 w-full h-full object-cover object-top" />
+              <div className="flex-1 min-w-0 min-h-[320px] lg:flex-none lg:w-[684px] lg:shrink-0 h-[320px] sm:h-[532px] md:h-[320px] lg:h-[532px] rounded-base overflow-hidden bg-surface-mid border border-stroke-neutral-translucent-weak relative">
+                <div className="absolute left-[var(--spacing-8)] top-[var(--spacing-8)] md:left-[var(--spacing-10)] md:top-[var(--spacing-10)] lg:left-[var(--spacing-14)] lg:top-[var(--spacing-14)] right-0 bottom-0 rounded-tl-lg overflow-hidden transform-image-shadow">
+                  <img
+                    src="/vortex/image-manage.png"
+                    alt="Vortex mod manager interface"
+                    className="absolute inset-0 w-full h-full object-cover object-top"
+                  />
                 </div>
-                <div className="absolute left-[32%] top-[27%] sm:left-[181px] sm:top-[151px] w-[92%] sm:w-[523px] sm:h-[384px] aspect-[523/384] rounded-lg overflow-hidden border border-stroke-neutral-translucent-weak transform-block3-main-shadow z-10">
-                  <img src="/vortex/image-perfect-2.png" alt="Health Check modal" className="absolute inset-0 w-full h-full object-cover object-top" />
+              </div>
+            </div>
+
+            {/* Block 4: Never run outdated mods - image left, text right (equal padding on image) */}
+            <div className="flex flex-col md:flex-row gap-[var(--spacing-10)] md:gap-[var(--spacing-6)] lg:gap-[var(--spacing-10)] p-[var(--spacing-4)] pt-[var(--spacing-5)] md:p-[var(--spacing-6)] rounded-lg bg-surface-low overflow-hidden">
+              <div className="flex-1 min-w-0 min-h-[320px] lg:flex-none lg:w-[684px] lg:shrink-0 h-[320px] sm:h-[532px] md:h-[320px] lg:h-[532px] rounded-base overflow-hidden bg-surface-mid border border-stroke-neutral-translucent-weak relative order-2 md:order-1">
+                <div className="absolute left-[var(--spacing-8)] right-[var(--spacing-8)] top-[var(--spacing-8)] md:left-[var(--spacing-10)] md:right-[var(--spacing-10)] md:top-[var(--spacing-10)] lg:left-[var(--spacing-14)] lg:right-[var(--spacing-14)] lg:top-[var(--spacing-14)] bottom-0 rounded-lg overflow-hidden">
+                  <img
+                    src="/vortex/image-safety.png"
+                    alt="Vortex update and safety features"
+                    className="absolute inset-0 w-full h-full object-cover object-top"
+                  />
                 </div>
+              </div>
+              <div className="flex flex-col gap-[var(--spacing-6)] justify-center sm:max-w-[448px] md:max-w-none md:flex-1 md:min-w-0 lg:flex-1 lg:min-w-0 order-1 md:order-2">
+                <div className="flex flex-col gap-[var(--spacing-4)] md:pl-[var(--spacing-2)]">
+                  <img src="/vortex/pictogram-downloads.svg" alt="" className="w-14 h-14 shrink-0" aria-hidden />
+                  <div className="flex flex-col gap-[var(--spacing-2)]">
+                    <Typography variant="heading-xs" as="p" className="text-neutral-strong">
+                      Never run outdated mods again
+                    </Typography>
+                    <Typography variant="heading-xs" as="p" className="text-neutral-subdued">
+                      See available updates instantly. Update multiple mods at once.
+                    </Typography>
+                  </div>
+                </div>
+                <Link
+                  href="#"
+                  className={cn(
+                    'group inline-flex md:pl-[var(--spacing-2)] items-center gap-2 self-start text-sm font-medium transition-colors',
+                    'text-primary-moderate hover:text-[color-mix(in_srgb,white_20%,var(--color-primary-moderate))]',
+                    'focus:outline-none focus:ring-2 focus:ring-primary-moderate focus:ring-offset-2'
+                  )}
+                >
+                  <span className="group-hover:underline">Download Vortex</span>
+                  <img src="/vortex/arrow_forward.svg" alt="" className="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1" aria-hidden />
+                </Link>
               </div>
             </div>
 

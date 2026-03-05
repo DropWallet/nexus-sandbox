@@ -53,7 +53,7 @@
   --color-neutral-inverted: var(--color-zinc-950);
   
   /* Surface (Zinc) - default to dark theme, overridden in @layer base for light */
-  --color-surface-base: var(--color-zinc-950);
+  --color-surface-base: #0F0F10;
   --color-surface-low: var(--color-zinc-900);
   --color-surface-mid: var(--color-zinc-800);
   --color-surface-high: var(--color-zinc-700);
@@ -471,7 +471,7 @@
     --text-xl--letter-spacing: -1px;
 
     /* Surface - dark shades */
-    --color-surface-base: var(--color-zinc-950);
+    --color-surface-base: #0F0F10;
     --color-surface-low: var(--color-zinc-900);
     --color-surface-mid: var(--color-zinc-800);
     --color-surface-high: var(--color-zinc-700);
@@ -504,7 +504,7 @@
   html[data-theme="dark"],
   [data-theme="dark"] {
     /* Surface - dark shades */
-    --color-surface-base: var(--color-zinc-950);
+    --color-surface-base: #0F0F10;
     --color-surface-low: var(--color-zinc-900);
     --color-surface-mid: var(--color-zinc-800);
     --color-surface-high: var(--color-zinc-700);
