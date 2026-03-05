@@ -139,9 +139,9 @@ const GAMES = [
 export default function VortexPage() {
   return (
     <div className="relative min-h-screen bg-surface-base w-full">
-      {/* Unicorn Studio WebGL — absolutely positioned at top of page */}
-      <div className="absolute top-0 left-0 right-0 z-0 w-full px-4 xs:px-5 sm:px-6">
-        <div className="mx-auto max-w-[1920px] aspect-[1920/799] w-full bg-surface-base opacity-0 animate-[blur-fade-in_0.8s_ease-out_0.2s_forwards]">
+      {/* Unicorn Studio WebGL — absolutely positioned at top of page, centered and scales with viewport */}
+      <div className="absolute top-0 left-0 right-0 z-0 w-full px-4 xs:px-5 sm:px-6 flex justify-center">
+        <div className="max-w-[1920px] w-full aspect-[1920/799] bg-surface-base opacity-0 animate-[blur-fade-in_0.8s_ease-out_0.2s_forwards]">
           <HeroUnicornScene />
         </div>
       </div>

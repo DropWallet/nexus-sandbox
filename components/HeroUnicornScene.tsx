@@ -13,12 +13,12 @@ export function HeroUnicornScene() {
   }
 
   return (
-    <div className="aspect-[1920/799] relative rounded-xl bg-surface-base">
+    <div className="aspect-[1920/799] relative rounded-xl bg-surface-base w-full h-full min-w-0">
       <UnicornScene
         projectId="8oDTLdjdUKxeYB3swXZi"
         sdkUrl={SDK_URL}
-        width={1920}
-        height={799}
+        width="100%"
+        height="100%"
         scale={1}
         lazyLoad
         production
