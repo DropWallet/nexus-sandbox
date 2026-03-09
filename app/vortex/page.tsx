@@ -196,7 +196,7 @@ export default function VortexPage() {
                 <div className="rounded-[11px] overflow-hidden bg-surface-base relative">
                   <div className="aspect-[1207/542] w-full relative">
                     <img
-                      src="/vortex/hero-app.png"
+                      src="/vortex/hero-app2.png"
                       alt="Vortex mod manager interface"
                       className="absolute inset-0 w-full h-full object-cover object-top"
                     />

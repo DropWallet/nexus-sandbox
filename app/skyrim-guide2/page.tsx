@@ -948,7 +948,7 @@ export default function SkyrimGuide2Page() {
                           <Typography variant="body-xl" className="text-neutral-subdued">
                           You’ve successfully installed Vortex, Skyrim Script Extender, SkyUI and applied essential bug fixes. You've got a solid foundation to build on.
                             <br /><br />
-                            Now, the world of Skyrim modding is yours to explore. Forge your own path on Nexus Mods or jump straight into a curated experience. Check out these advanced community collections to get started.
+                            Now, the world of Skyrim modding is yours to explore. Forge your own path on Nexus Mods or jump straight into a curated experience. Check out these community collections to get started.
                           </Typography>
                         </div>
                         <div className="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 pt-6">
@@ -958,21 +958,21 @@ export default function SkyrimGuide2Page() {
                           <div className="flex flex-col justify-center items-center self-stretch flex-grow-0 flex-shrink-0 gap-3 pb-6">
                             {[
                               {
-                                href: 'https://www.nexusmods.com/games/skyrimspecialedition/collections/qdurkx',
-                                title: "Gate to Sovengarde",
-                                description: "One of the most comprehensive Skyrim collections around, improving gameplay, graphics and quests.",
+                                href: 'https://www.nexusmods.com/games/skyrimspecialedition/collections/i9gfac',
+                                title: "HS Player Homes",
+                                description: "A great collection to get started with. It overhauls the original player homes across Skyrim and Solstheim.",
                                 image: '/guides/section7-collection1.png',
                               },
                               {
-                                href: 'https://dragonbornsfate.moddinglinked.com/',
-                                title: "A Dragonborn's Fate",
-                                description: "This Wabbajack list offers stability, performance enhancements, and better gameplay without straying from the original Skyrim experience.",
+                                href: 'https://www.nexusmods.com/games/skyrimspecialedition/collections/sklk3h',
+                                title: "JK's All-in-one collection",
+                                description: "Overhaul the interior and exterior of all the buildings in JKrojmal. This is simple to install if you want try out collections.",
                                 image: '/guides/section7-collection2.png',
                               },
                               {
-                                href: 'https://colinswrath.github.io/WindsOfTheNorth/',
-                                title: "Winds Of The North",
-                                description: "Forge your destiny in the frigid north with this modlist, designed to overhaul gameplay and enhance graphics while preserving Skyrim's original charm.",
+                                href: 'https://www.nexusmods.com/games/skyrimspecialedition/collections/62eesj',
+                                title: "Community Shaders Collection",
+                                description: "Transform Skyrim's visuals with this collection. It’s an easy way for Vortex users to install, update, and manage their Community Shaders experience.",
                                 image: '/guides/section7-collection3.png',
                               },
                             ].map((collection) => (
@@ -1064,9 +1064,29 @@ export default function SkyrimGuide2Page() {
           </div>
 
           {/* Right column: sticky Quick links (visible from sm) */}
-          <aside className="hidden md:block shrink-0 self-stretch">
-            <div className="sticky top-6 lg:top-24">
+          <aside className="hidden md:block max-w-[232px] shrink-0 self-stretch">
+            <div className="sticky top-6 lg:top-24 flex flex-col gap-[var(--spacing-4)]">
               <QuickLinksList activeSectionId={activeSectionId} onSectionChange={setActiveSectionId} />
+              <Link
+                href="https://discord.gg/nexusmods"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex flex-col gap-[var(--spacing-1)] p-[var(--spacing-3)] rounded-lg transition-colors hover:opacity-90"
+                style={{ backgroundColor: 'rgba(83, 102, 251, 0.16)', border: '1px solid rgba(83, 102, 251, 0.48)' }}
+              >
+                <span className="flex-shrink-0 w-5 h-5 text-translucent-moderate transition-colors group-hover:text-translucent-strong" aria-hidden>
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M15.776 4.38644C14.7138 3.89902 13.5746 3.53991 12.3836 3.33424C12.3619 3.33027 12.3402 3.34019 12.3291 3.36003C12.1826 3.62059 12.0203 3.96052 11.9066 4.22771C10.6256 4.03592 9.35115 4.03592 8.09638 4.22771C7.98272 3.95458 7.81455 3.62059 7.66739 3.36003C7.65622 3.34085 7.63455 3.33093 7.61286 3.33424C6.42248 3.53926 5.28335 3.89836 4.22042 4.38644C4.21122 4.39041 4.20333 4.39703 4.1981 4.40562C2.0374 7.63364 1.4455 10.7823 1.73587 13.892C1.73718 13.9072 1.74572 13.9217 1.75755 13.931C3.18311 14.9779 4.56401 15.6135 5.91927 16.0347C5.94096 16.0413 5.96394 16.0334 5.97774 16.0155C6.29833 15.5778 6.5841 15.1161 6.82913 14.6307C6.84359 14.6023 6.82979 14.5685 6.80023 14.5573C6.34694 14.3853 5.91533 14.1757 5.50014 13.9376C5.4673 13.9184 5.46467 13.8715 5.49488 13.849C5.58225 13.7835 5.66964 13.7154 5.75307 13.6466C5.76817 13.634 5.7892 13.6314 5.80695 13.6393C8.53455 14.8847 11.4875 14.8847 14.1829 13.6393C14.2007 13.6307 14.2217 13.6334 14.2375 13.6459C14.3209 13.7147 14.4083 13.7835 14.4963 13.849C14.5265 13.8715 14.5246 13.9184 14.4917 13.9376C14.0765 14.1803 13.6449 14.3853 13.191 14.5566C13.1614 14.5679 13.1483 14.6023 13.1627 14.6307C13.413 15.1155 13.6988 15.5771 14.0134 16.0149C14.0266 16.0334 14.0502 16.0413 14.0719 16.0347C15.4338 15.6135 16.8146 14.9779 18.2402 13.931C18.2527 13.9217 18.2606 13.9078 18.2619 13.8926C18.6094 10.2975 17.6798 7.17468 15.7977 4.40627C15.7931 4.39703 15.7852 4.39041 15.776 4.38644ZM7.23645 11.9985C6.41526 11.9985 5.73861 11.2446 5.73861 10.3187C5.73861 9.39282 6.40213 8.6389 7.23645 8.6389C8.07732 8.6389 8.74741 9.39944 8.73427 10.3187C8.73427 11.2446 8.07075 11.9985 7.23645 11.9985ZM12.7745 11.9985C11.9533 11.9985 11.2766 11.2446 11.2766 10.3187C11.2766 9.39282 11.9401 8.6389 12.7745 8.6389C13.6153 8.6389 14.2854 9.39944 14.2723 10.3187C14.2723 11.2446 13.6153 11.9985 12.7745 11.9985Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </span>
+                <Typography variant="body-sm" as="p" className="text-translucent-moderate leading-[1.375]">
+                  Join our Discord
+                  community to get help and chat to other modders.
+                </Typography>
+              </Link>
             </div>
           </aside>
         </div>
