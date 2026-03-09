@@ -20,8 +20,8 @@ const guideSections = [
   { id: 'setup', step: 1, label: 'Setup and requirements' },
   { id: 'install-vortex', step: 2, label: 'Install Vortex' },
   { id: 'add-skyrim-to-vortex', step: 3, label: 'Add Skyrim to Vortex' },
-  { id: 'install-address-library', step: 4, label: 'Install address library' },
-  { id: 'install-engine-fixes', step: 5, label: 'Install engine fixes' },
+  { id: 'install-address-library', step: 4, label: 'Install Address Library' },
+  { id: 'install-engine-fixes', step: 5, label: 'Install Engine Fixes' },
   { id: 'install-skyui', step: 6, label: 'Install SkyUI' },
   { id: 'install-ussep', step: 7, label: 'Install USSEP' },
   { id: 'wrapping-up', step: 8, label: 'Wrapping up' },
@@ -361,16 +361,35 @@ export default function SkyrimGuide2Page() {
                           <Typography variant="body-xl-semibold" as="p" className="text-neutral-strong">
                             Requirements
                           </Typography>
-                          <ul className="list-disc list-outside flex flex-col gap-1 mt-2 pl-6 text-neutral-subdued">
+                          <ul className="list-none flex flex-col gap-2 mt-2 text-neutral-subdued">
                             {[
                               'Skyrim should be installed only from Steam or GOG. Versions from other stores have issues which means they cannot work properly with some mods.',
                               'These guides assume you are using the English version of the game.',
                               'Skyrim should be installed on a Solid State Hard Drive (SSD) if possible, otherwise the game can take a particularly long time to load if modded.',
                               'Windows 10/11 is required.',
                             ].map((item, i) => (
-                              <li key={i}>
+                              <li key={i} className="flex gap-2 items-start">
+                                <span className="text-success-moderate shrink-0 mt-0.5 w-5 h-5 flex items-center justify-center" aria-hidden>
+                                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fillRule="evenodd" clipRule="evenodd" d="M2 12C2 6.48 6.48 2 12 2C17.52 2 22 6.48 22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12ZM5 12L10 17L19 8L17.59 6.58L10 14.17L6.41 10.59L5 12Z" fill="currentColor"/>
+                                  </svg>
+                                </span>
                                 <Typography variant="body-xl" as="span" className="text-neutral-subdued">
-                                  {item}
+                                  {i === 0 ? (
+                                    <>
+                                      Skyrim should be installed only from{' '}
+                                      <Link href="https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/" target="_blank" rel="noopener noreferrer" className="text-neutral-strong underline hover:decoration-neutral-moderate">
+                                        Steam
+                                      </Link>
+                                      {' '}or{' '}
+                                      <Link href="https://www.gog.com/en/game/the_elder_scrolls_v_skyrim_special_edition" target="_blank" rel="noopener noreferrer" className="text-neutral-strong underline hover:decoration-neutral-moderate">
+                                        GOG
+                                      </Link>
+                                      . Versions from other stores have issues which means they cannot work properly with some mods.
+                                    </>
+                                  ) : (
+                                    item
+                                  )}
                                 </Typography>
                               </li>
                             ))}
@@ -428,10 +447,10 @@ export default function SkyrimGuide2Page() {
                           <Typography variant="body-xl" className="text-neutral-subdued">
                             Vortex will automatically handle Nexus Download links. This means that clicking <span className="text-neutral-moderate italic font-semibold">Mod manager download</span> will download and install mods inside of Vortex.
                             <br /><br />
-                            After first installing Vortex, the app will look something like this:
+                            After first installing Vortex, the app will look like this:
                           </Typography>
                         </div>
-                        <div className="flex flex-col gap-2 py-6">
+                        <div className="flex flex-col gap-2 mb-4 py-6">
                           <GuideImage
                             src={g(2)}
                             alt="Vortex after installation"
@@ -524,6 +543,17 @@ export default function SkyrimGuide2Page() {
                             for Skyrim.
                           </Typography>
                         </div>
+                        <div className="flex flex-col gap-2 pt-6">
+                          <GuideInfoBlock title="What is SKSE?">
+                            <Typography variant="body-md" as="p" className="text-neutral-subdued [&_strong]:font-semibold [&_strong]:text-neutral-moderate">
+                              <strong>The Skyrim Script Extender (SKSE)</strong> is a vital tool that allows more advanced mods to function by expanding the game's core capabilities.
+                              <br /><br />
+                              Many modern mods rely on <strong>SKSE plugins</strong> to interact directly with the game engine. Because these plugins are version-specific, always check that a mod supports your current game version before installing.
+                              <br /><br />
+                              Modern SKSE plugins often use the <strong>Address Library</strong> to stay compatible with game updates—which is why we install it next.
+                            </Typography>
+                          </GuideInfoBlock>
+                        </div>
                         <div className="flex flex-col gap-2 py-6">
                           <GuideImage
                             src={g(7)}
@@ -545,10 +575,10 @@ export default function SkyrimGuide2Page() {
                         </div>
                         <div className="flex flex-col gap-2 pt-0">
                           <Typography variant="body-xl" className="text-neutral-subdued [&_em]:italic [&_em]:text-neutral-moderate [&_em]:font-semibold">
-                            Please note that the version of SKSE64 will depend on the game version. Vortex will
+                            Please note that the version of Skyrim Script Extender (SKSE64) will depend on the game version. Vortex will
                             automatically recommend the correct SKSE64 version for your game.
                             <br /><br />
-                            Select <em>Slow download</em>.
+                            Select <em>Slow download</em>. To enable faster downloads, <Link href="https://users.nexusmods.com/account/billing/premium" target="_blank" rel="noopener noreferrer" className="text-neutral-strong underline hover:decoration-neutral-moderate">Get Nexus Premium.</Link>
                           </Typography>
                         </div>
                         <div className="flex flex-col gap-2 py-6">
@@ -596,7 +626,7 @@ export default function SkyrimGuide2Page() {
                         <div className="flex flex-col gap-5 pt-0">
                           <Typography variant="body-xl" className="text-neutral-subdued">
                             Next we're going to install "Address Library". This is a common requirement for Skyrim
-                            Script Extender (SKSE) plugins. Download it from the button below.
+                            Script Extender (SKSE) plugins. Click the button below to go to the mod page and then click the download: 'Vortex' button.
                           </Typography>
                           <Link
                             href="https://www.nexusmods.com/skyrimspecialedition/mods/32444"
@@ -610,15 +640,6 @@ export default function SkyrimGuide2Page() {
                           >
                             Get Address Library
                           </Link>
-                          <GuideInfoBlock title="What is SKSE?">
-                            <Typography variant="body-md" as="p" className="text-neutral-subdued [&_strong]:font-semibold [&_strong]:text-neutral-moderate">
-                              <strong>The Skyrim Script Extender (SKSE)</strong> is a vital tool that allows more advanced mods to function by expanding the game's core capabilities.
-                              <br /><br />
-                              Many modern mods rely on <strong>SKSE plugins</strong> to interact directly with the game engine. Because these plugins are version-specific, always check that a mod supports your current game version before installing.
-                              <br /><br />
-                              Modern SKSE plugins often use the <strong>Address Library</strong> to stay compatible with game updates—which is why we install it next.
-                            </Typography>
-                          </GuideInfoBlock>
                         </div>
                         <div className="flex flex-col gap-2 py-6">
                           <GuideImage
@@ -629,7 +650,7 @@ export default function SkyrimGuide2Page() {
                         </div>
                         <div className="flex flex-col gap-2 pt-0">
                           <Typography variant="body-xl" className="text-neutral-subdued">
-                            Similar to SKSE, it will automatically install itself after it has finished downloading in Vortex.
+                            Similar to Skyrim Script Extender, it will automatically install itself after it has finished downloading in Vortex.
                           </Typography>
                         </div>
                         <div className="flex flex-col gap-2 py-6">
@@ -659,13 +680,13 @@ export default function SkyrimGuide2Page() {
                         </div>
                         <div className="flex flex-col gap-2 pt-0">
                           <Typography variant="body-xl" className="text-neutral-subdued">
-                            Engine Fixes is an SKSE64 plugin to fix various issues with the Skyrim Special Edition engine which fixes
+                            Engine Fixes is a Skyrim Script Extender plugin to fix various issues with the Skyrim Special Edition engine which fixes
                             many critical game engine bugs. Additionally, it enables receiving Steam/GOG achievements
                             when using mods.
                           </Typography>
                           <Typography variant="body-xl" className="text-neutral-subdued">
-                            Engine Fixes consists of an SKSE64 file, which can be installed directly with Vortex. It
-                            also requires installing the SKSE64 Preloader available on the same page.
+                            Engine Fixes consists of an Skyrim Script Extender file, which can be installed directly with Vortex. It
+                            also requires installing the <span className="text-neutral-moderate italic font-semibold">Skyrim Script Extender Preloader</span> available on the same page.
                           </Typography>
                           <Link
                             href="https://www.nexusmods.com/skyrimspecialedition/mods/17230"
@@ -741,7 +762,7 @@ export default function SkyrimGuide2Page() {
                             SkyUI adds a pc-friendly user interface with new advanced features such as the Mod Configuration Menu.
                           </Typography>
                           <Typography variant="body-xl" className="text-neutral-subdued">
-                            Select the Vortex button to automatically download and install SkyUI.
+                            Go to the mod page using the button below, and select the Vortex button to automatically download and install SkyUI.
                           </Typography>
                           <Link
                             href="https://www.nexusmods.com/skyrimspecialedition/mods/12604"
@@ -809,12 +830,12 @@ export default function SkyrimGuide2Page() {
                         </div>
                         <div className="flex flex-col gap-2 pt-0">
                           <Typography variant="body-xl" className="text-neutral-subdued">
-                            The Unofficial Skyrim Special Edition Patch, also known as USSEP, is a comprehensive bug
+                            The <span className="text-neutral-moderate italic font-semibold">Unofficial Skyrim Special Edition Patch</span>, also known as <span className="text-neutral-moderate italic font-semibold">USSEP</span>, is a comprehensive bug
                             fixing mod which is a common requirement for many other mods. This is important for fixing
                             scripting errors, which could otherwise cause problems with completing quests in the game.
                           </Typography>
                           <Link
-                            href="https://www.nexusmods.com/skyrimspecialedition/mods/266"
+                            href="https://www.nexusmods.com/skyrimspecialedition/mods/18975"
                             target="_blank"
                             rel="noopener noreferrer"
                             className={cn(
@@ -823,14 +844,15 @@ export default function SkyrimGuide2Page() {
                               'bg-primary-moderate text-neutral-inverted hover:bg-primary-strong'
                             )}
                           >
-                            Get USSE Patch
+                            Get patch
                           </Link>
                           <Typography variant="body-xl" className="text-neutral-subdued">
                             Similar to installing SkyUI, just select the Vortex button on the top right corner of the
-                            page to automatically download and install. This file may take longer to download than the
-                            previous mods as a free user.
-                            <br /><br />
-                            You can unlock faster download speeds by subscribing to Nexus Premium.
+                            mod page to automatically download and install. This file may take longer to download than the
+                            previous mods as a free user (you can unlock faster download speeds by subscribing to{' '}
+                            <Link href="https://users.nexusmods.com/account/billing/premium" target="_blank" rel="noopener noreferrer" className="text-neutral-strong underline hover:decoration-neutral-moderate">
+                              Nexus Premium
+                            </Link>).
                           </Typography>
                         </div>
                         <div className="flex flex-col gap-2 py-6">
@@ -840,35 +862,27 @@ export default function SkyrimGuide2Page() {
                             caption="Select Vortex to download and install USSEP"
                           />
                         </div>
-                        <div className="flex flex-col gap-2 pt-0">
-                          <Typography variant="body-xl" className="text-neutral-subdued">
-                            <span className="text-neutral-moderate italic font-semibold">unofficial skyrim special edition patch.esp</span> has been added as a plugin file. Mods that
-                            require USSEP will likely require this plugin as a <span className="text-neutral-moderate italic font-semibold">master file</span>, which means that the
-                            changes to the game will be overwritten in this order:
-                          </Typography>
-                          <ul className="list-disc list-outside flex flex-col gap-1 mt-2 pl-6 text-neutral-subdued">
-                            {['Skyrim Base Game', 'Skyrim DLCs', 'Creation Club', 'USSEP', 'Mods which require USSEP'].map((item, i) => (
-                              <li key={i}>
-                                <Typography variant="body-xl" as="span" className="text-neutral-subdued">
-                                  {item}
-                                </Typography>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                        <div className="flex flex-col gap-2 py-6">
-                          <GuideImage
-                            src="/guides/section6-image2.png"
-                            alt="Plugin load order in Vortex"
-                            caption="Plugin load order"
-                          />
-                        </div>
+                        <Typography variant="heading-sm" as="h3" className="text-neutral-strong pt-2 pb-[var(--spacing-2)]">
+                          Optional (if you have DLC)
+                        </Typography>
                         <div className="flex flex-col gap-2 pt-0">
                           <Typography variant="body-xl" className="text-neutral-subdued">
                             If you have purchased the Anniversary Edition DLC or any Creation Club creations, you need to
                             install the Unofficial Skyrim Creation Club Content Patches mod. Again, select the Vortex
                             button on the right side.
                           </Typography>
+                          <Link
+                            href="https://www.nexusmods.com/skyrimspecialedition/mods/18975"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={cn(
+                              'self-start inline-flex rounded-base font-medium px-4 py-2 text-base transition-colors my-[var(--spacing-4)]',
+                              'focus:outline-none focus:ring-2 focus:ring-primary-moderate focus:ring-offset-2',
+                              'bg-primary-moderate text-neutral-inverted hover:bg-primary-strong'
+                            )}
+                          >
+                            Get Creation Club patches
+                          </Link>
                         </div>
                         <div className="flex flex-col gap-2 py-6">
                           <GuideImage
@@ -903,8 +917,8 @@ export default function SkyrimGuide2Page() {
                         </div>
                         <div className="flex flex-col gap-2 pt-0">
                           <Typography variant="body-xl" className="text-neutral-subdued">
-                            You have now successfully installed USSEP and USCCP. Please note that if you purchase the
-                            Anniversary DLC or any new Creation Club creations, you will need to reinstall USCCP.
+                            You have now successfully installed Unofficial Skyrim Special Edition Patch (USSEP) and Unofficial Skyrim Creation Club Content Patches (USCCP). Please note that if you purchase the
+                            Anniversary DLC or any new Creation Club creations, you will need to reinstall Unofficial Skyrim Creation Club Content Patches (USCCP).
                           </Typography>
                         </div>
                       </div>
@@ -932,13 +946,9 @@ export default function SkyrimGuide2Page() {
                         </div>
                         <div className="flex flex-col gap-2 py-4">
                           <Typography variant="body-xl" className="text-neutral-subdued">
-                            Finishing this guide, you have successfully set up Vortex Mod Manager, Installed SKSE64,
-                            SkyUI as well as critical bug fixes for the game.
+                          You’ve successfully installed Vortex, Skyrim Script Extender, SkyUI and applied essential bug fixes. You've got a solid foundation to build on.
                             <br /><br />
-                            At this point, you have all the basic understandings of Skyrim modding to either start
-                            playing the game, browsing the plethora of content on Nexus Mods, or play a curated
-                            experience through a collection or modding guide. Below are some of the highest
-                            recommendations from the Skyrim modding community.
+                            Now, the world of Skyrim modding is yours to explore. Forge your own path on Nexus Mods or jump straight into a curated experience. Check out these advanced community collections to get started.
                           </Typography>
                         </div>
                         <div className="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 pt-6">

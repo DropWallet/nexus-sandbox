@@ -222,7 +222,7 @@ export default function VortexPage() {
             as="p"
             className="text-neutral-subdued text-center max-w-[1024px] w-full opacity-0 animate-[blur-fade-in_0.8s_ease-out_1s_forwards]"
           >
-            Over 800 games supported
+            Over 500 games supported
           </Typography>
           {/* Games carousel */}
           <div className="games-carousel-wrapper games-carousel-mask relative w-full max-w-[1100px] mt-[var(--spacing-6)] overflow-hidden pb-2 opacity-0 animate-[blur-fade-in_0.8s_ease-out_1.15s_forwards]">
@@ -260,7 +260,7 @@ export default function VortexPage() {
               className="text-neutral-strong max-w-[1024px]"
             >
               <span className="leading-[1.25]">Your games, reimagined.</span>
-              <span className="text-neutral-weak font-semi">{` Vortex lets you easily install and manage mods to make your games feel brand new.`}</span>
+              <span className="text-neutral-weak font-semi">{` Vortex lets you safely install and manage mods to make your games feel brand new.`}</span>
             </Typography>
 
             {/* Block 1: Manage mods - text left, image right */}
@@ -273,7 +273,7 @@ export default function VortexPage() {
                       Manage your mods effortlessly
                     </Typography>
                     <Typography variant="heading-xs" as="p" className="text-neutral-subdued">
-                    Our app gives you one place to install and update your mods with ease. 
+                    Install and organise your mods with ease, so you can play more. 
                     </Typography>
                   </div>
                 </div>
@@ -372,8 +372,8 @@ export default function VortexPage() {
               <div className="flex-1 min-w-0 min-h-[320px] lg:flex-none lg:w-[684px] lg:shrink-0 h-[320px] sm:h-[532px] md:h-[320px] lg:h-[532px] rounded-base overflow-hidden bg-surface-mid border border-stroke-neutral-translucent-weak relative">
                 <div className="absolute left-[var(--spacing-8)] top-[var(--spacing-8)] md:left-[var(--spacing-10)] md:top-[var(--spacing-10)] lg:left-[var(--spacing-14)] lg:top-[var(--spacing-14)] right-0 bottom-0 rounded-tl-lg overflow-hidden transform-image-shadow">
                   <img
-                    src="/vortex/image-manage.png"
-                    alt="Vortex mod manager interface"
+                    src="/vortex/image-games.png"
+                    alt="Vortex games and mod manager interface"
                     className="absolute inset-0 w-full h-full object-cover object-top"
                   />
                 </div>
