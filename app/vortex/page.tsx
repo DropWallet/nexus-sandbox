@@ -425,7 +425,7 @@ export default function VortexPage() {
                   Download Vortex now
                 </Typography>
                 <Typography variant="body-xl" as="p" className="text-translucent-subdued">
-                  Get started with the world&apos;s best mod manager, today.
+                Join millions of gamers using the most powerful mod manager.
                 </Typography>
               </div>
               <Link
