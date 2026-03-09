@@ -351,7 +351,7 @@ export default function VortexPage() {
                     All your games in one place
                     </Typography>
                     <Typography variant="heading-xs" as="p" className="text-neutral-subdued">
-                    Vortex supports more games than any other mod manager. 
+                    Vortex supports over 500 games, more than any other mod manager. 
                     </Typography>
                   </div>
                 </div>
