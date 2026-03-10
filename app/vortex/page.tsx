@@ -196,7 +196,7 @@ export default function VortexPage() {
                 <div className="rounded-[11px] overflow-hidden bg-surface-base relative">
                   <div className="aspect-[1207/542] w-full relative">
                     <img
-                      src="/vortex/hero-app2.png"
+                      src="/vortex/hero-app.png"
                       alt="Vortex mod manager interface"
                       className="absolute inset-0 w-full h-full object-cover object-top"
                     />
@@ -382,7 +382,7 @@ export default function VortexPage() {
 
             {/* Block 4: Never run outdated mods - image left, text right (equal padding on image) */}
             <div className="flex flex-col md:flex-row gap-[var(--spacing-10)] md:gap-[var(--spacing-6)] lg:gap-[var(--spacing-10)] p-[var(--spacing-4)] pt-[var(--spacing-5)] md:p-[var(--spacing-6)] rounded-lg bg-surface-low overflow-hidden">
-              <div className="flex-1 min-w-0 min-h-[320px] lg:flex-none lg:w-[684px] lg:shrink-0 h-[320px] sm:h-[532px] md:h-[320px] lg:h-[532px] rounded-base overflow-hidden bg-surface-mid border border-stroke-neutral-translucent-weak relative order-2 md:order-1">
+              <div className="flex-1 min-w-0 min-h-[320px] lg:flex-none lg:w-[684px] lg:shrink-0 h-[320px] sm:h-[532px] md:h-[320px] lg:h-[532px] rounded-base overflow-hidden bg-surface-base border border-stroke-neutral-translucent-weak relative order-2 md:order-1">
                 <div className="absolute left-[var(--spacing-8)] right-[var(--spacing-8)] top-[var(--spacing-8)] md:left-[var(--spacing-10)] md:right-[var(--spacing-10)] md:top-[var(--spacing-10)] lg:left-[var(--spacing-14)] lg:right-[var(--spacing-14)] lg:top-[var(--spacing-14)] bottom-0 rounded-lg overflow-hidden">
                   <img
                     src="/vortex/image-safety.png"
@@ -396,11 +396,10 @@ export default function VortexPage() {
                   <img src="/vortex/pictogram-downloads.svg" alt="" className="w-14 h-14 shrink-0" aria-hidden />
                   <div className="flex flex-col gap-[var(--spacing-2)]">
                     <Typography variant="heading-xs" as="p" className="text-neutral-strong">
-                      Never run outdated mods again
+                    Never run outdated mods again
                     </Typography>
                     <Typography variant="heading-xs" as="p" className="text-neutral-subdued">
-                      See available updates instantly. Update multiple mods at once.
-                    </Typography>
+                    See available updates instantly and update all your mods at once.                    </Typography>
                   </div>
                 </div>
                 <Link
