@@ -394,6 +394,16 @@
   );
 }
 
+/* Vision page — card shadow from Figma (node 2:150) */
+.vision-card-shadow {
+  box-shadow:
+    0px 278px 78px 0px rgba(0, 1, 10, 0.01),
+    0px 178px 71px 0px rgba(0, 1, 10, 0.09),
+    0px 100px 60px 0px rgba(0, 1, 10, 0.31),
+    0px 45px 45px 0px rgba(0, 1, 10, 0.53),
+    0px 11px 25px 0px rgba(0, 1, 10, 0.61);
+}
+
 /* Inner frame — gradient fills the p-px gap as the inner border ring */
 .hero-image-frame {
   background: linear-gradient(180deg,

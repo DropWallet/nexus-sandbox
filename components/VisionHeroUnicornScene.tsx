@@ -1,0 +1,58 @@
+'use client'
+
+import { useState } from 'react'
+import Image from 'next/image'
+import UnicornScene from 'unicornstudio-react/next'
+
+const SDK_URL =
+  'https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.1.6/dist/unicornStudio.umd.js'
+const PROJECT_ID = '7f5WDpqxua7qQZn6uBUe'
+
+export function VisionHeroUnicornScene() {
+  const [hasError, setHasError] = useState(false)
+
+  if (hasError) {
+    return (
+      <div className="relative w-full max-w-[795px] mx-auto aspect-[795/488] overflow-hidden rounded-none">
+        <Image
+          src="/vision/hero.png"
+          alt=""
+          fill
+          className="object-cover object-[50%_15%]"
+          sizes="(max-width: 795px) 100vw, 795px"
+          priority
+        />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              'radial-gradient(ellipse 55% 60% at 50% 45%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 65%, rgba(0,0,0,1) 100%)',
+          }}
+          aria-hidden
+        />
+      </div>
+    )
+  }
+
+  return (
+    <div className="relative w-full max-w-[795px] mx-auto aspect-[795/488] overflow-hidden rounded-none bg-black min-w-0">
+      <UnicornScene
+        projectId={PROJECT_ID}
+        sdkUrl={SDK_URL}
+        width="100%"
+        height="100%"
+        scale={1}
+        dpi={1.5}
+        fps={60}
+        lazyLoad
+        production
+        altText="The 2am person — ambient scene"
+        ariaLabel="Decorative WebGL animation for the Vision hero"
+        showPlaceholderOnError={false}
+        showPlaceholderWhileLoading={false}
+        onError={() => setHasError(true)}
+        className="w-full h-full"
+      />
+    </div>
+  )
+}
