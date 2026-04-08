@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
 import { Fraunces } from 'next/font/google'
-import NavigationBar from '@/components/Navigation'
+import { VisionPageFooter } from '@/components/VisionPageFooter'
+import { VisionPageNav } from '@/components/VisionPageNav'
+import { VisionClosingUnicornScene } from '@/components/VisionClosingUnicornScene'
 import { VisionHeroUnicornScene } from '@/components/VisionHeroUnicornScene'
+import { VisionOrbitDiagram } from '@/components/VisionOrbitDiagram'
 import { Typography } from '@/components/Typography'
 import { cn } from '@/lib/utils'
-import Image from 'next/image'
-
 export const metadata: Metadata = {
   title: 'Vision | Nexus Mods',
   description: 'The vision for Nexus Mods — building the operating system for user-generated content across all games.',
@@ -21,7 +22,7 @@ const fraunces = Fraunces({
 function SectionHeading({ title }: { title: string }) {
   return (
     <div className="flex flex-col gap-3 items-center w-full">
-      <Typography variant="heading-xs" as="h2" className="text-neutral-strong text-center max-w-[474px]">
+      <Typography variant="heading-lg" as="h2" className="text-neutral-strong text-center max-w-[474px]">
         {title}
       </Typography>
       <span className="inline-flex py-1" aria-hidden>
@@ -50,7 +51,7 @@ function VisionCard({
       )}
     >
       <Typography
-        variant="heading-xs"
+        variant="heading-lg"
         as="h2"
         className={cn('text-neutral-strong text-center max-w-[474px]', titleClassName)}
       >
@@ -70,7 +71,7 @@ export default function VisionPage() {
 
   return (
     <div className={cn('min-h-screen bg-surface-base', fraunces.variable)}>
-      <NavigationBar />
+      <VisionPageNav />
 
       <main className="w-full flex flex-col items-stretch gap-20 isolate pt-24 pb-40 px-[var(--spacing-10)]">
         {/* THE 2AM PERSON — hero card (blur-fade-in matches Vortex hero) */}
@@ -181,14 +182,8 @@ export default function VisionPage() {
 
         {/* THE VISION — diagram card */}
         <VisionCard title="THE VISION" className="z-[4]">
-          <div className="relative w-full max-w-[1012px] mx-auto aspect-[1012/448]">
-            <Image
-              src="/vision/vision-diagram.png"
-              alt="Vision diagram: Launcher connecting players, modders, gameplay, and mods"
-              fill
-              className="object-contain"
-              sizes="(max-width: 1012px) 100vw, 1012px"
-            />
+          <div className="relative mx-auto w-full max-w-[1012px] px-1 py-[var(--spacing-8)] sm:px-2">
+            <VisionOrbitDiagram />
           </div>
           <div className={cn(prose, 'max-w-[576px] w-full mx-auto')}>
             <p className="mb-0">We are building the operating system for user-generated content across all games.</p>
@@ -333,23 +328,7 @@ export default function VisionPage() {
 
         {/* FOR THE 2AM PERSON — closing card */}
         <VisionCard title="FOR THE 2AM PERSON" className="z-[1]">
-          <div className="relative w-full max-w-[1199px] mx-auto aspect-[1199/614] overflow-hidden">
-            <Image
-              src="/vision/footer.png"
-              alt=""
-              fill
-              className="object-cover object-[50%_35%]"
-              sizes="(max-width: 1199px) 100vw, 1199px"
-            />
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background:
-                  'radial-gradient(ellipse 50% 55% at 50% 50%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 55%, rgba(0,0,0,0.95) 100%)',
-              }}
-              aria-hidden
-            />
-          </div>
+          <VisionClosingUnicornScene />
           <div className={cn(prose, 'max-w-[576px] w-full mx-auto')}>
             <p className="mb-0">{`We started with them. We'll end with them.`}</p>
             <p className="mb-0">&nbsp;</p>
@@ -375,6 +354,8 @@ export default function VisionPage() {
           </div>
         </VisionCard>
       </main>
+
+      <VisionPageFooter />
     </div>
   )
 }
