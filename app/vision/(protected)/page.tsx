@@ -3,8 +3,8 @@ import { Fraunces } from 'next/font/google'
 import { VisionPageFooter } from '@/components/VisionPageFooter'
 import { VisionPageNav } from '@/components/VisionPageNav'
 import { VisionClosingUnicornScene } from '@/components/VisionClosingUnicornScene'
+import { VisionDiagramUnicornScene } from '@/components/VisionDiagramUnicornScene'
 import { VisionHeroUnicornScene } from '@/components/VisionHeroUnicornScene'
-import { VisionOrbitDiagram } from '@/components/VisionOrbitDiagram'
 import { Typography } from '@/components/Typography'
 import { cn } from '@/lib/utils'
 export const metadata: Metadata = {
@@ -182,8 +182,8 @@ export default function VisionPage() {
 
         {/* THE VISION — diagram card */}
         <VisionCard title="THE VISION" className="z-[4]">
-          <div className="relative mx-auto w-full max-w-[1012px] px-1 py-[var(--spacing-8)] sm:px-2">
-            <VisionOrbitDiagram />
+          <div className="relative mx-auto w-full max-w-[1012px] overflow-visible px-1 sm:px-2">
+            <VisionDiagramUnicornScene />
           </div>
           <div className={cn(prose, 'max-w-[576px] w-full mx-auto')}>
             <p className="mb-0">We are building the operating system for user-generated content across all games.</p>
