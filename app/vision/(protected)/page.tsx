@@ -46,7 +46,7 @@ function VisionCard({
   return (
     <div
       className={cn(
-        'bg-black border border-stroke-neutral-translucent-weak rounded-xl flex flex-col items-center gap-[42px] pt-10 pb-10 w-full max-w-none',
+        'bg-black border border-stroke-neutral-translucent-weak rounded-xl flex flex-col items-center gap-[42px] pt-10 pb-10 w-full max-w-none max-md:px-5 md:px-0',
         className
       )}
     >
@@ -73,13 +73,13 @@ export default function VisionPage() {
     <div className={cn('min-h-screen bg-surface-base', fraunces.variable)}>
       <VisionPageNav />
 
-      <main className="w-full flex flex-col items-stretch gap-20 isolate pt-24 pb-40 px-[var(--spacing-10)]">
+      <main className="w-full flex flex-col items-stretch gap-20 isolate pt-24 pb-40 px-4 sm:px-6 md:px-[var(--spacing-10)]">
         {/* THE 2AM PERSON — hero card (blur-fade-in matches Vortex hero) */}
         <VisionCard
           title="THE 2AM PERSON"
           titleClassName="opacity-0 animate-[blur-fade-in_0.8s_ease-out_forwards]"
         >
-          <div className="w-full opacity-0 animate-[blur-fade-in_0.8s_ease-out_0.15s_forwards]">
+          <div className="w-full min-w-0 self-stretch opacity-0 animate-[blur-fade-in_0.8s_ease-out_0.15s_forwards]">
             <VisionHeroUnicornScene />
           </div>
           <div
