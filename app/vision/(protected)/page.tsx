@@ -133,7 +133,7 @@ export default function VisionPage() {
             <p className="mb-0">&nbsp;</p>
             <p className="mb-0">
               The modder who rewrote Skyrim&apos;s lighting engine, their work lives here. The community manager who kept a
-              400,000 person forum from imploding for six straight years, they showed up, every day. The tool builder
+              400k person forum from imploding for six straight years, they showed up, every day. The tool builder
               whose mod manager has been downloaded 30 million times got a forum post as a thank you, and came back anyway.{' '}
             </p>
             <p className="mb-0">&nbsp;</p>
@@ -158,13 +158,13 @@ export default function VisionPage() {
               </p>
               <p className="mb-0">&nbsp;</p>
               <p className="mb-0">
-                20 million people use this platform every month. 600,000 pay for it. The 19.4 million people in between are not
+                20 million people use this platform every month. 600k pay for it. The 19.4 million people in between are not
                 disengaged. They are not unconvinced. They are hitting walls, walls we built, walls we inherited, walls we
                 haven&apos;t gotten around to tearing down yet. Every one of those walls is our problem.
               </p>
               <p className="mb-0">&nbsp;</p>
               <p className="mb-0">
-                The enemy is a creator who built something used by 80,000 people and can&apos;t pay rent from it. The enemy is
+                The enemy is a creator who built something used by 80k people and can&apos;t pay rent from it. The enemy is
                 a new player who wants to mod their first game and gives up after forty-five minutes of failed installs. The
                 enemy is a game studio that knows mods extend the life of their title by years, but has no standardised
                 infrastructure to support the ecosystem, so they build something bespoke, it breaks, and the community
@@ -247,7 +247,7 @@ export default function VisionPage() {
             <p className="mb-0">
               <span className="text-neutral-strong">20 million </span>
               <span>use us every month. </span>
-              <span className="text-neutral-strong">600 thousand</span>
+              <span className="text-neutral-strong">600k</span>
               <span>
                 {' '}
                 pay us. And here&apos;s the part that should hit different: they did all of that despite a product we all know{' '}
@@ -327,7 +327,9 @@ export default function VisionPage() {
               time. The experience that makes showing up here feel obvious rather than optional.
             </p>
             <p className="mb-0">&nbsp;</p>
-            <p className="mb-0">That&apos;s what we&apos;re here to build.</p>
+            <p className="mb-0">
+              <strong className="font-semibold text-neutral-strong">That&apos;s what we&apos;re here to build.</strong>
+            </p>
             <p className="mb-0">&nbsp;</p>
             <p className="mb-0">
               Every person in this company owns a piece of making that a reality. Not metaphorically. Literally. The thing you
