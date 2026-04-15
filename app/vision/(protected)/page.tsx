@@ -79,7 +79,7 @@ export default function VisionPage() {
           title="THE 2AM PERSON"
           titleClassName="opacity-0 animate-[blur-fade-in_0.8s_ease-out_forwards]"
         >
-          <div className="w-full opacity-0 animate-[blur-fade-in_0.8s_ease-out_0.15s_forwards]">
+          <div className="w-full min-w-0 self-stretch opacity-0 animate-[blur-fade-in_0.8s_ease-out_0.15s_forwards]">
             <VisionHeroUnicornScene />
           </div>
           <div
