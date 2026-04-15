@@ -17,7 +17,7 @@ export function VisionPageFooter() {
           alt=""
           width={171}
           height={40}
-          className="h-10 w-auto max-w-[171px] object-contain object-center"
+          className="h-10 w-auto max-w-[120px] object-contain object-center"
         />
       </a>
     </footer>
