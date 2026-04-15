@@ -65,7 +65,7 @@ function VisionCard({
 export default function VisionPage() {
   const prose = cn(
     fraunces.className,
-    'text-[18px] leading-[1.25] text-neutral-subdued whitespace-pre-wrap',
+    'text-[18px] leading-[1.3] text-neutral-subdued whitespace-pre-wrap',
     '[&_strong]:font-semibold [&_strong]:text-neutral-strong'
   )
 
@@ -73,7 +73,7 @@ export default function VisionPage() {
     <div className={cn('min-h-screen bg-surface-low', fraunces.variable)}>
       <VisionPageNav />
 
-      <main className="w-full flex flex-col items-stretch gap-20 isolate pt-24 pb-40 px-4 sm:px-6 md:px-[var(--spacing-10)]">
+      <main className="w-full flex flex-col items-stretch gap-20 isolate pt-24 pb-8 px-4 sm:px-6 md:px-[var(--spacing-10)]">
         {/* THE 2AM PERSON — hero card (blur-fade-in matches Vortex hero) */}
         <VisionCard
           title="THE 2AM PERSON"
@@ -90,14 +90,18 @@ export default function VisionPage() {
           >
             <p className="text-neutral-subdued mb-0">Somewhere right now, someone is awake when they shouldn&apos;t be.</p>
             <p className="mb-0">&nbsp;</p>
+            <p className="text-neutral-subdued mb-0">Not because anyone asked them to be. Not because there&apos;s a deadline.</p>
+            <p className="mb-0">&nbsp;</p>
             <p className="text-neutral-subdued mb-0">
-              They&apos;re staring at a bug report, or a broken mod page, or a community thread that&apos;s about to go
-              sideways, and they&apos;re fixing it. Quietly. Without asking for anything back.
+              They&apos;re three hours deep into fixing a mod that nobody asked them to touch. Debugging a conflict between two files they
+              didn&apos;t write, for a game a publisher stopped supporting years ago. No payment. No recognition. Just a
+              problem they decided was theirs to solve.
             </p>
             <p className="mb-0">&nbsp;</p>
             <p className="text-neutral-subdued mb-0">
-              You know who they are because you&apos;ve probably been one of them. Or you work with them every day. Or you
-              are one, right now, at this company.
+              You know who they are.{' '}
+              <span className="text-neutral-strong">75 million</span> of them found their way here. They showed up on
+              their own, told their friends, and came back the next day. And the day after that.
             </p>
             <p className="mb-0">&nbsp;</p>
             <p className="text-neutral-subdued mb-0">
@@ -116,11 +120,10 @@ export default function VisionPage() {
           <SectionHeading title="WHAT WE ACTUALLY ARE" />
           <div className={cn(prose, 'w-full text-left')}>
             <p className="mb-0">
-              We are the largest PC modding platform on earth. 70 million people chose us. Not because we outspent anyone.
-              Not because a growth team A/B tested our way to the top. Because twenty years ago, someone built something the
-              community needed, and the community showed up, and never left.
+            We are the largest PC modding platform on earth. 75 million people chose us. 
+            Not because we outspent anyone. Not because a growth team A/B tested our way to the top. 
+            Because twenty years ago, someone built something the community needed, and the community showed up, and never left.
             </p>
-            <p className="mb-0">&nbsp;</p>
             <p className="mb-0">&nbsp;</p>
             <p className="mb-0">{`That's not a feature. That's a foundation most companies never get to build on.`}</p>
             <p className="mb-0">&nbsp;</p>
@@ -130,13 +133,13 @@ export default function VisionPage() {
             <p className="mb-0">&nbsp;</p>
             <p className="mb-0">
               The modder who rewrote Skyrim&apos;s lighting engine, their work lives here. The community manager who kept a
-              400k person forum from imploding for six straight years, they showed up here, every day. The tool builder
+              400,000 person forum from imploding for six straight years, they showed up, every day. The tool builder
               whose mod manager has been downloaded 30 million times got a forum post as a thank you, and came back anyway.{' '}
             </p>
             <p className="mb-0">&nbsp;</p>
             <p>
               They didn&apos;t come back for us. They came back for the community. But they trusted us to hold it. We have
-              earned something rare. And we have spent almost none of it yet.
+              earned something rare.
             </p>
           </div>
           </div>
@@ -147,7 +150,7 @@ export default function VisionPage() {
           <div className="mx-auto w-full max-w-[576px] flex flex-col gap-3 items-start">
             <SectionHeading title="THE ENEMY" />
             <div className={cn(prose, 'w-full')}>
-              <p className="mb-0">{`Let's be honest about what we're fighting, because a movement without an enemy is just a mood board.`}</p>
+              <p className="mb-0">{`Let's be honest about what we're fighting, because a movement without an enemy is just another vision statement.`}</p>
               <p className="mb-0">&nbsp;</p>
               <p className="mb-0">
                 The enemy is friction. Specifically: the structural gap between how much people care about this world, and
@@ -173,7 +176,7 @@ export default function VisionPage() {
               </p>
               <p className="mb-0">&nbsp;</p>
               <p className="mb-0">
-                <strong className="font-semibold text-neutral-strong">That gap is our fault. Closing it is our job.</strong>
+                <strong className="font-semibold text-neutral-strong">That gap is our fault. Closing it is our responsibility.</strong>
               </p>
               <p className="mb-0">&nbsp;</p>
             </div>
@@ -194,7 +197,7 @@ export default function VisionPage() {
             </p>
             <p className="mb-0">&nbsp;</p>
             <p className="mb-0">
-              <strong className="font-semibold text-neutral-strong">But the layer that makes everything else possible.</strong>
+              <strong className="font-semibold text-neutral-strong">The layer that makes everything else possible.</strong>
             </p>
             <p className="mb-0">&nbsp;</p>
             <p className="mb-0">
@@ -204,13 +207,20 @@ export default function VisionPage() {
             </p>
             <p className="mb-0">&nbsp;</p>
             <p className="mb-0">
-              That&apos;s the move. Cross-title identity so a creator&apos;s reputation travels with them across every game they
-              touch. Distribution rails so a mod built once reaches every platform that needs it.
+            That's the move. A single place where a creator's reputation travels with them from game to game. 
+            Where a mod built once reaches every platform that needs it, PC, console, wherever people play. 
+            Where the person who built the tool that a million people rely on can actually make a living from it. 
+            And where twenty years of knowledge about how games and communities work becomes infrastructure no one else on earth can replicate.
             </p>
             <p className="mb-0">&nbsp;</p>
             <p className="mb-0">
-              Creator economics so the people doing the most important work in this ecosystem can actually live off it. A
-              shared data backbone 20 years in the making that no one else on earth can replicate.
+            The standard we're holding ourselves to is simple: installing a mod should feel like streaming a song. 
+            Publishing one should feel like pushing to GitHub. 
+            Getting paid for it should feel like getting a royalty check, automatic, consistent, fair.
+            </p>
+            <p className="mb-0">&nbsp;</p>
+            <p className="mb-0">
+            That standard doesn't exist today. We're the ones building it. Starting with Modding.
             </p>
             <p className="mb-0">&nbsp;</p>
           </div>
@@ -224,7 +234,7 @@ export default function VisionPage() {
             <p className="mb-0">
               <span className="text-neutral-strong">1.9 billion</span>
               <span> people play games on PC. </span>
-              <span className="text-neutral-strong">70 million</span>
+              <span className="text-neutral-strong">75 million</span>
               <span>
                 {' '}
                 of them found their way to us. Think about that for a second, without a consumer marketing budget, without
@@ -240,8 +250,8 @@ export default function VisionPage() {
               <span className="text-neutral-strong">600 thousand</span>
               <span>
                 {' '}
-                pay us. And here&apos;s the part that should hit different: they did all of that despite a product we all know
-                can be 10x better.{' '}
+                pay us. And here&apos;s the part that should hit different: they did all of that despite a product we all know{' '}
+                <span className="text-neutral-strong">can be 10x better.</span>{' '}
               </span>
             </p>
             <p className="mb-0">&nbsp;</p>
@@ -306,20 +316,23 @@ export default function VisionPage() {
             </p>
             <p className="mb-0">&nbsp;</p>
             <p className="mb-0">
-              And here&apos;s the thing: we&apos;re not starting from zero. We have 70 million users, twenty years of mod metadata,
-              600 thousands people already paying, and margins most software companies would trade their entire engineering
-              team for. We have the community trust that takes decades to build and can&apos;t be bought.
+              We&apos;re not starting from zero. We have 75 million users, twenty years of mod metadata, 600 thousand people
+              already paying, and margins most software companies would trade their entire engineering team for. We have the
+              community trust that takes decades to build and can&apos;t be bought.
             </p>
             <p className="mb-0">&nbsp;</p>
             <p className="mb-0">
-              What we don&apos;t have yet is the full infrastructure. The cross-title layer. The creator economy primitives. The
-              experience that makes modding feel inevitable rather than optional. That&apos;s what we&apos;re here to build.
+              What we don&apos;t have yet is the full infrastructure. The tools that make modding work across every game, not
+              just the ones we&apos;ve already won. The creator economy that lets the best people in this ecosystem do it full
+              time. The experience that makes showing up here feel obvious rather than optional.
             </p>
             <p className="mb-0">&nbsp;</p>
+            <p className="mb-0">That&apos;s what we&apos;re here to build.</p>
+            <p className="mb-0">&nbsp;</p>
             <p className="mb-0">
-              Every person in this company owns a piece of that. Not metaphorically. Literally. The thing you ship next
-              month either closes the gap or doesn&apos;t. The decision you make about how to design this feature, sequence this
-              acquisition, prioritise this quarter, that&apos;s the company deciding what it is.
+              Every person in this company owns a piece of making that a reality. Not metaphorically. Literally. The thing you
+              ship next month either closes the gap or doesn&apos;t. The decision you make about how to design this feature,
+              sequence this acquisition, prioritise this quarter, that&apos;s the company deciding what it is.
             </p>
             <p className="mb-0">&nbsp;</p>
           </div>
@@ -333,15 +346,15 @@ export default function VisionPage() {
             <p className="mb-0">{`We started with them. We'll end with them.`}</p>
             <p className="mb-0">&nbsp;</p>
             <p className="mb-0">
-              The person staying late without being asked. The moderator keeping the peace in a thread that has no business
-              staying civil. The developer who built the tool everyone uses and got almost nothing back. The new player who
-              wants in but can&apos;t find the door.
+              The modder three hours deep into something nobody asked for. The volunteer keeping the peace in a thread that
+              has no business staying civil. The tool builder whose work everyone uses and who got almost nothing back. The
+              new player who wants in but can&apos;t find the door.
             </p>
             <p className="mb-0">&nbsp;</p>
             <p className="mb-0">
-              We are building the infrastructure for all of them. The tools they&apos;ve never had. The recognition system that
-              makes quality visible. The payment rails that make sustainable creative work possible. The experience so good
-              that showing up here feels like the obvious choice, not just for the hardcore community, but for every gamer
+              We are building the infrastructure for all of them. The tools they&apos;ve never had. The system that makes
+              quality visible. The payment rails that make sustainable creative work possible. The experience so good that
+              showing up here feels like the obvious choice, not just for the hardcore community, but for every gamer
               who&apos;s ever wanted to make something.
             </p>
             <p className="mb-0">&nbsp;</p>
@@ -353,7 +366,7 @@ export default function VisionPage() {
             <img
               src="/vision/signature.png"
               alt="Victor Folmann"
-              className="mt-4 block h-auto w-[124px] max-w-[124px]"
+              className="mt-6 block h-auto w-[160px] max-w-[160px]"
               width={124}
               loading="lazy"
               decoding="async"
