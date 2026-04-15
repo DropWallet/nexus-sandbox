@@ -31,7 +31,7 @@ export function VisionPageNav() {
   const rotationDeg = scrollY * SCROLL_TO_DEG
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-surface-base" role="banner">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-surface-low" role="banner">
       <div className="flex w-full items-center justify-center px-[var(--spacing-10)] py-[var(--spacing-5)]">
         <a
           href="/"

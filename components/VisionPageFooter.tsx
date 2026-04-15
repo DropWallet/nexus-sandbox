@@ -4,7 +4,7 @@
 export function VisionPageFooter() {
   return (
     <footer
-      className="flex w-full items-center justify-center border-t border-stroke-neutral-translucent-weak bg-surface-base py-[var(--spacing-5)]"
+      className="flex w-full items-center justify-center border-t border-stroke-neutral-translucent-weak bg-surface-low py-[var(--spacing-5)]"
       role="contentinfo"
     >
       <a

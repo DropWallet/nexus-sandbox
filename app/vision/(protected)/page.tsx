@@ -70,7 +70,7 @@ export default function VisionPage() {
   )
 
   return (
-    <div className={cn('min-h-screen bg-surface-base', fraunces.variable)}>
+    <div className={cn('min-h-screen bg-surface-low', fraunces.variable)}>
       <VisionPageNav />
 
       <main className="w-full flex flex-col items-stretch gap-20 isolate pt-24 pb-40 px-4 sm:px-6 md:px-[var(--spacing-10)]">
