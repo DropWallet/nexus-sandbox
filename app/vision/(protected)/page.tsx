@@ -350,6 +350,15 @@ export default function VisionPage() {
             <p>
               <strong className="font-semibold text-neutral-strong">Let&apos;s get to work.</strong>
             </p>
+            <img
+              src="/vision/signature.png"
+              alt="Victor Folmann"
+              className="mt-4 block h-auto w-[124px] max-w-[124px]"
+              width={124}
+              loading="lazy"
+              decoding="async"
+              draggable={false}
+            />
             <p className="mb-0">&nbsp;</p>
           </div>
         </VisionCard>
