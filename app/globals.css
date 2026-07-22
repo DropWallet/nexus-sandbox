@@ -239,6 +239,73 @@
   50% { opacity: 1; }
 }
 
+.anniversary-page {
+  background-color: #0f0f10;
+  background-image: url('/cubes/cube-bg.svg');
+  background-repeat: repeat;
+  background-position: top center;
+  background-size: 200px 172.5px;
+}
+
+/* Anniversary cubes — drop into wordmark, kick away on hover, ease home */
+.anniversary-cubes {
+  overflow: visible;
+}
+
+.anniversary-cube {
+  transform-origin: 50% 60%;
+  will-change: transform, opacity;
+  transform: translate(var(--drop-x, 0), var(--drop-y, -40%)) rotate(var(--drop-r, 0deg));
+  opacity: 0;
+  transition:
+    transform 0.75s cubic-bezier(0.22, 1.2, 0.36, 1),
+    opacity 0.4s ease;
+}
+
+.anniversary-cube.is-settled {
+  transform: translate(0, 0) rotate(0deg);
+  opacity: 1;
+}
+
+.anniversary-cube.is-settled.is-kicked {
+  transform: translate(var(--kick-x), var(--kick-y)) rotate(var(--kick-r)) scale(1.06);
+  opacity: 1;
+  /* Snappy launch */
+  transition:
+    transform 0.42s cubic-bezier(0.14, 0.9, 0.2, 1.2),
+    opacity 0.2s ease;
+}
+
+.anniversary-cube.is-settled:not(.is-kicked):not(.is-scatter-mode) {
+  /* Soft ease back into the wordmark */
+  transition:
+    transform 0.7s cubic-bezier(0.22, 1.15, 0.36, 1),
+    opacity 0.35s ease;
+}
+
+/* Scatter mode: animate position inside the playfield on each hover */
+.anniversary-cube.is-scatter-mode.is-settled {
+  transition:
+    left 0.45s cubic-bezier(0.18, 0.9, 0.25, 1.1),
+    top 0.45s cubic-bezier(0.18, 0.9, 0.25, 1.1),
+    transform 0.45s cubic-bezier(0.18, 0.9, 0.25, 1.1),
+    opacity 0.3s ease;
+}
+
+.anniversary-cube.is-reduced {
+  transition: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anniversary-cube {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
 .hero-glow-blue {
   background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(96, 165, 250, 0.9) 0%, transparent 70%);
 }
