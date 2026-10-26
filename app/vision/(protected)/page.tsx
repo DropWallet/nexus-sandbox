@@ -100,7 +100,7 @@ export default function VisionPage() {
             <p className="mb-0">&nbsp;</p>
             <p className="text-neutral-subdued mb-0">
               You know who they are.{' '}
-              <span className="text-neutral-strong">75 million</span> of them found their way here. They showed up on
+              <span className="text-neutral-strong">80 million</span> of them found their way here. They showed up on
               their own, told their friends, and came back the next day. And the day after that.
             </p>
             <p className="mb-0">&nbsp;</p>
@@ -120,7 +120,7 @@ export default function VisionPage() {
           <SectionHeading title="WHAT WE ACTUALLY ARE" />
           <div className={cn(prose, 'w-full text-left')}>
             <p className="mb-0">
-            We are the largest PC modding platform on earth. 75 million people chose us. 
+            We are the largest PC modding platform on earth. 80 million people chose us. 
             Not because we outspent anyone. Not because a growth team A/B tested our way to the top. 
             Because twenty years ago, someone built something the community needed, and the community showed up, and never left.
             </p>
@@ -158,7 +158,7 @@ export default function VisionPage() {
               </p>
               <p className="mb-0">&nbsp;</p>
               <p className="mb-0">
-                20 million people use this platform every month. 600k pay for it. The 19.4 million people in between are not
+                35 million people use this platform every month. 660k pay for it. The 34.3 million people in between are not
                 disengaged. They are not unconvinced. They are hitting walls, walls we built, walls we inherited, walls we
                 haven&apos;t gotten around to tearing down yet. Every one of those walls is our problem.
               </p>
@@ -232,9 +232,9 @@ export default function VisionPage() {
             <SectionHeading title="THE NUMBER THAT KEEPS ME UP AT NIGHT" />
             <div className={cn(prose, 'w-full')}>
             <p className="mb-0">
-              <span className="text-neutral-strong">1.9 billion</span>
+              <span className="text-neutral-strong">1 billion</span>
               <span> people play games on PC. </span>
-              <span className="text-neutral-strong">75 million</span>
+              <span className="text-neutral-strong">80 million</span>
               <span>
                 {' '}
                 of them found their way to us. Think about that for a second, without a consumer marketing budget, without
@@ -245,9 +245,9 @@ export default function VisionPage() {
             <p className="mb-0">Word of mouth. Community gravity. The product just existed, and people came.</p>
             <p className="mb-0">&nbsp;</p>
             <p className="mb-0">
-              <span className="text-neutral-strong">20 million </span>
+              <span className="text-neutral-strong">35 million </span>
               <span>use us every month. </span>
-              <span className="text-neutral-strong">600k</span>
+              <span className="text-neutral-strong">660k</span>
               <span>
                 {' '}
                 pay us. And here&apos;s the part that should hit different: they did all of that despite a product we all know{' '}
@@ -278,7 +278,7 @@ export default function VisionPage() {
             </p>
             <p className="mb-0">&nbsp;</p>
             <p className="mb-0">
-              The 1.8 billion people who haven&apos;t found us yet are not a different species. They&apos;re not less interested in
+              The 920 million people who haven&apos;t found us yet are not a different species. They&apos;re not less interested in
               shaping the games they play. They&apos;re hitting a wall we built, and most of them bounced before we ever had a
               chance to show them what was on the other side.
             </p>
@@ -316,7 +316,7 @@ export default function VisionPage() {
             </p>
             <p className="mb-0">&nbsp;</p>
             <p className="mb-0">
-              We&apos;re not starting from zero. We have 75 million users, twenty years of mod metadata, 600 thousand people
+              We&apos;re not starting from zero. We have 80 million users, twenty years of mod metadata, 660 thousand people
               already paying, and margins most software companies would trade their entire engineering team for. We have the
               community trust that takes decades to build and can&apos;t be bought.
             </p>
