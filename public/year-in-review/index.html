@@ -210,12 +210,16 @@ canvas.static{position:absolute;inset:0;width:100%;height:100%;image-rendering:p
 .verdict.close{color:var(--orange)}
 .verdict.no{color:var(--bad)}
 .figure{position:relative}
-.rv.hit .big{animation:lock .75s cubic-bezier(.16,1,.3,1) both}
-.rv.hit .verdict{animation:bloom .65s ease-out both}
-.rv.hit .figure::after{content:"";position:absolute;left:-6%;right:-6%;height:14%;top:-20%;background:linear-gradient(transparent, rgba(94,234,212,.75), transparent);pointer-events:none;animation:sweep .7s cubic-bezier(.2,.6,.2,1) both}
-@keyframes lock{0%{text-shadow:-.14em 0 rgba(255,41,79,.85), .14em 0 rgba(61,199,255,.8), 0 0 .16em #fff;filter:brightness(1.7)}100%{text-shadow:var(--fringe);filter:none}}
-@keyframes bloom{0%{filter:brightness(2.2)}100%{filter:none}}
-@keyframes sweep{80%{opacity:1}100%{top:108%;opacity:0}}
+/* A correct answer locks the signal: the number stays split, then the colours snap together, and one bright line drops down the glass. */
+.rv.hit .big{animation:lock 1.35s linear both}
+.rv.hit .verdict{animation:bloom 1.35s ease-out both}
+.screen.locking::after{content:"";position:absolute;z-index:7;left:0;right:0;height:18%;top:-22%;pointer-events:none;background:linear-gradient(to bottom, transparent 0%, rgba(94,234,212,.45) 38%, #fff 50%, rgba(94,234,212,.45) 62%, transparent 100%);animation:sweep 1.15s linear both}
+@keyframes lock{
+  0%,46%{text-shadow:-.16em 0 #ff294f, .16em 0 #3dc7ff, 0 0 .14em #fff;filter:brightness(1.7)}
+  70%,100%{text-shadow:-.045em 0 rgba(255,41,79,.55), .045em 0 rgba(61,199,255,.45), 0 0 .08em rgba(255,255,255,.55);filter:none}
+}
+@keyframes bloom{0%,46%{filter:brightness(2.2);box-shadow:0 0 1.4em var(--cyan)}100%{filter:none;box-shadow:none}}
+@keyframes sweep{0%{top:-22%;opacity:0}10%{opacity:1}82%{opacity:1}100%{top:108%;opacity:0}}
 .rv-grid{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:3.6cqh;align-items:center;width:100%}
 .stat{display:grid;gap:3.6cqh;min-width:0}
 .figure{display:grid;gap:.3cqh;min-width:0}
@@ -499,7 +503,7 @@ S.push({kind:'results'});
 const CARDS = ['cards/01-audience.png','cards/02-catalogue.png','cards/03-catalogue.png','cards/04-creators.png','cards/05-creators.png','cards/06-money.png','cards/07-peak.png','cards/08-events.png','cards/09-boss.png'];
 const CARD_BACK = 'cards/back.png';
 let answers = [], dealt = [], dealing = false;
-const won = a => a && a.res !== 'no';
+const won = a => a && a.res === 'ok';
 function score(i, pick) {
   const Q = QUIZ[i]; const res = pick === Q.a ? 'ok' : Q.close.includes(pick) ? 'close' : 'no';
   answers[i] = {pick, res}; return answers[i];
@@ -568,7 +572,7 @@ const R = {
       const bars = Array.from({length: stripes}, (_, k) => `<i${k < stripes - on ? ' class="dim"' : ''}></i>`).join('');
       return `<div class="col${now ? ' now' : ''}"><b>${fmt(v, c.vs.f)}</b><div class="track"><div class="ghost">${ghost}</div><div class="fill">${bars}</div></div><span class="yr">${label}${now ? `<em class="delta">${sign}${shown}% ▲</em>` : ''}</span></div>`;
     };
-    const missed = answers[s.i] && answers[s.i].res === 'no';
+    const missed = !answers[s.i] || answers[s.i].res !== 'ok';
     return `<div class="cmp"><div class="eyebrow">COMPARED TO LAST YEAR</div><div class="cmp-grid">
       <div class="yearbars">${col(c.vs.prev, lb[0], false)}${col(c.vs.cur, lb[1], true)}</div>
       <div class="panel"><div class="hero${missed ? ' miss' : ''}" id="hero"><div class="hero-spin"><img class="face front" src="${CARDS[s.i]}" alt=""><img class="face back" src="${CARD_BACK}" alt=""><i class="edge"></i></div></div>
@@ -588,7 +592,13 @@ const INIT = {
     document.querySelectorAll('.opt').forEach(b => b.onclick = () => choose(s.i, +b.dataset.k));
     document.querySelector('.opt').focus({preventScroll:true});
   },
-  reveal(s) { const r = QUIZ[s.i].reveal; countUp($('#val'), r.value, r.f, 1200); animate(r.gfx); },
+  reveal(s) {
+    const r = QUIZ[s.i].reveal; countUp($('#val'), r.value, r.f, 1200); animate(r.gfx);
+    if (answers[s.i] && answers[s.i].res === 'ok' && !reduce) {
+      const here = idx;
+      requestAnimationFrame(() => { if (idx === here) $('#screen').classList.add('locking'); });
+    }
+  },
   compare() {
     document.querySelectorAll('.yearbars .fill').forEach(fill => {
       const track = fill.parentElement;
@@ -627,6 +637,7 @@ const chOf = s => s.i !== undefined ? QUIZ[s.i].lv : s.kind === 'results' ? 8 : 
 const CHEV_L = `<svg width="10" height="12" viewBox="0 0 10 12" aria-hidden="true"><path d="M8 1 2 6l6 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>`;
 const CHEV_R = `<svg width="10" height="12" viewBox="0 0 10 12" aria-hidden="true"><path d="M2 1l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>`;
 function render() {
+  $('#screen').classList.remove('locking');
   const s = S[idx]; $('#menu') && $('#menu').remove();
   $('#content').classList.toggle('is-title', s.kind === 'title');
   $('#content').classList.toggle('is-question', s.kind === 'question');
@@ -655,8 +666,9 @@ function render() {
 function go(i) {
   if (!on) return;
   const from = S[idx]; idx = Math.max(0, Math.min(S.length - 1, i)); const to = S[idx], c = $('#content');
+  const hit = to.kind === 'reveal' && answers[to.i] && answers[to.i].res === 'ok';
   if (chOf(from) !== chOf(to)) staticBurst(420, () => { render(); });
-  else { render(); if (!reduce) { c.classList.remove('poweron', 'glitch'); void c.offsetWidth; c.classList.add('glitch'); } }
+  else { render(); if (!reduce && !hit) { c.classList.remove('poweron', 'glitch'); void c.offsetWidth; c.classList.add('glitch'); } }
 }
 function deal(i, done) {
   const finish = () => { if (!dealt.includes(i)) dealt.push(i); done(); };
@@ -737,7 +749,7 @@ function openMenu() {
   const items = [['RESUME', () => {}], ['RESTART QUIZ', restart], ['POWER OFF', powerToggle]];
   let pos = 0; const m = document.createElement('div'); m.className = 'menu'; m.id = 'menu';
   const right = answers.filter(a => a && a.res === 'ok').length;
-  const cards = dealt.filter(i => won(answers[i])).length;
+  const cards = dealt.length;
   m.innerHTML = `<div class="menu-box"><h3>PAUSED</h3>${items.map(([t], k) => `<button type="button">${t}</button>`).join('')}<small>${cards} ${cards === 1 ? 'card' : 'cards'} · ${right} correct so far · ↑ ↓ and Enter</small></div>`;
   $('#content').appendChild(m);
   const btns = [...m.querySelectorAll('button')]; const mark = () => btns.forEach((b, k) => b.setAttribute('aria-current', k === pos));
