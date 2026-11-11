@@ -208,7 +208,8 @@ canvas.static{position:absolute;inset:0;width:100%;height:100%;image-rendering:p
 .verdict svg{width:3.6cqh;height:3.6cqh;display:block;flex:none}
 .verdict.ok{color:var(--cyan)}
 .verdict.no{color:var(--bad)}
-.rv-grid{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:3.6cqh;align-items:center;width:100%}
+/* 40px on the Figma screen. Same scale as the title, where 32px is 4.8cqh. */
+.rv-grid{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:6cqh;align-items:center;width:100%}
 .stat{display:grid;gap:3.6cqh;min-width:0}
 .figure{display:grid;gap:.3cqh;min-width:0}
 .big{font-size:16.8cqh;line-height:1}
@@ -239,15 +240,18 @@ canvas.static{position:absolute;inset:0;width:100%;height:100%;image-rendering:p
 .stack{display:flex;flex-direction:column-reverse;align-items:center;gap:.12em}
 .stack i{display:block;width:70%;height:.5em;background:var(--cyan);box-shadow:inset 0 -.12em 0 rgba(0,0,0,.35);opacity:0;transform:translateY(-1.5em);transition:opacity .2s, transform .25s steps(3)}
 .stack i.on{opacity:1;transform:none}
-/* Infographic: event timeline */
-.tl{position:relative;height:6em;margin:0 .5em}
-.tl .line{position:absolute;left:0;right:0;top:3em;border-top:2px dashed rgba(94,234,212,.45)}
-.tl .m{position:absolute;top:2.55em;transform:translateX(-50%);display:grid;justify-items:center;gap:.3em;opacity:0;transition:opacity .2s}
+/* Infographic: event timeline. Dots are spaced to read, not pinned to the exact day. */
+.tl{position:relative;height:3.2em;margin:0 .15em .9em}
+.tl .line{position:absolute;left:0;right:0;top:1.15em;border-top:2px dashed rgba(94,234,212,.45)}
+.tl .m{position:absolute;top:.7em;transform:translateX(-50%);opacity:0;transition:opacity .2s}
 .tl .m.on{opacity:1}
-.tl .m i{width:.85em;height:.85em;background:var(--cyan);display:block;transform:rotate(45deg)}
-.tl .m span{font-size:.8em;white-space:nowrap;color:var(--ink)}
-.tl .m:nth-child(odd) span{order:-1;transform:translateY(-2.2em)}
-.tl .mo{position:absolute;top:4.2em;font-size:.75em;color:var(--cyan);opacity:.7;transform:translateX(-50%)}
+.tl .m i{width:.85em;height:.85em;display:block;transform:rotate(45deg)}
+.tl .mo{position:absolute;top:1.85em;font-size:.75em;color:var(--cyan);opacity:.7}
+.tl .mo.jan{left:0}
+.tl .mo.dec{right:0}
+.tl-key{display:grid;grid-template-columns:1fr 1fr;gap:.4em .9em}
+.tl-key span{display:flex;align-items:center;gap:.45em;font-size:.8em;line-height:1.15;color:var(--ink)}
+.tl-key i{width:.55em;height:.55em;transform:rotate(45deg);flex:none}
 /* Infographic: ticker */
 .ticker{display:grid;gap:.4em;text-align:center}
 .ticker .n{font-size:3.2em;line-height:1;font-variant-numeric:tabular-nums}
@@ -331,8 +335,9 @@ canvas.static{position:absolute;inset:0;width:100%;height:100%;image-rendering:p
   .bezel{padding:var(--space-3) var(--space-3) 0;border-radius:20px}
   .recess{padding:var(--space-2);border-radius:16px}
   .screen{aspect-ratio:3/5.3}
-  .osd{font-size:1.35cqh;grid-template-columns:minmax(0,1fr) auto max-content;gap:1cqh}
-  .qprog{gap:1cqh}
+  .osd{font-size:1.35cqh;grid-template-columns:minmax(0,1fr) max-content;gap:1cqh}
+  .osd .ch,.mark{display:none}
+  .qprog{justify-self:start;gap:1cqh}
   .deck{--card-w:2.8cqh;--card-h:3.7cqh;--step:.95cqh}
   .prog{width:5cqh}
   .title p{width:100%}
@@ -469,9 +474,17 @@ const QUIZ = [
    reveal:{value:828e6, f:'M', unit:'DOWNLOADS IN JANUARY', line:'October was the next busiest, at 706 million.', gfx:{type:'bars', v:[666,828,648,561,508,545,621,629,680,618,706], labels:['D','J','F','M','A','M','J','J','A','S','O'], hi:1, legend:['Dec to Oct, in millions','']}},
    cmp:{h:'January beat a typical month by about a third', vs:{prev:637e6, cur:828e6, f:'M', labels:['AVG','JAN']}, an:{big:'+30%', em:'+30%', text:'+30% more than a typical month this year.'}}},
   {name:'Side quests', lv:6, q:'How many community events did we host in 2026?', ctx:'From Las Vegas to modding festivals.',
-   opts:['6','2','4','10'], a:0, close:[2,3],
-   reveal:{value:6, f:'int', unit:'EVENTS HOSTED', line:'Sample figure. The real event list is still to come.', gfx:{type:'timeline', ev:[[1.9,'Vegas'],[3.5,'[Event]'],[5.2,'Modfest'],[7.4,'[Event]'],[9,'[Event]'],[10.4,'Skyrim 15']], legend:['Events through the year','']}},
-   cmp:{h:'Our busiest year for events, and for giving back', vs:{prev:3, cur:6, f:'int'}, an:{big:'$96K', em:'$96K', text:'Sample figure. $96K raised for charity is still to come.'}}},
+   opts:['4','7','5','12'], a:1, close:[0,2],
+   reveal:{value:7, f:'int', unit:'EVENTS HOSTED', line:'From Vegas in February to Jingle Jam in December.', gfx:{type:'timeline', legend:[], ev:[
+     [1.5,'Vegas','#5eead4'],
+     [3.1,'Stardew Valley','#fb923c'],
+     [6.2,'25th Anniversary','#73ff9f'],
+     [8.0,'Skyrim','#fbbf24'],
+     [9.2,'Witcher 3','#7dd3fc'],
+     [10.3,'Cyberpunk','#f0abfc'],
+     [11.4,'Jingle Jam','#ededed'],
+   ]}},
+   cmp:{h:'Jingle Jam closes the year', vs:{prev:null, cur:7, f:'int', labels:['','2026']}, an:{big:'', em:'Make-A-Wish', text:'Jingle Jam is with Make-A-Wish. The amount raised is still to come.'}}},
   {name:'Platform', lv:7, boss:true, q:'How often was a mod downloaded in 2026, on average?', ctx:'The big one. Every download, all year.',
    opts:['Every second','Every 4 milliseconds','Every 100 milliseconds','Every millisecond'], a:1, close:[2,3],
    reveal:{value:7.218629396e9, f:'B', unit:'DOWNLOADS SO FAR', line:'Watch it tick at this year\u2019s average rate.', gfx:{type:'ticker', rate:243, legend:['Downloads since this screen opened','']}},
@@ -514,7 +527,11 @@ function gfx(g) {
   if (g.type === 'squares') return `<div class="units" id="g" style="grid-template-columns:repeat(${g.cols},minmax(0,1fr))">${'<i></i>'.repeat(g.total)}</div>`;
   if (g.type === 'bars') { const max = Math.max(...g.v); return `<div class="bars" id="g" style="grid-template-columns:repeat(${g.v.length},minmax(0,1fr))">${g.v.map((v, k) => `<div class="b ${k === g.hi ? 'hi' : ''}"><span>${k === g.hi ? v : ''}</span><i data-h="${v / max * 100}"></i></div>`).join('')}</div><div class="blabels" style="grid-template-columns:repeat(${g.v.length},minmax(0,1fr))">${g.labels.map(l => `<span>${l}</span>`).join('')}</div>`; }
   if (g.type === 'coins') return `<div class="stacks" id="g">${g.q.map(v => `<div class="stack">${'<i></i>'.repeat(Math.round(v * 10))}</div>`).join('')}</div><div class="blabels" style="grid-template-columns:repeat(4,minmax(0,1fr))"><span>Q1</span><span>Q2</span><span>Q3</span><span>Q4</span></div>`;
-  if (g.type === 'timeline') return `<div class="tl" id="g"><div class="line"></div>${g.ev.map(([m, t]) => `<div class="m" style="left:${m / 12 * 100}%"><i></i><span>${t}</span></div>`).join('')}${['JAN','APR','JUL','OCT'].map((m, k) => `<span class="mo" style="left:${k * 25 + 2}%">${m}</span>`).join('')}</div>`;
+  if (g.type === 'timeline') {
+    const marks = g.ev.map(([m, , c]) => `<div class="m" style="left:${m / 12 * 100}%"><i style="background:${c}"></i></div>`).join('');
+    const key = g.ev.map(([, t, c]) => `<span><i style="background:${c}"></i>${t}</span>`).join('');
+    return `<div class="tl" id="g"><div class="line"></div>${marks}<span class="mo jan">JAN</span><span class="mo dec">DEC</span></div><div class="tl-key">${key}</div>`;
+  }
   if (g.type === 'ticker') return `<div class="ticker"><div class="n ab" id="tick">0</div><div class="flow">${'<i></i>'.repeat(9).replace(/<i><\/i>/g, (m, o) => `<i style="animation-delay:${(o % 7) * 70}ms"></i>`)}</div></div>`;
   return '';
 }
@@ -547,9 +564,10 @@ const R = {
   reveal: s => { const Q = QUIZ[s.i], A = answers[s.i] || {res:'no'}, r = Q.reveal;
     const ok = A.res === 'ok';
     return `<div class="rv"><div class="verdict ${ok ? 'ok' : 'no'}">${ok ? TICK : SKULL}${ok ? 'CORRECT' : 'WRONG ANSWER'}</div><div class="rv-grid"><div class="stat"><div class="figure"><div class="big ab" id="val">0</div><div class="unit">${r.unit}</div></div><p class="rv-line">${r.line}</p></div>
-      <div class="gfx">${gfx(r.gfx)}<div class="legend"><span>${r.gfx.legend[0]}</span><span>${r.gfx.legend[1]}</span></div></div></div></div>`; },
-  compare: s => { const Q = QUIZ[s.i], c = Q.cmp, max = Math.max(c.vs.prev, c.vs.cur), lb = c.vs.labels || ['2025','2026'];
-    const pct = (c.vs.cur / c.vs.prev - 1) * 100;
+      <div class="gfx">${gfx(r.gfx)}${(r.gfx.legend || []).some(Boolean) ? `<div class="legend"><span>${r.gfx.legend[0] || ''}</span><span>${r.gfx.legend[1] || ''}</span></div>` : ''}</div></div></div>`; },
+  compare: s => { const Q = QUIZ[s.i], c = Q.cmp, hasPrev = c.vs.prev != null, lb = c.vs.labels || ['2025','2026'];
+    const max = Math.max(hasPrev ? c.vs.prev : 0, c.vs.cur);
+    const pct = hasPrev ? (c.vs.cur / c.vs.prev - 1) * 100 : 0;
     const shown = Math.abs(pct) < 1 ? pct.toFixed(1) : String(Math.round(pct));
     const sign = shown.startsWith('-') ? '' : '+';
     const stripes = 18;
@@ -557,11 +575,13 @@ const R = {
       const on = Math.round(v / max * stripes);
       const ghost = '<i></i>'.repeat(stripes);
       const bars = Array.from({length: stripes}, (_, k) => `<i${k < stripes - on ? ' class="dim"' : ''}></i>`).join('');
-      return `<div class="col${now ? ' now' : ''}"><b>${fmt(v, c.vs.f)}</b><div class="track"><div class="ghost">${ghost}</div><div class="fill">${bars}</div></div><span class="yr">${label}${now ? `<em class="delta">${sign}${shown}% ▲</em>` : ''}</span></div>`;
+      const delta = now && hasPrev ? `<em class="delta">${sign}${shown}% ▲</em>` : '';
+      return `<div class="col${now ? ' now' : ''}"><b>${fmt(v, c.vs.f)}</b><div class="track"><div class="ghost">${ghost}</div><div class="fill">${bars}</div></div><span class="yr">${label}${delta}</span></div>`;
     };
     const missed = !answers[s.i] || answers[s.i].res !== 'ok';
-    return `<div class="cmp"><div class="eyebrow">COMPARED TO LAST YEAR</div><div class="cmp-grid">
-      <div class="yearbars">${col(c.vs.prev, lb[0], false)}${col(c.vs.cur, lb[1], true)}</div>
+    const bars = `${hasPrev ? col(c.vs.prev, lb[0], false) : ''}${col(c.vs.cur, lb[1], true)}`;
+    return `<div class="cmp"><div class="eyebrow">${hasPrev ? 'COMPARED TO LAST YEAR' : 'ACROSS THE YEAR'}</div><div class="cmp-grid">
+      <div class="yearbars">${bars}</div>
       <div class="panel"><div class="hero${missed ? ' miss' : ''}" id="hero"><div class="hero-spin"><img class="face front" src="${CARDS[s.i]}" alt=""><img class="face back" src="${CARD_BACK}" alt=""><i class="edge"></i></div></div>
       <p class="like">${likeHtml(c.an)}</p></div></div></div>`; },
   results: () => { const right = answers.filter(a => a && a.res === 'ok').length; const rank = [...RANKS].reverse().find(r => right >= r[0]);
