@@ -194,10 +194,11 @@ canvas.static{position:absolute;inset:0;width:100%;height:100%;image-rendering:p
 .opt:hover:not(:disabled),.opt:focus-visible:not(:disabled){background:rgba(94,234,212,.3);border-color:var(--cyan)}
 .opt:hover:not(:disabled) .k,.opt:focus-visible:not(:disabled) .k{background:var(--cyan);color:var(--glass)}
 .opt:disabled{cursor:default}
-.opt.right{border-color:#fff;background:rgba(94,234,212,.14);color:#fff}
-.opt.right .k{background:#fff;color:var(--glass)}
-.opt.wrong{border-color:var(--bad);background:rgba(248,113,113,.1);color:var(--bad);animation:shake .25s steps(2)}
-.opt.wrong .k{background:var(--bad);color:var(--glass)}
+.opt.right{border-color:var(--cyan);background:none;color:#fff}
+.opt.right .k{background:none;color:var(--cyan);border:2px solid var(--cyan);box-sizing:border-box}
+.opt.right .k svg{width:3.6cqh;height:3.6cqh;display:block}
+.opt.wrong{border-color:var(--bad);background:none;color:var(--bad);animation:shake .25s steps(2)}
+.opt.wrong .k{background:none;color:var(--bad);border:2px solid var(--bad);box-sizing:border-box}
 .opt.dim{opacity:.35}
 @keyframes shake{50%{transform:translateX(-3%)}}
 
@@ -208,6 +209,13 @@ canvas.static{position:absolute;inset:0;width:100%;height:100%;image-rendering:p
 .verdict.ok{color:var(--cyan)}
 .verdict.close{color:var(--orange)}
 .verdict.no{color:var(--bad)}
+.figure{position:relative}
+.rv.hit .big{animation:lock .75s cubic-bezier(.16,1,.3,1) both}
+.rv.hit .verdict{animation:bloom .65s ease-out both}
+.rv.hit .figure::after{content:"";position:absolute;left:-6%;right:-6%;height:14%;top:-20%;background:linear-gradient(transparent, rgba(94,234,212,.75), transparent);pointer-events:none;animation:sweep .7s cubic-bezier(.2,.6,.2,1) both}
+@keyframes lock{0%{text-shadow:-.14em 0 rgba(255,41,79,.85), .14em 0 rgba(61,199,255,.8), 0 0 .16em #fff;filter:brightness(1.7)}100%{text-shadow:var(--fringe);filter:none}}
+@keyframes bloom{0%{filter:brightness(2.2)}100%{filter:none}}
+@keyframes sweep{80%{opacity:1}100%{top:108%;opacity:0}}
 .rv-grid{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:3.6cqh;align-items:center;width:100%}
 .stat{display:grid;gap:3.6cqh;min-width:0}
 .figure{display:grid;gap:.3cqh;min-width:0}
@@ -532,6 +540,7 @@ function animate(g) {
 const L = Q => `LEVEL ${String(Q.lv).padStart(2,'0')}`;
 const LEVELS = ['', 'ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN'];
 const SKULL = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.2a7.4 7.4 0 0 0-7.4 7.4c0 2.1.9 3.8 2 5.1.4.4.6 1 .6 1.5V19h2.3v-1.5h1.3V19h2.4v-1.5H14.5V19h2.3v-2.8c0-.5.2-1.1.6-1.5 1.1-1.3 2-3 2-5.1A7.4 7.4 0 0 0 12 2.2Zm-2.5 8.1a1.45 1.45 0 1 1 0-2.9 1.45 1.45 0 0 1 0 2.9Zm5 0a1.45 1.45 0 1 1 0-2.9 1.45 1.45 0 0 1 0 2.9ZM9.4 15.2h1.4v1.4H9.4Zm2 0h1.4v1.4h-1.4Zm2 0h1.4v1.4h-1.4Z"/></svg>`;
+const TICK = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter" d="M4 12.5 9.2 17.8 20 6.2"/></svg>`;
 const R = {
   title: () => {
     const logo = document.querySelector('.mark') ? document.querySelector('.mark').innerHTML : '';
@@ -542,10 +551,11 @@ const R = {
   question: s => { const Q = QUIZ[s.i], A = answers[s.i];
     const eye = Q.boss ? 'FINAL BOSS · PLATFORM' : `Q-${String(s.i + 1).padStart(2, '0')}: ${Q.name.toUpperCase()}`;
     return `<div class="q"><div class="q-head"><div class="eyebrow${Q.boss ? ' boss' : ''}">${eye}</div><h2>${Q.q}</h2></div>
-      <div class="opts">${Q.opts.map((o, k) => `<button type="button" class="opt ${A ? (k === Q.a ? 'right' : k === A.pick ? 'wrong' : 'dim') : ''}" data-k="${k}" ${A ? 'disabled' : ''}><span class="k">${'ABCD'[k]}</span><span>${o}</span></button>`).join('')}</div></div>`; },
+      <div class="opts">${Q.opts.map((o, k) => `<button type="button" class="opt ${A ? (k === Q.a ? 'right' : k === A.pick ? 'wrong' : 'dim') : ''}" data-k="${k}" ${A ? 'disabled' : ''}><span class="k">${A && k === Q.a ? TICK : 'ABCD'[k]}</span><span>${o}</span></button>`).join('')}</div></div>`; },
   reveal: s => { const Q = QUIZ[s.i], A = answers[s.i] || {res:'no'}, r = Q.reveal;
     const v = A.res === 'ok' ? 'CORRECT' : A.res === 'close' ? 'SO CLOSE' : 'WRONG ANSWER';
-    return `<div class="rv"><div class="verdict ${A.res}">${A.res === 'no' ? SKULL : ''}${v}</div><div class="rv-grid"><div class="stat"><div class="figure"><div class="big ab" id="val">0</div><div class="unit">${r.unit}</div></div><p class="rv-line">${r.line}</p></div>
+    const icon = A.res === 'ok' ? TICK : A.res === 'no' ? SKULL : '';
+    return `<div class="rv${A.res === 'ok' ? ' hit' : ''}"><div class="verdict ${A.res}">${icon}${v}</div><div class="rv-grid"><div class="stat"><div class="figure"><div class="big ab" id="val">0</div><div class="unit">${r.unit}</div></div><p class="rv-line">${r.line}</p></div>
       <div class="gfx">${gfx(r.gfx)}<div class="legend"><span>${r.gfx.legend[0]}</span><span>${r.gfx.legend[1]}</span></div></div></div></div>`; },
   compare: s => { const Q = QUIZ[s.i], c = Q.cmp, max = Math.max(c.vs.prev, c.vs.cur), lb = c.vs.labels || ['2025','2026'];
     const pct = (c.vs.cur / c.vs.prev - 1) * 100;
@@ -597,7 +607,7 @@ const INIT = {
 function choose(i, k) {
   if (answers[i]) return;
   const A = score(i, k), Q = QUIZ[i];
-  document.querySelectorAll('.opt').forEach((b, j) => { b.disabled = true; b.classList.add(j === Q.a ? 'right' : j === k ? 'wrong' : 'dim'); });
+  document.querySelectorAll('.opt').forEach((b, j) => { b.disabled = true; b.classList.add(j === Q.a ? 'right' : j === k ? 'wrong' : 'dim'); if (j === Q.a) b.querySelector('.k').innerHTML = TICK; });
   setTimeout(() => { if (S[idx].kind === 'question' && S[idx].i === i) next(); }, reduce ? 400 : 1100);
 }
 function restart() { answers = []; dealt = []; dealing = false; hud(); go(0); }
