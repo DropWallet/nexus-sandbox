@@ -4,6 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Year in Review Quiz</title>
+<script>
+/* Pictures sit next to this file. On the live site the address is /year-in-review
+   with no slash at the end, so the browser would look for them in the site root. */
+(function () {
+  if (location.protocol === 'file:') return;
+  var path = location.pathname;
+  var last = path.split('/').pop();
+  var dir = path.endsWith('/') ? path : (/\.[a-z0-9]+$/i.test(last) ? path.slice(0, -last.length) : path + '/');
+  var base = document.createElement('base');
+  base.href = dir;
+  document.head.prepend(base);
+})();
+</script>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=Geist+Mono:wght@400;600;700&family=Press+Start+2P&display=swap">
