@@ -262,11 +262,12 @@ canvas.static{position:absolute;inset:0;width:100%;height:100%;image-rendering:p
 .yearbars .col{--ink:var(--cyan);--dim:rgba(94,234,212,.22);display:grid;grid-template-rows:auto 1fr auto;gap:1cqh;width:14cqh}
 .yearbars .now{--ink:#fb923c;--dim:rgba(251,146,60,.22)}
 .yearbars b{font-weight:600;font-size:2.4cqh;color:var(--ink)}
-.yearbars .track{min-height:0;overflow:hidden}
-.yearbars .fill{height:100%;display:flex;flex-direction:column;gap:.32cqh;transform:translateY(100%);transition:transform .85s steps(18)}
-.yearbars .fill.on{transform:none}
+.yearbars .track{position:relative;min-height:0}
+.yearbars .ghost,.yearbars .fill{position:absolute;inset:0;display:flex;flex-direction:column;gap:.32cqh}
 .yearbars .track i{flex:1 1 0;min-height:0;background:var(--ink)}
-.yearbars .track i.dim{background:var(--dim)}
+.yearbars .ghost i{background:var(--dim)}
+.yearbars .fill{z-index:1;clip-path:inset(100% 0 0 0)}
+.yearbars .fill i.dim{background:transparent}
 .yearbars .yr{font-size:2.1cqh;color:var(--ink);display:flex;gap:.6cqh;align-items:baseline}
 .yearbars .delta{font-weight:700;font-size:1.5cqh;letter-spacing:.04em}
 .panel{border:2px solid var(--cyan);display:grid;align-content:center;justify-items:center;gap:2.4cqh;padding:2.4cqh;min-width:0}
@@ -553,8 +554,9 @@ const R = {
     const stripes = 18;
     const col = (v, label, now) => {
       const on = Math.round(v / max * stripes);
+      const ghost = '<i></i>'.repeat(stripes);
       const bars = Array.from({length: stripes}, (_, k) => `<i${k < stripes - on ? ' class="dim"' : ''}></i>`).join('');
-      return `<div class="col${now ? ' now' : ''}"><b>${fmt(v, c.vs.f)}</b><div class="track"><div class="fill">${bars}</div></div><span class="yr">${label}${now ? `<em class="delta">${sign}${shown}% ▲</em>` : ''}</span></div>`;
+      return `<div class="col${now ? ' now' : ''}"><b>${fmt(v, c.vs.f)}</b><div class="track"><div class="ghost">${ghost}</div><div class="fill">${bars}</div></div><span class="yr">${label}${now ? `<em class="delta">${sign}${shown}% ▲</em>` : ''}</span></div>`;
     };
     const missed = answers[s.i] && answers[s.i].res === 'no';
     return `<div class="cmp"><div class="eyebrow">COMPARED TO LAST YEAR</div><div class="cmp-grid">
@@ -578,9 +580,15 @@ const INIT = {
   },
   reveal(s) { const r = QUIZ[s.i].reveal; countUp($('#val'), r.value, r.f, 1200); animate(r.gfx); },
   compare() {
-    const fills = [...document.querySelectorAll('.yearbars .fill')];
-    if (reduce) { fills.forEach(el => el.classList.add('on')); return; }
-    requestAnimationFrame(() => requestAnimationFrame(() => fills.forEach((el, k) => setTimeout(() => el.classList.add('on'), 90 * k))));
+    document.querySelectorAll('.yearbars .fill').forEach(fill => {
+      const track = fill.parentElement;
+      const first = [...fill.children].find(i => !i.classList.contains('dim'));
+      const top = first ? first.offsetTop : track.clientHeight;
+      const from = `inset(${track.clientHeight}px 0 0 0)`;
+      const to = `inset(${top}px 0 0 0)`;
+      if (reduce) { fill.style.clipPath = to; return; }
+      fill.animate([{ clipPath: from }, { clipPath: to }], { duration: 1100, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'forwards' });
+    });
   },
   results() {
     $('#again').onclick = restart; $('#shareRes').onclick = () => osd('RESULT CARD SAVED (PROTOTYPE)');
