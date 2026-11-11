@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Year in Review Quiz</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=Geist+Mono:wght@400;600;700&family=Press+Start+2P&display=swap">
+<script>
+/* Apply the saved theme before first paint so the room does not flash. */
+(function () {
+  try {
+    var query = new URLSearchParams(location.search).get('theme');
+    var saved = localStorage.getItem('yir-theme');
+    var theme = query === 'light' || query === 'dark' ? query : (saved === 'light' || saved === 'dark' ? saved : (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'));
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+})();
+</script>
+<style>
+/* Layout: one CRT monitor centred in a room. The quiz runs inside the 4:3 glass. The glass stays black; light mode only changes the room and the plastic. */
+@property --room { syntax: "<color>"; inherits: true; initial-value: #0b0908; }
+@property --room-glow { syntax: "<color>"; inherits: true; initial-value: rgba(255, 150, 60, .10); }
+@property --room-floor { syntax: "<color>"; inherits: true; initial-value: rgba(255, 150, 60, .08); }
+@property --plastic-hi { syntax: "<color>"; inherits: true; initial-value: #3a3633; }
+@property --plastic { syntax: "<color>"; inherits: true; initial-value: #2a2724; }
+@property --plastic-lo { syntax: "<color>"; inherits: true; initial-value: #171513; }
+@property --plastic-edge { syntax: "<color>"; inherits: true; initial-value: rgba(255, 255, 255, .08); }
+@property --plastic-shade { syntax: "<color>"; inherits: true; initial-value: rgba(0, 0, 0, .5); }
+@property --plastic-shadow { syntax: "<color>"; inherits: true; initial-value: rgba(0, 0, 0, .7); }
+@property --bezel-glow { syntax: "<color>"; inherits: true; initial-value: rgba(255, 140, 40, .06); }
+@property --recess { syntax: "<color>"; inherits: true; initial-value: #0f0e0d; }
+@property --recess-shadow { syntax: "<color>"; inherits: true; initial-value: rgba(0, 0, 0, .9); }
+@property --label { syntax: "<color>"; inherits: true; initial-value: #aaa7a2; }
+@property --label-dim { syntax: "<color>"; inherits: true; initial-value: #756f67; }
+@property --mark { syntax: "<color>"; inherits: true; initial-value: #8a847c; }
+@property --hw-hi { syntax: "<color>"; inherits: true; initial-value: #3b3733; }
+@property --hw { syntax: "<color>"; inherits: true; initial-value: #24211e; }
+@property --hw-border { syntax: "<color>"; inherits: true; initial-value: #121212; }
+@property --hw-lip { syntax: "<color>"; inherits: true; initial-value: #0c0b0a; }
+@property --hw-shine { syntax: "<color>"; inherits: true; initial-value: rgba(255, 255, 255, .1); }
+@property --knob { syntax: "<color>"; inherits: true; initial-value: #8a847c; }
+@property --knob-ink { syntax: "<color>"; inherits: true; initial-value: #332f2c; }
+@property --led-off { syntax: "<color>"; inherits: true; initial-value: #2a3a2f; }
+@property --stand { syntax: "<color>"; inherits: true; initial-value: #1c1a17; }
+@property --help { syntax: "<color>"; inherits: true; initial-value: #6f6a63; }
+
+:root{
+  /* Nexus spacing, 4px base. Used on the room and the monitor shell. */
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px; --space-6:24px; --space-7:28px; --space-8:32px; --space-9:36px;
+  --radius-sm:2px; --radius:4px; --radius-md:6px; --radius-lg:8px; --radius-xl:12px;
+  /* Glass stays black. Type inside it follows the new CRT frames: orange, teal, white. */
+  --glass:#090604; --ink:#ededed; --orange:#f97316; --cyan:#5eead4; --bad:#f87171; --green:#73ff9f;
+  --pixel:"Press Start 2P", ui-monospace, monospace;
+  --ui:"Geist Mono", ui-monospace, monospace;
+  --hw-font:"DM Mono", ui-monospace, monospace;
+  --fringe:-.045em 0 rgba(255,41,79,.55), .045em 0 rgba(61,199,255,.45), 0 0 .08em rgba(255,255,255,.55);
+  --theme-ms:480ms;
+}
+:root, [data-theme="dark"]{
+  color-scheme:dark;
+  --room:#0b0908; --room-glow:rgba(255,150,60,.10); --room-floor:rgba(255,150,60,.08);
+  --plastic-hi:#3a3633; --plastic:#2a2724; --plastic-lo:#171513;
+  --plastic-edge:rgba(255,255,255,.08); --plastic-shade:rgba(0,0,0,.5); --plastic-shadow:rgba(0,0,0,.7); --bezel-glow:rgba(255,140,40,.06);
+  --recess:#0f0e0d; --recess-shadow:rgba(0,0,0,.9);
+  --label:#aaa7a2; --label-dim:#756f67; --mark:#8a847c;
+  --hw-hi:#3b3733; --hw:#24211e; --hw-border:#121212; --hw-lip:#0c0b0a; --hw-shine:rgba(255,255,255,.1);
+  --knob:#8a847c; --knob-ink:#332f2c;
+  --led-off:#2a3a2f; --stand:#1c1a17; --help:#6f6a63;
+}
+[data-theme="light"]{
+  color-scheme:light;
+  --room:#e4e2dc; --room-glow:rgba(255,250,240,.72); --room-floor:rgba(150,130,100,.16);
+  --plastic-hi:#ddd4c6; --plastic:#cfc4b4; --plastic-lo:#b7ab9a;
+  --plastic-edge:rgba(255,255,255,.72); --plastic-shade:rgba(90,70,40,.16); --plastic-shadow:rgba(70,55,30,.32); --bezel-glow:rgba(255,236,200,.18);
+  --recess:#3a3632; --recess-shadow:rgba(0,0,0,.5);
+  --label:#514c44; --label-dim:#746d62; --mark:#5c564c;
+  --hw-hi:#f4efe6; --hw:#e3dcd0; --hw-border:#8d867a; --hw-lip:#9c9486; --hw-shine:rgba(255,255,255,.8);
+  --knob:#faf7f2; --knob-ink:#3a342c;
+  --led-off:#8f9788; --stand:#a79e90; --help:#6d675e;
+}
+html{
+  transition:
+    --room var(--theme-ms) ease, --room-glow var(--theme-ms) ease, --room-floor var(--theme-ms) ease,
+    --plastic-hi var(--theme-ms) ease, --plastic var(--theme-ms) ease, --plastic-lo var(--theme-ms) ease,
+    --plastic-edge var(--theme-ms) ease, --plastic-shade var(--theme-ms) ease, --plastic-shadow var(--theme-ms) ease, --bezel-glow var(--theme-ms) ease,
+    --recess var(--theme-ms) ease, --recess-shadow var(--theme-ms) ease,
+    --label var(--theme-ms) ease, --label-dim var(--theme-ms) ease, --mark var(--theme-ms) ease,
+    --hw-hi var(--theme-ms) ease, --hw var(--theme-ms) ease, --hw-border var(--theme-ms) ease, --hw-lip var(--theme-ms) ease, --hw-shine var(--theme-ms) ease,
+    --knob var(--theme-ms) ease, --knob-ink var(--theme-ms) ease,
+    --led-off var(--theme-ms) ease, --stand var(--theme-ms) ease, --help var(--theme-ms) ease;
+}
+html,body{height:100%}
+body{margin:0;background:var(--room);color:var(--help);font-family:var(--hw-font);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-4);overflow:auto;min-height:100dvh;
+  padding-block:var(--space-4);padding-left:max(var(--space-4), env(safe-area-inset-left, 0px));padding-right:max(var(--space-4), env(safe-area-inset-right, 0px));box-sizing:border-box;
+  background-image:radial-gradient(60% 45% at 50% 42%, var(--room-glow), transparent 70%),radial-gradient(40% 12% at 50% 96%, var(--room-floor), transparent 70%)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:var(--space-1)}
+
+/* Monitor */
+.monitor{width:min(1060px, 100%, max(320px, calc((100dvh - 250px) * 1.333 + 72px)));display:flex;flex-direction:column;align-items:center}
+.bezel{width:100%;box-sizing:border-box;padding:4% 4.2% 0;border-radius:26px 26px 18px 18px;background:linear-gradient(180deg,var(--plastic-hi),var(--plastic) 18%,var(--plastic-lo));
+  box-shadow:inset 0 2px 0 var(--plastic-edge),inset 0 -6px 12px var(--plastic-shade),0 30px 80px var(--plastic-shadow),0 0 120px var(--bezel-glow)}
+.recess{border-radius:22px;padding:var(--space-3);background:var(--recess);box-shadow:inset 0 var(--space-1) 14px var(--recess-shadow),inset 0 -2px 0 var(--plastic-edge)}
+.screen{position:relative;aspect-ratio:4/3;border-radius:6% / 8%;overflow:hidden;background:radial-gradient(ellipse at 50% 45%, #1a120b, var(--glass) 75%);container-type:size;box-shadow:inset 0 0 60px rgba(0,0,0,.9)}
+.content{position:absolute;inset:0;padding:6.5% 7%;box-sizing:border-box;font-family:var(--ui);font-weight:400;font-size:clamp(12px, 1.95cqh, 16px);line-height:1.15;color:var(--ink);display:flex;flex-direction:column;text-shadow:none}
+.content.poweron{animation:poweron .9s cubic-bezier(.2,.8,.2,1) both}
+@keyframes poweron{0%{transform:scale(.4,.004);filter:brightness(6)}35%{transform:scale(1,.006);filter:brightness(4)}100%{transform:none;filter:none}}
+.content.poweroff{animation:poweroff .7s ease-in forwards}
+@keyframes poweroff{0%{transform:none}50%{transform:scale(1,.006);filter:brightness(4)}100%{transform:scale(0,.004);filter:brightness(8);opacity:0}}
+.content.glitch{animation:glitch .22s steps(3)}
+@keyframes glitch{33%{transform:translate(-.6%, 1.5%) skewX(-2deg);filter:hue-rotate(-12deg)}66%{transform:translate(.5%,-1%)}}
+
+/* Glass effects */
+.fx{position:absolute;inset:0;pointer-events:none;z-index:5;animation:flicker .12s steps(2) infinite}
+@keyframes flicker{50%{opacity:.94}}
+.fx::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(to bottom, rgba(0,0,0,.32) 0 1px, transparent 1px 3px),repeating-linear-gradient(90deg, rgba(255,0,0,.035) 0 1px, rgba(0,255,0,.025) 1px 2px, rgba(0,80,255,.035) 2px 3px)}
+.fx::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%, transparent 58%, rgba(0,0,0,.7) 100%),linear-gradient(155deg, rgba(255,255,255,.08), transparent 32%)}
+.rollbar{position:absolute;left:0;right:0;height:14%;top:-14%;background:linear-gradient(transparent, rgba(255,220,170,.045), transparent);z-index:6;pointer-events:none;animation:rollbar 7s linear infinite}
+@keyframes rollbar{to{top:100%}}
+canvas.static{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;z-index:4;opacity:.9}
+
+/* On-screen display */
+.osd{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:start;gap:1.5cqh;flex:none;font-size:1.95cqh;line-height:1.15;letter-spacing:.02em}
+.content.is-title .osd{display:none}
+.osd .ch{color:var(--cyan);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qprog{display:flex;align-items:center;gap:2.4cqh;justify-self:center;white-space:nowrap}
+.prog{position:relative;width:18.5cqh;height:2.1cqh;border:1px solid #fff;box-sizing:border-box}
+.prog b{position:absolute;left:2px;top:2px;bottom:2px;background:#fff;display:block}
+.deck{--card-w:4.8cqh;--card-h:6.4cqh;--step:2cqh;justify-self:end;position:relative;height:var(--card-h);width:var(--card-w)}
+.deck .slot{display:block;width:var(--card-w);height:var(--card-h);box-sizing:border-box;border:1px dashed rgba(237,237,237,.45)}
+.deck .mini{position:absolute;top:0;width:var(--card-w);height:var(--card-h);display:block;object-fit:fill;image-rendering:pixelated}
+.mini.miss,.flyer.miss,.hand img.miss{filter:grayscale(1) brightness(.42)}
+.hero.miss .face,.hero.miss .edge{filter:grayscale(1) brightness(.7);opacity:.4}
+.content.is-results .deck{visibility:hidden}
+.flyer{position:absolute;z-index:3;object-fit:fill;image-rendering:pixelated;pointer-events:none;transition:left .55s cubic-bezier(.2,.7,.2,1),top .55s cubic-bezier(.2,.7,.2,1),width .55s cubic-bezier(.2,.7,.2,1),height .55s cubic-bezier(.2,.7,.2,1)}
+.stage{flex:1;min-height:0;display:flex;flex-direction:column;overflow-y:auto;scrollbar-width:none;padding-block:1.5cqh}
+.stage::-webkit-scrollbar{display:none}
+.stage > *{margin-block:auto}
+.hint{display:none;justify-content:space-between;align-items:center;gap:1em;flex:none}
+.hint.on{display:flex}
+.hint button{display:inline-flex;align-items:center;gap:1.2cqh;background:none;border:none;font-weight:700;font-size:2.1cqh;line-height:1.45;letter-spacing:.1em;color:var(--orange);padding:.6cqh 0;cursor:pointer}
+.hint button:empty{display:none}
+.hint button:hover{color:#fff}
+.hint svg{display:block}
+.osd-msg{position:absolute;left:50%;bottom:12%;transform:translateX(-50%);z-index:3;background:rgba(0,0,0,.8);border:2px solid var(--cyan);color:var(--cyan);padding:.4em .8em;white-space:nowrap;max-width:86%;overflow:hidden;text-overflow:ellipsis}
+
+/* Type helpers */
+.ab{color:#fff;font-weight:600;line-height:1;text-shadow:var(--fringe)}
+.muted{color:rgba(237,237,237,.62)}
+.eyebrow{font-weight:700;font-size:2.7cqh;line-height:1.45;letter-spacing:.1em;color:var(--orange)}
+.eyebrow.boss{color:var(--bad)}
+.key{font-weight:700;font-size:.85em;letter-spacing:.1em;background:none;border:2px solid var(--orange);color:var(--orange);padding:.5em .75em;text-decoration:none;display:inline-block}
+.key:hover,.key:focus-visible{background:var(--orange);color:#1a1008}
+
+/* Title. The logo, the year lockup, the intro, the button and the footer are 32px apart on the Figma screen. The lockup itself is stacked with no extra gap; the line heights make the space. */
+.title{display:grid;justify-items:center;gap:4.8cqh;text-align:center}
+.title-mark{color:var(--orange);line-height:0}
+.title-mark svg{display:block;width:7.2cqh;height:7.2cqh}
+.lockup{display:grid;justify-items:center;gap:0}
+.title .brand{font-weight:700;font-size:2.7cqh;line-height:1.45;letter-spacing:.1em;color:var(--orange)}
+.title h1{font-weight:600;font-size:16.8cqh;line-height:1;margin:0}
+.title h2{font-weight:700;font-size:3.9cqh;line-height:1.45;letter-spacing:.03em;color:var(--cyan);margin:0}
+.title p{margin:0;font-size:3.75cqh;line-height:1.15;width:min(100%,40ch);max-width:100%}
+.start{font-weight:700;font-size:2.7cqh;line-height:1.45;letter-spacing:.1em;color:var(--orange);background:none;border:2px solid var(--orange);padding:.6cqh 1.7cqh;margin:0}
+.start:hover{background:var(--orange);color:#1a1008}
+.foot{font-size:1.8cqh;line-height:1.15;color:var(--ink)}
+
+/* Question */
+.qbg{position:absolute;left:0;right:0;top:0;height:72.7%;background-position:center top;background-size:cover;background-repeat:no-repeat;pointer-events:none}
+.qbg::after{content:"";position:absolute;left:0;right:0;top:0;height:111.8%;background:linear-gradient(to bottom, rgba(9,6,4,.6), var(--glass))}
+.q{display:grid;gap:4.8cqh;justify-items:start}
+.q-head{display:grid;gap:1.8cqh}
+.q h2{font-weight:400;font-size:4.8cqh;line-height:1.15;margin:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.65cqh;width:100%}
+.opt{display:grid;grid-template-columns:5.1cqh 1fr;align-items:center;gap:2.1cqh;min-height:9cqh;text-align:left;background:none;border:3px solid rgba(94,234,212,.5);padding:1.5cqh 2cqh;font-weight:600;font-size:3cqh;line-height:1.15;letter-spacing:.02em;color:var(--cyan);text-transform:uppercase}
+.opt .k{font-weight:600;font-size:2.4cqh;width:5.1cqh;height:5.1cqh;display:grid;place-items:center;border:none;background:rgba(94,234,212,.3);color:var(--cyan)}
+.opt:hover:not(:disabled),.opt:focus-visible:not(:disabled){background:rgba(94,234,212,.3);border-color:var(--cyan)}
+.opt:hover:not(:disabled) .k,.opt:focus-visible:not(:disabled) .k{background:var(--cyan);color:var(--glass)}
+.opt:disabled{cursor:default}
+.opt.right{border-color:#fff;background:rgba(94,234,212,.14);color:#fff}
+.opt.right .k{background:#fff;color:var(--glass)}
+.opt.wrong{border-color:var(--bad);background:rgba(248,113,113,.1);color:var(--bad);animation:shake .25s steps(2)}
+.opt.wrong .k{background:var(--bad);color:var(--glass)}
+.opt.dim{opacity:.35}
+@keyframes shake{50%{transform:translateX(-3%)}}
+
+/* Reveal */
+.rv{display:grid;gap:3.3cqh;justify-items:start}
+.verdict{display:inline-flex;align-items:center;gap:1.5cqh;font-weight:700;font-size:2.7cqh;line-height:1.45;letter-spacing:.1em;padding:1.8cqh 2.4cqh;border:4px solid currentColor;justify-self:start}
+.verdict svg{width:3.6cqh;height:3.6cqh;display:block;flex:none}
+.verdict.ok{color:var(--cyan)}
+.verdict.close{color:var(--orange)}
+.verdict.no{color:var(--bad)}
+.rv-grid{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:3.6cqh;align-items:center;width:100%}
+.stat{display:grid;gap:3.6cqh;min-width:0}
+.figure{display:grid;gap:.3cqh;min-width:0}
+.big{font-size:16.8cqh;line-height:1}
+.unit{font-weight:700;font-size:3.9cqh;line-height:1.45;letter-spacing:.03em;color:var(--cyan);margin:0;text-transform:uppercase;white-space:nowrap}
+.rv-line{font-size:2.7cqh;line-height:1.15;margin:0;max-width:36ch}
+.gfx{border:2px solid var(--cyan);padding:2.1cqh;display:grid;gap:2.4cqh;min-width:0}
+.legend{font-size:1.95cqh;line-height:1.15;color:var(--cyan);opacity:.5;display:flex;justify-content:space-between;gap:1.5cqh}
+
+/* Infographic: unit grid */
+.units{display:grid;gap:.22em}
+.units i{display:block;aspect-ratio:1;background:rgba(94,234,212,.1)}
+.units i.on{background:var(--cyan);box-shadow:0 0 .25em rgba(94,234,212,.55)}
+.units i.on.lo{background:rgba(94,234,212,.4);box-shadow:none}
+.units.people i{aspect-ratio:3/5;-webkit-mask:var(--person) center/contain no-repeat;mask:var(--person) center/contain no-repeat;background:rgba(94,234,212,.16);box-shadow:none}
+.units.people i.on{background:var(--cyan)}
+.units.people i.prev{background:rgba(94,234,212,.38)}
+:root{--person:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 10' shape-rendering='crispEdges'%3E%3Cpath d='M2 0h2v2H2zM1 3h4v3H1zM0 3h1v3H0zM5 3h1v3H5zM1 6h1v4H1zM4 6h1v4H4z'/%3E%3C/svg%3E")}
+/* Infographic: bars */
+.bars{display:grid;gap:.3em;align-items:end;height:8em;border-bottom:2px solid rgba(94,234,212,.45)}
+.bars .b{height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:.15em;min-width:0}
+.bars .b i{display:block;width:100%;height:0;background:repeating-linear-gradient(to top, rgba(94,234,212,.4) 0 .45em, transparent .45em .6em);transition:height .5s steps(6)}
+.bars .b.hi i{background:repeating-linear-gradient(to top, var(--cyan) 0 .45em, transparent .45em .6em)}
+.bars .b span{font-size:.85em;color:var(--cyan);opacity:.7}
+.bars .b.hi span{opacity:1}
+.blabels{display:grid;gap:.3em;text-align:center;font-size:.85em;color:var(--cyan);opacity:.7}
+/* Infographic: coin stacks */
+.stacks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.8em;align-items:end;height:8em;border-bottom:2px solid rgba(94,234,212,.45)}
+.stack{display:flex;flex-direction:column-reverse;align-items:center;gap:.12em}
+.stack i{display:block;width:70%;height:.5em;background:var(--cyan);box-shadow:inset 0 -.12em 0 rgba(0,0,0,.35);opacity:0;transform:translateY(-1.5em);transition:opacity .2s, transform .25s steps(3)}
+.stack i.on{opacity:1;transform:none}
+/* Infographic: event timeline */
+.tl{position:relative;height:6em;margin:0 .5em}
+.tl .line{position:absolute;left:0;right:0;top:3em;border-top:2px dashed rgba(94,234,212,.45)}
+.tl .m{position:absolute;top:2.55em;transform:translateX(-50%);display:grid;justify-items:center;gap:.3em;opacity:0;transition:opacity .2s}
+.tl .m.on{opacity:1}
+.tl .m i{width:.85em;height:.85em;background:var(--cyan);display:block;transform:rotate(45deg)}
+.tl .m span{font-size:.8em;white-space:nowrap;color:var(--ink)}
+.tl .m:nth-child(odd) span{order:-1;transform:translateY(-2.2em)}
+.tl .mo{position:absolute;top:4.2em;font-size:.75em;color:var(--cyan);opacity:.7;transform:translateX(-50%)}
+/* Infographic: ticker */
+.ticker{display:grid;gap:.4em;text-align:center}
+.ticker .n{font-size:3.2em;line-height:1;font-variant-numeric:tabular-nums}
+.ticker .flow{display:flex;gap:.25em;justify-content:center;height:1em;overflow:hidden}
+.ticker .flow i{width:.55em;height:.55em;background:var(--cyan);animation:flow .6s steps(3) infinite;display:block}
+@keyframes flow{from{transform:translateY(-1em)}to{transform:translateY(1em)}}
+
+/* Compare. Two striped columns, then the card for this question. */
+.cmp{display:grid;gap:2.4cqh;justify-items:start}
+.cmp-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:3cqh;align-items:stretch;width:100%}
+.yearbars{display:flex;gap:3cqh;align-items:stretch;height:32cqh}
+.yearbars .col{--ink:var(--cyan);--dim:rgba(94,234,212,.22);display:grid;grid-template-rows:auto 1fr auto;gap:1cqh;width:14cqh}
+.yearbars .now{--ink:#fb923c;--dim:rgba(251,146,60,.22)}
+.yearbars b{font-weight:600;font-size:2.4cqh;color:var(--ink)}
+.yearbars .track{min-height:0;display:flex;flex-direction:column;gap:.32cqh}
+.yearbars .track i{flex:1 1 0;min-height:0;background:var(--ink)}
+.yearbars .track i.dim{background:var(--dim)}
+.yearbars .yr{font-size:2.1cqh;color:var(--ink);display:flex;gap:.6cqh;align-items:baseline}
+.yearbars .delta{font-weight:700;font-size:1.5cqh;letter-spacing:.04em}
+.panel{border:2px solid var(--cyan);display:grid;align-content:center;justify-items:center;gap:2.4cqh;padding:2.4cqh;min-width:0}
+.hero{width:16cqh;aspect-ratio:3/4;perspective:700px}
+.hero-spin{width:100%;height:100%;position:relative;transform-style:preserve-3d;animation:yspin 12s linear infinite}
+.hero-spin .face{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;image-rendering:pixelated;backface-visibility:hidden}
+.hero-spin .front{transform:translateZ(4px)}
+.hero-spin .back{transform:rotateY(180deg) translateZ(4px)}
+.hero-spin .edge{position:absolute;top:0;bottom:0;left:50%;width:8px;margin-left:-4px;background:#14110e;transform:rotateY(90deg)}
+@keyframes yspin{to{transform:rotateY(360deg)}}
+.like{margin:0;font-size:2.7cqh;line-height:1.35;text-align:center;max-width:34ch}
+.like b{color:var(--cyan);font-weight:700}
+
+/* Results */
+.res{display:grid;justify-items:center;gap:2.4cqh;text-align:center}
+.res .rank{font-weight:600;font-size:4.8cqh;line-height:1.15}
+.hand{display:flex;flex-wrap:wrap;gap:1cqh;justify-content:center}
+.hand img{height:12cqh;width:auto;image-rendering:pixelated;display:block}
+.row{display:flex;gap:.5em;flex-wrap:wrap;justify-content:center}
+
+/* Pause menu */
+.menu{position:absolute;inset:0;z-index:3;background:rgba(9,6,4,.94);display:grid;place-items:center;padding:7%}
+.menu-box{border:2px solid var(--orange);padding:1em 1.3em;min-width:55%;display:grid;gap:.45em}
+.menu-box h3{margin:0 0 .3em;font-weight:700;font-size:1em;letter-spacing:.1em;color:var(--orange)}
+.menu-box button{background:none;border:none;text-align:left;font-weight:600;font-size:1.15em;letter-spacing:.04em;padding:.15em 0 .15em 1.3em;position:relative;color:var(--ink)}
+.menu-box button[aria-current=true]::before{content:"▶";position:absolute;left:0;color:var(--orange)}
+.menu-box small{color:var(--cyan);font-size:.85em;margin-top:.35em}
+
+/* Chin. Logo sits on the centre line of the monitor; label left, controls right. */
+.chin{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:var(--space-3);padding:var(--space-6) var(--space-1) var(--space-6)}
+.plate{justify-self:start;display:flex;align-items:center;gap:var(--space-3);min-width:0;font-family:var(--hw-font);font-weight:500;font-size:13px;line-height:1.4;letter-spacing:2.34px;color:var(--label);white-space:nowrap}
+.plate span{color:var(--label-dim)}
+.mark{justify-self:center;color:var(--mark);line-height:0}
+.mark svg{display:block}
+.controls{justify-self:end;display:flex;align-items:center;gap:var(--space-2)}
+.hw{display:inline-grid;place-items:center;box-sizing:border-box;height:32px;margin:0;padding:0;font-family:var(--hw-font);font-weight:500;font-size:13px;line-height:1;letter-spacing:.04em;color:var(--mark);background:linear-gradient(180deg,var(--hw-hi),var(--hw));border:1px solid var(--hw-border);border-radius:var(--radius-md);box-shadow:inset 0 1px 0 var(--hw-shine),0 2px 0 var(--hw-lip)}
+.hw:active:not(:disabled){transform:translateY(2px);box-shadow:inset 0 1px 0 var(--hw-shine)}
+.hw:disabled{opacity:.45}
+.hw.step{width:44px}
+.hw.chin-menu{width:62px;color:var(--label);letter-spacing:.06em}
+.hw.power{width:40px;height:40px;border-radius:50%;font-family:var(--pixel);font-size:9px;color:var(--mark)}
+.hw.theme{position:relative;width:62px;height:32px;border-radius:16px;color:var(--knob-ink)}
+.theme-knob{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:var(--knob);color:var(--knob-ink);display:grid;place-items:center;box-shadow:inset 0 1px 0 var(--hw-shine),0 1px 1px rgba(0,0,0,.35);transform:translateX(30px);transition:transform 240ms cubic-bezier(.2,.8,.2,1)}
+[data-theme="light"] .theme-knob{transform:translateX(0)}
+.theme-knob .ico{position:absolute;top:50%;left:50%;transition:opacity 200ms ease, transform 240ms ease}
+.ico-moon{transform:translate(-50%,-50%)}
+.ico-sun{opacity:0;transform:translate(-50%,-50%) rotate(-40deg) scale(.65)}
+[data-theme="light"] .ico-moon{opacity:0;transform:translate(-50%,-50%) rotate(28deg) scale(.65)}
+[data-theme="light"] .ico-sun{opacity:1;transform:translate(-50%,-50%)}
+.led{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);flex:none}
+.led.off{background:var(--led-off);box-shadow:none}
+.stand{width:34%;height:var(--space-4);background:var(--stand);border-radius:0 0 var(--radius-xl) var(--radius-xl);box-shadow:0 10px 30px var(--plastic-shadow)}
+.keys-help{font-family:var(--hw-font);font-weight:500;font-size:13px;letter-spacing:.02em;color:var(--help);text-align:center;padding-inline:var(--space-4)}
+
+@media (max-width:880px){
+  .plate span{display:none}
+}
+@media (max-width:700px){
+  body{overflow:auto;justify-content:flex-start}
+  .monitor{width:100%}
+  .bezel{padding:var(--space-3) var(--space-3) 0;border-radius:20px}
+  .recess{padding:var(--space-2);border-radius:16px}
+  .screen{aspect-ratio:3/5.3}
+  .osd{font-size:1.35cqh;grid-template-columns:minmax(0,1fr) auto max-content;gap:1cqh}
+  .qprog{gap:1cqh}
+  .deck{--card-w:2.8cqh;--card-h:3.7cqh;--step:.95cqh}
+  .prog{width:5cqh}
+  .title p{width:100%}
+  .content{padding:7% 6%}
+  .opts{grid-template-columns:1fr}
+  .rv-grid,.cmp-grid{grid-template-columns:1fr}
+  .unit{white-space:normal}
+  .big{font-size:14cqh}
+  .hand img{height:9cqh}
+  .plate span,.keys-help{display:none}
+  .chin{padding:var(--space-3) 0 var(--space-4)}
+}
+@media (max-width:560px){
+  .chin{display:flex;flex-wrap:wrap;justify-content:center;row-gap:var(--space-3)}
+  .plate,.mark{justify-self:auto}
+  .controls{flex-basis:100%;justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .rollbar{display:none}
+}
+</style>
+</head>
+<body>
+<div class="monitor">
+  <div class="bezel">
+    <div class="recess">
+      <div class="screen" id="screen">
+        <canvas class="static" id="static" width="160" height="120" hidden></canvas>
+        <div class="qbg" id="qbg" hidden></div>
+        <div class="content" id="content">
+          <div class="osd"><div class="ch" id="ch"></div><div class="qprog" id="qprog"></div><div class="deck" id="deck"></div></div>
+          <div class="stage" id="stage"></div>
+          <div class="hint" id="hint"><button type="button" id="hintL"></button><button type="button" id="hintR"></button></div>
+        </div>
+        <div class="fx"></div><div class="rollbar"></div>
+      </div>
+    </div>
+    <div class="chin">
+      <div class="plate">NEXUS MODS<span>MODEL YR-2026</span></div>
+      <div class="mark" aria-hidden="true">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="logo-flattened">
+<g id="logo-flattened_2" filter="url(#filter0_i_0_9)">
+<path d="M30.3283 0.0471906C30.9261 0.108738 31.5802 0.375063 32.2009 0.702337C32.8356 1.03697 33.4989 1.46988 34.1294 1.92378C35.3904 2.83168 36.5697 3.85983 37.205 4.45599L37.3565 4.59813L37.4101 4.79904C38.0498 7.19546 37.3199 9.70054 36.1956 12.1475C37.3584 14.5304 38.0111 17.2088 38.0111 20.0399C38.0111 21.8231 37.752 23.5457 37.2698 25.1721C38.4225 26.4586 39.3142 27.9487 39.884 29.704L39.9316 29.8506L39.9157 30.004C39.8538 30.6029 39.5875 31.2579 39.2603 31.8796C38.9258 32.5152 38.4932 33.1795 38.0396 33.8107C37.1324 35.0734 36.1053 36.2541 35.5098 36.89L35.3677 37.0417L35.1671 37.0953C32.9071 37.6989 30.5519 37.078 28.2418 36.0574C25.7858 37.3206 23.0015 38.0335 20.051 38.0335C18.1165 38.0335 16.2534 37.727 14.5075 37.16C13.1794 38.3734 11.6363 39.3048 9.80914 39.885L9.6624 39.9316L9.50947 39.9146C8.91212 39.8481 8.26031 39.5763 7.6423 39.2439C7.0104 38.9041 6.35062 38.4657 5.72393 38.0066C4.47042 37.0883 3.29963 36.0505 2.66934 35.4491L2.51901 35.3056L2.46708 35.1043C1.84071 32.6777 2.61291 30.1483 3.78392 27.6771C2.6977 25.3588 2.09065 22.7704 2.09065 20.0399C2.09065 18.2606 2.34845 16.5416 2.82866 14.9183C1.60813 13.5932 0.668435 12.0506 0.0786682 10.221L0.0313314 10.0742L0.0475098 9.92088C0.110639 9.32207 0.378337 8.66759 0.706763 8.04662C1.04257 7.41171 1.47655 6.74835 1.93139 6.118C2.84118 4.85719 3.87076 3.67863 4.46761 3.04391L4.60995 2.8925L4.81062 2.83934C7.13862 2.22264 9.56466 2.90417 11.9372 3.98287C14.3743 2.74438 17.1313 2.04632 20.051 2.04632C21.8965 2.04632 23.6769 2.32538 25.3526 2.84334C26.6708 1.61885 28.2064 0.674568 30.0289 0.0792076L30.1752 0.0313822L30.3283 0.0471906ZM12.9192 25.1703L14.4054 25.9687L14.1149 26.5925C13.4658 27.9859 12.0042 30.2559 10.1058 32.1663C8.64636 33.635 6.83593 34.9842 4.86394 35.466C5.37718 35.9041 5.97027 36.384 6.58145 36.8317C7.17711 37.2681 7.77758 37.6648 8.32945 37.9616C8.81685 38.2237 9.22246 38.3837 9.52951 38.4457C13.5927 37.09 16.1527 33.7021 18.1877 28.856L18.5171 28.0714L19.2395 28.5195C19.4057 28.6225 19.5603 28.717 19.7037 28.8035L18.1796 23.1101L12.9192 25.1703ZM30.4087 29.8047C27.8149 32.5651 24.1342 34.2888 20.0515 34.2888C19.0591 34.2888 18.0905 34.187 17.1555 33.9932C16.6897 34.7048 16.1913 35.3708 15.6544 35.9848C17.0542 36.3714 18.5285 36.578 20.051 36.578C24.7659 36.578 29.0191 34.5976 32.0271 31.4217C31.7548 31.1091 31.4646 30.8024 31.1604 30.5036C30.9151 30.2625 30.6634 30.0293 30.4087 29.8047ZM32.9298 32.5811C31.9959 33.5436 30.9554 34.4017 29.8274 35.1364C31.4184 35.7379 32.8817 36.0191 34.2341 35.8068C34.1292 34.7231 33.6487 33.6302 32.9298 32.5811ZM23.0781 21.4436L25.1738 26.6982L25.9596 25.2033L26.5844 25.4897C27.98 26.1295 30.2567 27.577 32.1777 29.4645C33.6545 30.9156 35.0146 32.7193 35.5103 34.6913C35.9437 34.1738 36.4182 33.5761 36.8605 32.9604C37.2916 32.3604 37.6831 31.7558 37.9753 31.2007C38.2333 30.7105 38.3899 30.3029 38.4495 29.9948C37.066 25.9343 33.6653 23.395 28.8132 21.3926L28.0276 21.0683L28.4694 20.3412C28.571 20.174 28.6641 20.0184 28.7494 19.8741L23.0781 21.4436ZM4.6497 29.3022C3.91283 31.0696 3.5382 32.6878 3.76002 34.1791C4.94277 34.0732 6.13968 33.518 7.28065 32.6924C6.27549 31.6742 5.39077 30.5364 4.6497 29.3022ZM20.0515 7.24653C16.4284 7.24653 13.158 8.75825 10.8339 11.1863C11.7506 11.8798 12.6413 12.4425 13.3635 12.8319L14.971 9.78901L18.8169 19.4899L8.41833 22.3446L9.06547 20.9282L9.06587 20.9274L9.06633 20.9262L9.06766 20.9234L9.07152 20.9151C9.07469 20.9083 9.07901 20.8991 9.08457 20.8875C9.09571 20.8642 9.1118 20.8311 9.13338 20.7878C9.17652 20.7013 9.24165 20.5742 9.33318 20.4042C9.44656 20.1935 9.60057 19.9167 9.80348 19.5692C8.96107 19.1977 8.15408 18.8033 7.38857 18.3802C7.31826 18.9235 7.28178 19.4775 7.28178 20.04C7.28178 23.5238 8.67174 26.6822 10.9262 28.9892C11.5798 28.1191 12.1128 27.2781 12.4873 26.5898L9.45888 24.9628L19.1624 21.1624L21.9553 31.5957L20.5451 30.9397L20.5442 30.9393L20.5403 30.9375L20.532 30.9335C20.5253 30.9303 20.5161 30.926 20.5045 30.9203C20.4813 30.9091 20.4484 30.8927 20.4053 30.8709C20.3192 30.8272 20.1927 30.7613 20.0234 30.6687C19.8138 30.5539 19.5384 30.3981 19.1926 30.1929C18.8079 31.0557 18.3995 31.8811 17.961 32.6625C18.6412 32.7748 19.3395 32.8334 20.0515 32.8334C23.6816 32.8334 26.9576 31.3156 29.2825 28.8791C28.3099 28.133 27.3577 27.5301 26.5938 27.1203L24.9926 30.1665L21.1268 20.4736L31.5195 17.5975L30.8753 19.0152L30.8749 19.0161L30.8731 19.02L30.8692 19.0284C30.8661 19.0351 30.8618 19.0443 30.8562 19.056C30.8451 19.0793 30.8291 19.1125 30.8076 19.1558C30.7647 19.2424 30.6998 19.3695 30.6086 19.5398C30.4957 19.7507 30.3423 20.0278 30.1401 20.3758C31.0432 20.7719 31.9058 21.1942 32.7204 21.6502C32.7866 21.1228 32.8209 20.5854 32.8209 20.04C32.8209 16.4818 31.371 13.2631 29.0309 10.9442C28.3711 11.8337 27.8349 12.6944 27.4605 13.3962L30.5022 14.998L20.8304 18.8786L17.9515 8.46885L19.3671 9.11312L19.368 9.11352L19.3718 9.11532L19.3802 9.11919C19.387 9.12234 19.3962 9.12666 19.4078 9.1322C19.4311 9.14329 19.4642 9.15928 19.5074 9.18076C19.5938 9.22373 19.7209 9.28865 19.8909 9.37986C20.1015 9.49287 20.3783 9.64633 20.7257 9.84864C21.1009 8.9882 21.4997 8.16448 21.9286 7.38387C21.3159 7.29345 20.6892 7.24653 20.0515 7.24653ZM4.02174 16.072C3.70928 17.3432 3.54344 18.6721 3.54344 20.0399C3.54344 24.6254 5.40608 28.7748 8.41467 31.7704C8.63871 31.5684 8.85949 31.3576 9.07625 31.1394C9.40191 30.8117 9.71356 30.4725 10.0091 30.1296C7.42698 27.55 5.82899 23.9821 5.82899 20.04C5.82899 19.1997 5.90158 18.3763 6.04084 17.5759C5.31949 17.1101 4.64438 16.6108 4.02174 16.072ZM31.5249 8.15008C31.2906 8.36366 31.06 8.58706 30.8339 8.81843C30.5223 9.13716 30.224 9.46651 29.9405 9.79942C32.6125 12.3899 34.2737 16.0205 34.2737 20.04C34.2737 20.8671 34.2033 21.6777 34.0683 22.4663C34.7893 22.9394 35.463 23.447 36.0829 23.9955C36.3934 22.7281 36.5584 21.4033 36.5584 20.0399C36.5583 15.3727 34.6286 11.157 31.5249 8.15008ZM4.46255 5.24267C4.02809 5.75923 3.55233 6.35599 3.10875 6.97072C2.67643 7.56985 2.28372 8.17362 1.99045 8.72812C1.73143 9.21785 1.57396 9.62506 1.51375 9.93302C2.88895 13.9964 6.28442 16.5427 11.1324 18.5551L11.9173 18.881L11.474 19.6071C11.3721 19.7742 11.2786 19.9296 11.1931 20.0737L16.8676 18.5159L14.7827 13.2569L13.9938 14.7502L13.3696 14.4625C11.9753 13.8198 9.7016 12.3678 7.78451 10.4763C6.31065 9.02213 4.95414 7.21568 4.46255 5.24267ZM30.3203 1.51617C26.2685 2.90546 23.7365 6.31446 21.7416 11.1772L21.4186 11.9645L20.6925 11.5225C20.5255 11.4208 20.3701 11.3275 20.226 11.2422L21.797 16.9229L27.0403 14.8192L25.5475 14.0331L25.8329 13.4069C26.4705 12.0082 27.9133 9.72612 29.7958 7.80009C31.2431 6.31936 33.0424 4.95523 35.0103 4.45712C34.4935 4.02333 33.8964 3.5484 33.2816 3.10574C32.6824 2.67432 32.0786 2.2826 31.5243 1.99035C31.0348 1.73224 30.6279 1.57562 30.3203 1.51617ZM36.1248 5.73487C34.9565 5.84923 33.7779 6.4027 32.6554 7.22199C33.6637 8.21724 34.5551 9.33095 35.3072 10.5407C36.0094 8.79499 36.355 7.19995 36.1248 5.73487ZM20.051 3.50182C15.3322 3.50183 11.076 5.48539 8.06753 8.66562C8.30145 8.92832 8.54772 9.18656 8.80388 9.43929C9.09562 9.72713 9.39631 10.0039 9.70055 10.2681C12.294 7.51178 15.9721 5.7911 20.0515 5.7911C20.9651 5.7911 21.8586 5.87749 22.7244 6.04243C23.1852 5.32452 23.6791 4.6523 24.2122 4.0319C22.8828 3.68602 21.4884 3.50182 20.051 3.50182ZM10.356 4.89042C8.68478 4.23018 7.15301 3.91116 5.74111 4.12975C5.84901 5.26947 6.37218 6.42012 7.15129 7.51988C8.11298 6.52555 9.18821 5.64208 10.356 4.89042Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_i_0_9" x="0.0313314" y="0.0313822" width="40.3169" height="40.3169" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="0.416667" dy="0.416667"/>
+<feGaussianBlur stdDeviation="0.208333"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.32 0"/>
+<feBlend mode="normal" in2="shape" result="effect1_innerShadow_0_9"/>
+</filter>
+</defs>
+</svg>
+      </div>
+      <div class="controls">
+        <button class="hw step" id="backBtn" type="button" aria-label="Back"><svg width="10" height="12" viewBox="0 0 10 12" aria-hidden="true"><path d="M10 12V0L0 6.5 10 12Z" fill="currentColor"/></svg></button>
+        <button class="hw step" id="nextBtn" type="button" aria-label="Continue"><svg width="10" height="12" viewBox="0 0 10 12" aria-hidden="true"><path d="M0 0v12l10-5.5L0 0Z" fill="currentColor"/></svg></button>
+        <button class="hw chin-menu" id="menuBtn" type="button">MENU</button>
+        <button class="hw theme" id="themeBtn" type="button" aria-pressed="false" aria-label="Switch to light mode">
+          <span class="theme-knob">
+            <svg class="ico ico-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 14.5A8.5 8.5 0 1 1 9.5 3a7 7 0 0 0 11.5 11.5z"/></svg>
+            <svg class="ico ico-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          </span>
+        </button>
+        <button class="hw power" id="powerBtn" type="button" aria-label="Power">⏻</button>
+        <span class="led" id="led"></span>
+      </div>
+    </div>
+  </div>
+  <div class="stand"></div>
+</div>
+<div class="keys-help">Keys: 1–4 answer · Space / → continue · ← back · M menu · figures to 4 Nov</div>
+
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = s => document.querySelector(s);
+const fmt = (v, f) => {
+  if (f === 'M') return (v/1e6).toFixed(1).replace(/\.0$/,'') + 'M';
+  if (f === 'M2') return (v/1e6).toFixed(2) + 'M';
+  if (f === 'B') return (v/1e9).toFixed(1) + 'B';
+  if (f === 'K') return (v/1e3).toFixed(1).replace(/\.0$/,'') + 'K';
+  if (f === '$M') return '$' + (v/1e6).toFixed(2) + 'M';
+  if (f === '$K') return '$' + Math.round(v/1e3) + 'K';
+  return Math.round(v).toLocaleString('en-GB');
+};
+function countUp(el, to, f, ms = 1200, done) {
+  if (reduce) { el.textContent = fmt(to, f); done && done(); return; }
+  const t0 = performance.now();
+  const step = t => { if (!el.isConnected) return; const p = Math.min(1, (t - t0) / ms); el.textContent = fmt(to * (1 - Math.pow(1 - p, 3)), f); p < 1 ? requestAnimationFrame(step) : done && done(); };
+  requestAnimationFrame(step);
+}
+const stagger = (els, total = 1100) => els.forEach((el, i) => setTimeout(() => el.classList.add('on'), reduce ? 0 : Math.round(i * total / Math.max(1, els.length))));
+const cells = (n, on) => Array.from({length:n}, (_, i) => `<i class="${i < on ? 'on' : ''}"></i>`).join('');
+let msgT;
+function osd(msg) { document.querySelectorAll('.osd-msg').forEach(m => m.remove()); const m = document.createElement('div'); m.className = 'osd-msg'; m.textContent = msg; $('#screen').appendChild(m); clearTimeout(msgT); msgT = setTimeout(() => m.remove(), 2400); }
+
+/* ---------- Quiz content ----------
+   Figures are as of 4 November 2026. The reporting window closes on 24 November.
+   Questions 6 and 8 are still sample data. See docs/content.md. */
+const QUIZ = [
+  {name:'Audience', lv:1, bg:'question1-bg.jpg', q:'How many new players joined Nexus Mods in 2026?', ctx:'Every modding journey starts with an account.',
+   opts:['12.1 million','2.4 million','6 million','24 million'], a:0, close:[2,3],
+   reveal:{value:12112164, f:'M2', unit:'NEW PLAYERS', line:'And 10.8 million of them downloaded a mod.', gfx:{type:'people', on:24, prev:0, total:30, legend:['1 figure = 500,000 players','']}},
+   cmp:{h:'Already level with last year, with three weeks to go', vs:{prev:12083448, cur:12112164, f:'M2'}, an:{big:'2.5s', em:'2.5 seconds', text:'On average, a new account was created every 2.5 seconds.'}}},
+  {name:'Catalogue', lv:2, part:'1/2', q:'How many new games got their own home on Nexus Mods this year?', ctx:'New worlds, new communities.',
+   opts:['400','1,605','900','3,200'], a:1, close:[2,3],
+   reveal:{value:1605, f:'int', unit:'NEW GAMES ADDED', line:'Biggest newcomer: Resident Evil Requiem, downloaded by 9.2 million people.', gfx:{type:'squares', on:161, total:180, cols:20, legend:['1 square = 10 games','']}},
+   cmp:{h:'More than four new games, every day', vs:{prev:917, cur:1605, f:'int'}, an:{big:'4.7', em:'4.7', text:'4.7 new games a day, on average.'}}},
+  {name:'Catalogue', lv:2, part:'2/2', q:'How many games passed 1 million mod downloads this year?', ctx:'The one-million club.',
+   opts:['25','55','240','110'], a:3, close:[1,2],
+   reveal:{value:110, f:'int', unit:'GAMES WITH 1M+ DOWNLOADS', line:'And 32 of them passed 10 million.', gfx:{type:'squares', on:110, hi:32, total:120, cols:20, legend:['1 square = 1 game','Bright = 10M+']}},
+   cmp:{h:'The one-million club keeps growing', vs:{prev:93, cur:110, f:'int'}, an:{big:'32', em:'32', text:'32 games reached 10 million downloads. At one a second, that takes nearly four months.'}}},
+  {name:'Creators', lv:3, part:'1/2', q:'How many people published their first ever mod in 2026?', ctx:'Every creator starts somewhere.',
+   opts:['42,200','8,000','18,000','90,000'], a:0, close:[2,3],
+   reveal:{value:42183, f:'K', unit:'FIRST-TIME CREATORS', line:'How many updates they shipped on top of that is still to come.', gfx:{type:'squares', on:84, total:100, cols:20, legend:['1 brick = 500 creators','']}},
+   cmp:{h:'A new creator about every 12 minutes', vs:{prev:25885, cur:42183, f:'K'}, an:{big:'8×', em:'eight times', text:'Enough new creators to fill the Royal Albert Hall eight times.'}}},
+  {name:'Creators', lv:3, part:'2/2', q:'How many live collections did the community create in 2026?', ctx:'Curated loadouts, ready to install.',
+   opts:['1,500','3,000','5,975','12,000'], a:2, close:[1,3],
+   reveal:{value:5975, f:'int', unit:'LIVE COLLECTIONS', line:'Staff pick of the year is still to be chosen.', gfx:{type:'squares', on:30, total:40, cols:10, legend:['1 crate = 200 collections','']}},
+   cmp:{h:'Live collections are up by half', vs:{prev:3876, cur:5975, f:'int'}, an:{big:'17', em:'17', text:'17 new live collections every day.'}}},
+  {name:'Loot', lv:4, q:'How much did creators earn through Donation Points in 2026?', ctx:'Downloads turn into real rewards.',
+   opts:['$0.9M','$3.6M','$1.8M','$7.2M'], a:1, close:[2,3],
+   reveal:{value:3.62e6, f:'$M', unit:'PAID TO CREATORS', line:'Sample figure. Needs sign-off before launch.', gfx:{type:'coins', q:[0.82,0.86,0.93,1.01], legend:['Paid per quarter','1 coin = $100K']}},
+   cmp:{h:'Creators earned more than ever', vs:{prev:3.0e6, cur:3.62e6, f:'$M'}, an:{big:'$9.9K', em:'$9.9K', text:'Sample figure. About $9.9K paid out every day.'}}},
+  {name:'Peak hours', lv:5, q:'Which month was our busiest for downloads?', ctx:'Launches and updates send traffic through the roof.',
+   opts:['June','September','November','January'], a:3, close:[],
+   reveal:{value:828e6, f:'M', unit:'DOWNLOADS IN JANUARY', line:'October was the next busiest, at 706 million.', gfx:{type:'bars', v:[666,828,648,561,508,545,621,629,680,618,706], labels:['D','J','F','M','A','M','J','J','A','S','O'], hi:1, legend:['Dec to Oct, in millions','']}},
+   cmp:{h:'January beat a typical month by about a third', vs:{prev:637e6, cur:828e6, f:'M', labels:['AVG','JAN']}, an:{big:'+30%', em:'+30%', text:'+30% more than a typical month this year.'}}},
+  {name:'Side quests', lv:6, q:'How many community events did we host in 2026?', ctx:'From Las Vegas to modding festivals.',
+   opts:['6','2','4','10'], a:0, close:[2,3],
+   reveal:{value:6, f:'int', unit:'EVENTS HOSTED', line:'Sample figure. The real event list is still to come.', gfx:{type:'timeline', ev:[[1.9,'Vegas'],[3.5,'[Event]'],[5.2,'Modfest'],[7.4,'[Event]'],[9,'[Event]'],[10.4,'Skyrim 15']], legend:['Events through the year','']}},
+   cmp:{h:'Our busiest year for events, and for giving back', vs:{prev:3, cur:6, f:'int'}, an:{big:'$96K', em:'$96K', text:'Sample figure. $96K raised for charity is still to come.'}}},
+  {name:'Platform', lv:7, boss:true, q:'How often was a mod downloaded in 2026, on average?', ctx:'The big one. Every download, all year.',
+   opts:['Every second','Every 4 milliseconds','Every 100 milliseconds','Every millisecond'], a:1, close:[2,3],
+   reveal:{value:7.218629396e9, f:'B', unit:'DOWNLOADS SO FAR', line:'Watch it tick at this year\u2019s average rate.', gfx:{type:'ticker', rate:243, legend:['Downloads since this screen opened','']}},
+   cmp:{h:'We passed 25 billion downloads, all time', vs:{prev:5.859733712e9, cur:7.218629396e9, f:'B', labels:['2025','2026']}, an:{big:'29 Aug', em:'29 August', text:'All-time downloads passed 25 billion on 29 August 2026.'}}},
+];
+const RANKS = [
+  [0,'VANILLA PLAYER',"You've got the base game. Time to install some mods."],
+  [3,'WEEKEND MODDER','You know your way around a load order.'],
+  [6,'LOAD ORDER WIZARD','Not a single conflict in sight.'],
+  [8,'NEXUS LEGEND','You clearly read the patch notes. All of them.'],
+];
+
+/* ---------- Screens ---------- */
+const S = [{kind:'title'}];
+QUIZ.forEach((Q, i) => { S.push({kind:'question', i}); S.push({kind:'reveal', i}); S.push({kind:'compare', i}); });
+S.push({kind:'results'});
+const CARDS = ['cards/01-audience.png','cards/02-catalogue.png','cards/03-catalogue.png','cards/04-creators.png','cards/05-creators.png','cards/06-money.png','cards/07-peak.png','cards/08-events.png','cards/09-boss.png'];
+const CARD_BACK = 'cards/back.png';
+let answers = [], dealt = [], dealing = false;
+const won = a => a && a.res !== 'no';
+function score(i, pick) {
+  const Q = QUIZ[i]; const res = pick === Q.a ? 'ok' : Q.close.includes(pick) ? 'close' : 'no';
+  answers[i] = {pick, res}; return answers[i];
+}
+function likeHtml(an) {
+  const i = an.em ? an.text.indexOf(an.em) : -1;
+  if (i < 0) return an.text;
+  return an.text.slice(0, i) + '<b>' + an.em + '</b>' + an.text.slice(i + an.em.length);
+}
+function hud() {
+  const el = $('#deck'); if (!el) return;
+  if (!dealt.length) { el.style.width = ''; el.innerHTML = '<i class="slot" aria-hidden="true"></i>'; return; }
+  el.style.width = `calc(var(--card-w) + ${dealt.length - 1} * var(--step))`;
+  el.innerHTML = dealt.map((i, n) => `<img class="mini${won(answers[i]) ? '' : ' miss'}" style="left:calc(${n} * var(--step));z-index:${n + 1}" src="${CARDS[i]}" alt="${QUIZ[i].name}${won(answers[i]) ? '' : ', missed'}">`).join('');
+}
+
+/* ---------- Graphics ---------- */
+function gfx(g) {
+  if (g.type === 'people') return `<div class="units people" id="g" style="grid-template-columns:repeat(10,minmax(0,1fr))">${Array.from({length:g.total}, (_, k) => `<i data-k="${k}"></i>`).join('')}</div>`;
+  if (g.type === 'squares') return `<div class="units" id="g" style="grid-template-columns:repeat(${g.cols},minmax(0,1fr))">${'<i></i>'.repeat(g.total)}</div>`;
+  if (g.type === 'bars') { const max = Math.max(...g.v); return `<div class="bars" id="g" style="grid-template-columns:repeat(${g.v.length},minmax(0,1fr))">${g.v.map((v, k) => `<div class="b ${k === g.hi ? 'hi' : ''}"><span>${k === g.hi ? v : ''}</span><i data-h="${v / max * 100}"></i></div>`).join('')}</div><div class="blabels" style="grid-template-columns:repeat(${g.v.length},minmax(0,1fr))">${g.labels.map(l => `<span>${l}</span>`).join('')}</div>`; }
+  if (g.type === 'coins') return `<div class="stacks" id="g">${g.q.map(v => `<div class="stack">${'<i></i>'.repeat(Math.round(v * 10))}</div>`).join('')}</div><div class="blabels" style="grid-template-columns:repeat(4,minmax(0,1fr))"><span>Q1</span><span>Q2</span><span>Q3</span><span>Q4</span></div>`;
+  if (g.type === 'timeline') return `<div class="tl" id="g"><div class="line"></div>${g.ev.map(([m, t]) => `<div class="m" style="left:${m / 12 * 100}%"><i></i><span>${t}</span></div>`).join('')}${['JAN','APR','JUL','OCT'].map((m, k) => `<span class="mo" style="left:${k * 25 + 2}%">${m}</span>`).join('')}</div>`;
+  if (g.type === 'ticker') return `<div class="ticker"><div class="n ab" id="tick">0</div><div class="flow">${'<i></i>'.repeat(9).replace(/<i><\/i>/g, (m, o) => `<i style="animation-delay:${(o % 7) * 70}ms"></i>`)}</div></div>`;
+  return '';
+}
+function animate(g) {
+  const el = $('#g');
+  if (g.type === 'people') { const is = [...el.children]; is.forEach((x, k) => k < g.prev && x.classList.add('prev')); stagger(is.slice(0, g.on)); }
+  if (g.type === 'squares') { const cs = [...el.children]; if (g.hi) cs.slice(g.hi, g.on).forEach(x => x.classList.add('lo')); stagger(cs.slice(0, g.on), 1300); }
+  if (g.type === 'bars') [...el.querySelectorAll('i')].forEach((x, k) => setTimeout(() => x.style.height = x.dataset.h + '%', reduce ? 0 : 60 * k));
+  if (g.type === 'coins') stagger([...el.querySelectorAll('i')], 1300);
+  if (g.type === 'timeline') stagger([...el.querySelectorAll('.m')], 1200);
+  if (g.type === 'ticker') { const t0 = performance.now(), n = $('#tick'); const id = setInterval(() => { if (!n.isConnected) return clearInterval(id); n.textContent = Math.floor((performance.now() - t0) / 1000 * g.rate).toLocaleString('en-GB'); }, 50); }
+}
+
+/* ---------- Renderers ---------- */
+const L = Q => `LEVEL ${String(Q.lv).padStart(2,'0')}`;
+const LEVELS = ['', 'ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN'];
+const SKULL = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.2a7.4 7.4 0 0 0-7.4 7.4c0 2.1.9 3.8 2 5.1.4.4.6 1 .6 1.5V19h2.3v-1.5h1.3V19h2.4v-1.5H14.5V19h2.3v-2.8c0-.5.2-1.1.6-1.5 1.1-1.3 2-3 2-5.1A7.4 7.4 0 0 0 12 2.2Zm-2.5 8.1a1.45 1.45 0 1 1 0-2.9 1.45 1.45 0 0 1 0 2.9Zm5 0a1.45 1.45 0 1 1 0-2.9 1.45 1.45 0 0 1 0 2.9ZM9.4 15.2h1.4v1.4H9.4Zm2 0h1.4v1.4h-1.4Zm2 0h1.4v1.4h-1.4Z"/></svg>`;
+const R = {
+  title: () => {
+    const logo = document.querySelector('.mark') ? document.querySelector('.mark').innerHTML : '';
+    return `<div class="title"><div class="title-mark" aria-hidden="true">${logo}</div><div class="lockup"><div class="brand">NEXUS MODS PRESENTS</div><h1 class="ab">2026</h1><h2>THE YEAR IN REVIEW QUIZ</h2></div>
+    <p>Nine questions about the year on Nexus Mods. Guess right, collect the cards, and see how well versed you are in Nexus lore.</p>
+    <button class="start" id="start" type="button">PRESS START</button><div class="foot">© 2026 NEXUS MODS · 1 PLAYER · FIGURES TO 4 NOV</div></div>`;
+  },
+  question: s => { const Q = QUIZ[s.i], A = answers[s.i];
+    const eye = Q.boss ? 'FINAL BOSS · PLATFORM' : `Q-${String(s.i + 1).padStart(2, '0')}: ${Q.name.toUpperCase()}`;
+    return `<div class="q"><div class="q-head"><div class="eyebrow${Q.boss ? ' boss' : ''}">${eye}</div><h2>${Q.q}</h2></div>
+      <div class="opts">${Q.opts.map((o, k) => `<button type="button" class="opt ${A ? (k === Q.a ? 'right' : k === A.pick ? 'wrong' : 'dim') : ''}" data-k="${k}" ${A ? 'disabled' : ''}><span class="k">${'ABCD'[k]}</span><span>${o}</span></button>`).join('')}</div></div>`; },
+  reveal: s => { const Q = QUIZ[s.i], A = answers[s.i] || {res:'no'}, r = Q.reveal;
+    const v = A.res === 'ok' ? 'CORRECT' : A.res === 'close' ? 'SO CLOSE' : 'WRONG ANSWER';
+    return `<div class="rv"><div class="verdict ${A.res}">${A.res === 'no' ? SKULL : ''}${v}</div><div class="rv-grid"><div class="stat"><div class="figure"><div class="big ab" id="val">0</div><div class="unit">${r.unit}</div></div><p class="rv-line">${r.line}</p></div>
+      <div class="gfx">${gfx(r.gfx)}<div class="legend"><span>${r.gfx.legend[0]}</span><span>${r.gfx.legend[1]}</span></div></div></div></div>`; },
+  compare: s => { const Q = QUIZ[s.i], c = Q.cmp, max = Math.max(c.vs.prev, c.vs.cur), lb = c.vs.labels || ['2025','2026'];
+    const pct = (c.vs.cur / c.vs.prev - 1) * 100;
+    const shown = Math.abs(pct) < 1 ? pct.toFixed(1) : String(Math.round(pct));
+    const sign = shown.startsWith('-') ? '' : '+';
+    const stripes = 18;
+    const col = (v, label, now) => {
+      const on = Math.round(v / max * stripes);
+      const bars = Array.from({length: stripes}, (_, k) => `<i${k < stripes - on ? ' class="dim"' : ''}></i>`).join('');
+      return `<div class="col${now ? ' now' : ''}"><b>${fmt(v, c.vs.f)}</b><div class="track">${bars}</div><span class="yr">${label}${now ? `<em class="delta">${sign}${shown}% ▲</em>` : ''}</span></div>`;
+    };
+    const missed = answers[s.i] && answers[s.i].res === 'no';
+    return `<div class="cmp"><div class="eyebrow">COMPARED TO LAST YEAR</div><div class="cmp-grid">
+      <div class="yearbars">${col(c.vs.prev, lb[0], false)}${col(c.vs.cur, lb[1], true)}</div>
+      <div class="panel"><div class="hero${missed ? ' miss' : ''}" id="hero"><div class="hero-spin"><img class="face front" src="${CARDS[s.i]}" alt=""><img class="face back" src="${CARD_BACK}" alt=""><i class="edge"></i></div></div>
+      <p class="like">${likeHtml(c.an)}</p></div></div></div>`; },
+  results: () => { const right = answers.filter(a => a && a.res === 'ok').length; const rank = [...RANKS].reverse().find(r => right >= r[0]);
+    let best = 0; try { best = +localStorage.getItem('yir-correct-best') || 0; if (right > best) localStorage.setItem('yir-correct-best', right); } catch (e) {}
+    const hand = QUIZ.map((Q, k) => `<img class="${won(answers[k]) ? '' : 'miss'}" src="${CARDS[k]}" alt="${Q.name}${won(answers[k]) ? '' : ', missed'}">`).join('');
+    return `<div class="res"><div class="eyebrow">FINAL RESULTS</div><div class="rank ab">${rank[1]}</div><div class="muted">${rank[2]}</div>
+      <div class="hand">${hand}</div>
+      <div class="muted">${right} of ${QUIZ.length} correct${best && right <= best ? ' · BEST ' + best : right > best && best ? ' · NEW BEST' : ''}</div>
+      <div class="row"><button class="key" id="shareRes" type="button">SAVE RESULT CARD</button><button class="key" id="again" type="button">PLAY AGAIN</button><a class="key" href="https://www.nexusmods.com" target="_blank" rel="noopener">EXPLORE MODS</a></div></div>`; }
+};
+const INIT = {
+  title() { $('#start').onclick = next; },
+  question(s) {
+    if (answers[s.i]) return;
+    document.querySelectorAll('.opt').forEach(b => b.onclick = () => choose(s.i, +b.dataset.k));
+    document.querySelector('.opt').focus({preventScroll:true});
+  },
+  reveal(s) { const r = QUIZ[s.i].reveal; countUp($('#val'), r.value, r.f, 1200); animate(r.gfx); },
+  compare() {},
+  results() {
+    $('#again').onclick = restart; $('#shareRes').onclick = () => osd('RESULT CARD SAVED (PROTOTYPE)');
+  }
+};
+function choose(i, k) {
+  if (answers[i]) return;
+  const A = score(i, k), Q = QUIZ[i];
+  document.querySelectorAll('.opt').forEach((b, j) => { b.disabled = true; b.classList.add(j === Q.a ? 'right' : j === k ? 'wrong' : 'dim'); });
+  setTimeout(() => { if (S[idx].kind === 'question' && S[idx].i === i) next(); }, reduce ? 400 : 1100);
+}
+function restart() { answers = []; dealt = []; dealing = false; hud(); go(0); }
+
+/* ---------- Static + transitions ---------- */
+const cv = $('#static'), cx = cv.getContext('2d'), img = cx.createImageData(160, 120);
+function staticBurst(ms, mid) {
+  if (reduce) { mid(); return; }
+  cv.hidden = false; const t0 = performance.now(); let swapped = false;
+  (function f(t) { const d = img.data; for (let i = 0; i < d.length; i += 4) { const v = Math.random() * 200 | 0; d[i] = v + 30; d[i+1] = v + 15; d[i+2] = v; d[i+3] = 255; }
+    cx.putImageData(img, 0, 0); if (!swapped && t - t0 > ms / 2) { swapped = true; mid(); } if (t - t0 < ms) requestAnimationFrame(f); else cv.hidden = true; })(t0);
+}
+
+/* ---------- Engine ---------- */
+let idx = 0, on = true;
+const chOf = s => s.i !== undefined ? QUIZ[s.i].lv : s.kind === 'results' ? 8 : 0;
+const CHEV_L = `<svg width="10" height="12" viewBox="0 0 10 12" aria-hidden="true"><path d="M8 1 2 6l6 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>`;
+const CHEV_R = `<svg width="10" height="12" viewBox="0 0 10 12" aria-hidden="true"><path d="M2 1l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>`;
+function render() {
+  const s = S[idx]; $('#menu') && $('#menu').remove();
+  $('#content').classList.toggle('is-title', s.kind === 'title');
+  $('#content').classList.toggle('is-question', s.kind === 'question');
+  $('#content').classList.toggle('is-results', s.kind === 'results');
+  const bg = $('#qbg');
+  const picture = s.kind === 'question' && QUIZ[s.i].bg;
+  bg.hidden = !picture;
+  bg.style.backgroundImage = picture ? `url("${QUIZ[s.i].bg}")` : '';
+  $('#stage').innerHTML = R[s.kind](s); $('#stage').scrollTop = 0; INIT[s.kind] && INIT[s.kind](s);
+  const Q = s.i !== undefined ? QUIZ[s.i] : null;
+  if (!Q) {
+    $('#ch').textContent = s.kind === 'results' ? 'RESULTS' : '';
+    $('#qprog').innerHTML = s.kind === 'results' ? `QUESTION ${QUIZ.length}/${QUIZ.length} <i class="prog" aria-hidden="true"><b style="width:100%"></b></i>` : '';
+  } else {
+    $('#ch').textContent = Q.boss ? 'FINAL BOSS' : `LEVEL ${LEVELS[Q.lv]} · ${Q.name.toUpperCase()}`;
+    const n = s.i + 1;
+    $('#qprog').innerHTML = `QUESTION ${n}/${QUIZ.length} <i class="prog" aria-hidden="true"><b style="width:${Math.round(n / QUIZ.length * 100)}%"></b></i>`;
+  }
+  hud();
+  const nav = s.kind === 'reveal' || s.kind === 'compare';
+  $('#hintL').innerHTML = nav ? CHEV_L + '<span>BACK</span>' : '';
+  $('#hintR').innerHTML = nav ? '<span>NEXT</span>' + CHEV_R : '';
+  $('#hint').classList.toggle('on', nav);
+  $('#backBtn').disabled = idx === 0; $('#nextBtn').disabled = s.kind === 'results' || (s.kind === 'question' && !answers[s.i]);
+}
+function go(i) {
+  if (!on) return;
+  const from = S[idx]; idx = Math.max(0, Math.min(S.length - 1, i)); const to = S[idx], c = $('#content');
+  if (chOf(from) !== chOf(to)) staticBurst(420, () => { render(); });
+  else { render(); if (!reduce) { c.classList.remove('poweron', 'glitch'); void c.offsetWidth; c.classList.add('glitch'); } }
+}
+function deal(i, done) {
+  const finish = () => { if (!dealt.includes(i)) dealt.push(i); done(); };
+  const hero = document.querySelector('#hero');
+  const deck = document.querySelector('#deck');
+  if (reduce || !hero || !deck) { finish(); return; }
+  const spin = hero.querySelector('.hero-spin');
+  spin.style.animation = 'none'; spin.style.transform = 'rotateY(0deg)';
+  const screen = $('#screen').getBoundingClientRect();
+  const from = hero.getBoundingClientRect();
+  const slot = deck.getBoundingClientRect();
+  const h = slot.height || from.height * .28;
+  const w = h * .75;
+  const flyer = document.createElement('img');
+  flyer.className = 'flyer' + (won(answers[i]) ? '' : ' miss');
+  flyer.src = CARDS[i]; flyer.alt = '';
+  flyer.style.left = (from.left - screen.left) + 'px';
+  flyer.style.top = (from.top - screen.top) + 'px';
+  flyer.style.width = from.width + 'px';
+  flyer.style.height = from.height + 'px';
+  $('#screen').appendChild(flyer);
+  hero.style.visibility = 'hidden';
+  let gone = false;
+  const end = () => { if (gone) return; gone = true; flyer.remove(); finish(); };
+  flyer.addEventListener('transitionend', end);
+  setTimeout(end, 750);
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    flyer.style.left = (slot.right - screen.left - w) + 'px';
+    flyer.style.top = (slot.top - screen.top) + 'px';
+    flyer.style.width = w + 'px';
+    flyer.style.height = h + 'px';
+  }));
+}
+function next() {
+  if (dealing) return;
+  const s = S[idx];
+  if (s.kind === 'question' && !answers[s.i]) { osd('PICK AN ANSWER FIRST'); return; }
+  if (s.kind === 'results') return;
+  if (s.kind === 'compare' && !dealt.includes(s.i)) {
+    dealing = true;
+    deal(s.i, () => { dealing = false; go(idx + 1); });
+    return;
+  }
+  go(idx + 1);
+}
+function back() { if (idx > 0) go(idx - 1); }
+$('#nextBtn').onclick = next; $('#backBtn').onclick = back;
+$('#hintR').onclick = next; $('#hintL').onclick = back;
+
+function powerToggle() {
+  const c = $('#content');
+  if (on) { on = false; c.classList.remove('poweron', 'glitch'); c.classList.add('poweroff'); $('#led').classList.add('off'); }
+  else { on = true; idx = 0; answers = []; dealt = []; dealing = false; render(); c.classList.remove('poweroff'); void c.offsetWidth; c.classList.add('poweron'); $('#led').classList.remove('off'); }
+}
+$('#powerBtn').onclick = powerToggle;
+
+function currentTheme() {
+  return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+}
+function applyTheme(theme, save) {
+  document.documentElement.setAttribute('data-theme', theme);
+  const light = theme === 'light';
+  const btn = $('#themeBtn');
+  btn.setAttribute('aria-pressed', light ? 'true' : 'false');
+  btn.setAttribute('aria-label', light ? 'Switch to dark mode' : 'Switch to light mode');
+  if (save) { try { localStorage.setItem('yir-theme', theme); } catch (e) {} }
+}
+applyTheme(currentTheme(), false);
+$('#themeBtn').onclick = () => applyTheme(currentTheme() === 'light' ? 'dark' : 'light', true);
+matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {
+  let saved = null;
+  try { saved = localStorage.getItem('yir-theme'); } catch (err) {}
+  if (!saved) applyTheme(e.matches ? 'light' : 'dark', false);
+});
+
+function openMenu() {
+  if (!on) return; if ($('#menu')) { $('#menu').remove(); return; }
+  const items = [['RESUME', () => {}], ['RESTART QUIZ', restart], ['POWER OFF', powerToggle]];
+  let pos = 0; const m = document.createElement('div'); m.className = 'menu'; m.id = 'menu';
+  const right = answers.filter(a => a && a.res === 'ok').length;
+  const cards = dealt.filter(i => won(answers[i])).length;
+  m.innerHTML = `<div class="menu-box"><h3>PAUSED</h3>${items.map(([t], k) => `<button type="button">${t}</button>`).join('')}<small>${cards} ${cards === 1 ? 'card' : 'cards'} · ${right} correct so far · ↑ ↓ and Enter</small></div>`;
+  $('#content').appendChild(m);
+  const btns = [...m.querySelectorAll('button')]; const mark = () => btns.forEach((b, k) => b.setAttribute('aria-current', k === pos));
+  btns.forEach((b, k) => { b.onmouseenter = () => { pos = k; mark(); }; b.onclick = () => { m.remove(); items[k][1](); }; });
+  m.onkey = ev => { if (ev.key === 'ArrowDown') { pos = (pos + 1) % btns.length; mark(); } else if (ev.key === 'ArrowUp') { pos = (pos + btns.length - 1) % btns.length; mark(); } else if (ev.key === 'Enter' || ev.key === ' ') btns[pos].click(); else if (ev.key === 'Escape' || ev.key.toLowerCase() === 'm') m.remove(); };
+  mark(); btns[0].focus();
+}
+$('#menuBtn').onclick = openMenu;
+
+const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a']; let kpos = 0;
+document.addEventListener('keydown', ev => {
+  kpos = ev.key === KONAMI[kpos] ? kpos + 1 : (ev.key === KONAMI[0] ? 1 : 0);
+  if (kpos === KONAMI.length) { kpos = 0; osd('CHEAT ACCEPTED'); return; }
+  const menu = $('#menu'); if (menu) { ev.preventDefault(); menu.onkey(ev); return; }
+  if (!on) return;
+  const s = S[idx], k = ev.key.toLowerCase();
+  if (s.kind === 'question' && !answers[s.i] && '1234abcd'.includes(k) && k.length === 1) { const n = '1234'.includes(k) ? +k - 1 : 'abcd'.indexOf(k); choose(s.i, n); return; }
+  const tag = ev.target.tagName;
+  if (k === ' ' || k === 'enter' || k === 'arrowright') { if (tag === 'BUTTON' && k !== 'arrowright') return; ev.preventDefault(); next(); }
+  else if (k === 'arrowleft') back();
+  else if (k === 'm') openMenu();
+});
+render(); if (!reduce) $('#content').classList.add('poweron');
+</script>
+</body>
+</html>
