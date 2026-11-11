@@ -197,29 +197,17 @@ canvas.static{position:absolute;inset:0;width:100%;height:100%;image-rendering:p
 .opt.right{border-color:var(--cyan);background:none;color:#fff}
 .opt.right .k{background:none;color:var(--cyan);border:2px solid var(--cyan);box-sizing:border-box}
 .opt.right .k svg{width:3.6cqh;height:3.6cqh;display:block}
-.opt.wrong{border-color:var(--bad);background:none;color:var(--bad);animation:shake .25s steps(2)}
+.opt.wrong{border-color:var(--bad);background:none;color:var(--bad)}
 .opt.wrong .k{background:none;color:var(--bad);border:2px solid var(--bad);box-sizing:border-box}
+.opt.wrong .k svg{width:3.6cqh;height:3.6cqh;display:block}
 .opt.dim{opacity:.35}
-@keyframes shake{50%{transform:translateX(-3%)}}
 
 /* Reveal */
 .rv{display:grid;gap:3.3cqh;justify-items:start}
 .verdict{display:inline-flex;align-items:center;gap:1.5cqh;font-weight:700;font-size:2.7cqh;line-height:1.45;letter-spacing:.1em;padding:1.8cqh 2.4cqh;border:4px solid currentColor;justify-self:start}
 .verdict svg{width:3.6cqh;height:3.6cqh;display:block;flex:none}
 .verdict.ok{color:var(--cyan)}
-.verdict.close{color:var(--orange)}
 .verdict.no{color:var(--bad)}
-.figure{position:relative}
-/* A correct answer locks the signal: the number stays split, then the colours snap together, and one bright line drops down the glass. */
-.rv.hit .big{animation:lock 1.35s linear both}
-.rv.hit .verdict{animation:bloom 1.35s ease-out both}
-.screen.locking::after{content:"";position:absolute;z-index:7;left:0;right:0;height:18%;top:-22%;pointer-events:none;background:linear-gradient(to bottom, transparent 0%, rgba(94,234,212,.45) 38%, #fff 50%, rgba(94,234,212,.45) 62%, transparent 100%);animation:sweep 1.15s linear both}
-@keyframes lock{
-  0%,46%{text-shadow:-.16em 0 #ff294f, .16em 0 #3dc7ff, 0 0 .14em #fff;filter:brightness(1.7)}
-  70%,100%{text-shadow:-.045em 0 rgba(255,41,79,.55), .045em 0 rgba(61,199,255,.45), 0 0 .08em rgba(255,255,255,.55);filter:none}
-}
-@keyframes bloom{0%,46%{filter:brightness(2.2);box-shadow:0 0 1.4em var(--cyan)}100%{filter:none;box-shadow:none}}
-@keyframes sweep{0%{top:-22%;opacity:0}10%{opacity:1}82%{opacity:1}100%{top:108%;opacity:0}}
 .rv-grid{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:3.6cqh;align-items:center;width:100%}
 .stat{display:grid;gap:3.6cqh;min-width:0}
 .figure{display:grid;gap:.3cqh;min-width:0}
@@ -555,11 +543,10 @@ const R = {
   question: s => { const Q = QUIZ[s.i], A = answers[s.i];
     const eye = Q.boss ? 'FINAL BOSS · PLATFORM' : `Q-${String(s.i + 1).padStart(2, '0')}: ${Q.name.toUpperCase()}`;
     return `<div class="q"><div class="q-head"><div class="eyebrow${Q.boss ? ' boss' : ''}">${eye}</div><h2>${Q.q}</h2></div>
-      <div class="opts">${Q.opts.map((o, k) => `<button type="button" class="opt ${A ? (k === Q.a ? 'right' : k === A.pick ? 'wrong' : 'dim') : ''}" data-k="${k}" ${A ? 'disabled' : ''}><span class="k">${A && k === Q.a ? TICK : 'ABCD'[k]}</span><span>${o}</span></button>`).join('')}</div></div>`; },
+      <div class="opts">${Q.opts.map((o, k) => `<button type="button" class="opt ${A ? (k === Q.a ? 'right' : k === A.pick ? 'wrong' : 'dim') : ''}" data-k="${k}" ${A ? 'disabled' : ''}><span class="k">${A ? (k === Q.a ? TICK : k === A.pick ? SKULL : 'ABCD'[k]) : 'ABCD'[k]}</span><span>${o}</span></button>`).join('')}</div></div>`; },
   reveal: s => { const Q = QUIZ[s.i], A = answers[s.i] || {res:'no'}, r = Q.reveal;
-    const v = A.res === 'ok' ? 'CORRECT' : A.res === 'close' ? 'SO CLOSE' : 'WRONG ANSWER';
-    const icon = A.res === 'ok' ? TICK : A.res === 'no' ? SKULL : '';
-    return `<div class="rv${A.res === 'ok' ? ' hit' : ''}"><div class="verdict ${A.res}">${icon}${v}</div><div class="rv-grid"><div class="stat"><div class="figure"><div class="big ab" id="val">0</div><div class="unit">${r.unit}</div></div><p class="rv-line">${r.line}</p></div>
+    const ok = A.res === 'ok';
+    return `<div class="rv"><div class="verdict ${ok ? 'ok' : 'no'}">${ok ? TICK : SKULL}${ok ? 'CORRECT' : 'WRONG ANSWER'}</div><div class="rv-grid"><div class="stat"><div class="figure"><div class="big ab" id="val">0</div><div class="unit">${r.unit}</div></div><p class="rv-line">${r.line}</p></div>
       <div class="gfx">${gfx(r.gfx)}<div class="legend"><span>${r.gfx.legend[0]}</span><span>${r.gfx.legend[1]}</span></div></div></div></div>`; },
   compare: s => { const Q = QUIZ[s.i], c = Q.cmp, max = Math.max(c.vs.prev, c.vs.cur), lb = c.vs.labels || ['2025','2026'];
     const pct = (c.vs.cur / c.vs.prev - 1) * 100;
@@ -592,13 +579,7 @@ const INIT = {
     document.querySelectorAll('.opt').forEach(b => b.onclick = () => choose(s.i, +b.dataset.k));
     document.querySelector('.opt').focus({preventScroll:true});
   },
-  reveal(s) {
-    const r = QUIZ[s.i].reveal; countUp($('#val'), r.value, r.f, 1200); animate(r.gfx);
-    if (answers[s.i] && answers[s.i].res === 'ok' && !reduce) {
-      const here = idx;
-      requestAnimationFrame(() => { if (idx === here) $('#screen').classList.add('locking'); });
-    }
-  },
+  reveal(s) { const r = QUIZ[s.i].reveal; countUp($('#val'), r.value, r.f, 1200); animate(r.gfx); },
   compare() {
     document.querySelectorAll('.yearbars .fill').forEach(fill => {
       const track = fill.parentElement;
@@ -617,7 +598,7 @@ const INIT = {
 function choose(i, k) {
   if (answers[i]) return;
   const A = score(i, k), Q = QUIZ[i];
-  document.querySelectorAll('.opt').forEach((b, j) => { b.disabled = true; b.classList.add(j === Q.a ? 'right' : j === k ? 'wrong' : 'dim'); if (j === Q.a) b.querySelector('.k').innerHTML = TICK; });
+  document.querySelectorAll('.opt').forEach((b, j) => { b.disabled = true; b.classList.add(j === Q.a ? 'right' : j === k ? 'wrong' : 'dim'); b.querySelector('.k').innerHTML = j === Q.a ? TICK : j === k ? SKULL : 'ABCD'[j]; });
   setTimeout(() => { if (S[idx].kind === 'question' && S[idx].i === i) next(); }, reduce ? 400 : 1100);
 }
 function restart() { answers = []; dealt = []; dealing = false; hud(); go(0); }
@@ -637,7 +618,6 @@ const chOf = s => s.i !== undefined ? QUIZ[s.i].lv : s.kind === 'results' ? 8 : 
 const CHEV_L = `<svg width="10" height="12" viewBox="0 0 10 12" aria-hidden="true"><path d="M8 1 2 6l6 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>`;
 const CHEV_R = `<svg width="10" height="12" viewBox="0 0 10 12" aria-hidden="true"><path d="M2 1l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>`;
 function render() {
-  $('#screen').classList.remove('locking');
   const s = S[idx]; $('#menu') && $('#menu').remove();
   $('#content').classList.toggle('is-title', s.kind === 'title');
   $('#content').classList.toggle('is-question', s.kind === 'question');
@@ -666,9 +646,8 @@ function render() {
 function go(i) {
   if (!on) return;
   const from = S[idx]; idx = Math.max(0, Math.min(S.length - 1, i)); const to = S[idx], c = $('#content');
-  const hit = to.kind === 'reveal' && answers[to.i] && answers[to.i].res === 'ok';
   if (chOf(from) !== chOf(to)) staticBurst(420, () => { render(); });
-  else { render(); if (!reduce && !hit) { c.classList.remove('poweron', 'glitch'); void c.offsetWidth; c.classList.add('glitch'); } }
+  else { render(); if (!reduce) { c.classList.remove('poweron', 'glitch'); void c.offsetWidth; c.classList.add('glitch'); } }
 }
 function deal(i, done) {
   const finish = () => { if (!dealt.includes(i)) dealt.push(i); done(); };
