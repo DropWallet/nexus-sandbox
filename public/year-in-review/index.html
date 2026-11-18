@@ -180,8 +180,6 @@ canvas.static{position:absolute;inset:0;width:100%;height:100%;image-rendering:p
 .title p{margin:0;font-size:3.75cqh;line-height:1.15;width:min(100%,40ch);max-width:100%}
 .start{font-weight:700;font-size:2.7cqh;line-height:1.45;letter-spacing:.1em;color:var(--orange);background:none;border:2px solid var(--orange);padding:.6cqh 1.7cqh;margin:0}
 .start:hover{background:var(--orange);color:#1a1008}
-.foot{font-size:1.8cqh;line-height:1.15;color:var(--ink)}
-
 /* Question */
 .qbg{position:absolute;left:0;right:0;top:0;height:72.7%;background-position:center top;background-size:cover;background-repeat:no-repeat;pointer-events:none}
 .qbg::after{content:"";position:absolute;left:0;right:0;top:0;height:111.8%;background:linear-gradient(to bottom, rgba(9,6,4,.6), var(--glass))}
@@ -276,7 +274,7 @@ canvas.static{position:absolute;inset:0;width:100%;height:100%;image-rendering:p
 .yearbars .delta{font-weight:700;font-size:1.5cqh;letter-spacing:.04em}
 .panel{border:2px solid var(--cyan);display:grid;align-content:center;justify-items:center;gap:2.4cqh;padding:2.4cqh;min-width:0}
 .hero{width:16cqh;aspect-ratio:3/4;perspective:700px}
-.hero-spin{width:100%;height:100%;position:relative;transform-style:preserve-3d;animation:yspin 12s linear infinite}
+.hero-spin{width:100%;height:100%;position:relative;transform-style:preserve-3d;animation:yspin 16s linear infinite}
 .hero-spin .face{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;image-rendering:pixelated;backface-visibility:hidden}
 .hero-spin .front{transform:translateZ(4px)}
 .hero-spin .back{transform:rotateY(180deg) translateZ(4px)}
@@ -324,17 +322,15 @@ canvas.static{position:absolute;inset:0;width:100%;height:100%;image-rendering:p
 .led{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);flex:none}
 .led.off{background:var(--led-off);box-shadow:none}
 .stand{width:34%;height:var(--space-4);background:var(--stand);border-radius:0 0 var(--radius-xl) var(--radius-xl);box-shadow:0 10px 30px var(--plastic-shadow)}
-.keys-help{font-family:var(--hw-font);font-weight:500;font-size:13px;letter-spacing:.02em;color:var(--help);text-align:center;padding-inline:var(--space-4)}
-
 @media (max-width:880px){
   .plate span{display:none}
 }
 @media (max-width:700px){
   body{overflow:auto;justify-content:flex-start}
   .monitor{width:100%}
-  .bezel{padding:var(--space-3) var(--space-3) 0;border-radius:20px}
-  .recess{padding:var(--space-2);border-radius:16px}
-  .screen{aspect-ratio:3/5.3}
+  .bezel{padding:10px 10px 0;border-radius:28px 28px 18px 18px}
+  .recess{padding:8px;border-radius:18px}
+  .screen{aspect-ratio:3/5.3;border-radius:10px}
   .osd{font-size:1.35cqh;grid-template-columns:minmax(0,1fr) max-content;gap:1cqh}
   .osd .ch,.mark{display:none}
   .qprog{justify-self:start;gap:1cqh}
@@ -347,7 +343,7 @@ canvas.static{position:absolute;inset:0;width:100%;height:100%;image-rendering:p
   .unit{white-space:normal}
   .big{font-size:14cqh}
   .hand img{height:9cqh}
-  .plate span,.keys-help{display:none}
+  .plate span{display:none}
   .chin{padding:var(--space-3) 0 var(--space-4)}
 }
 @media (max-width:560px){
@@ -416,8 +412,6 @@ canvas.static{position:absolute;inset:0;width:100%;height:100%;image-rendering:p
   </div>
   <div class="stand"></div>
 </div>
-<div class="keys-help">Keys: 1–4 answer · Space / → continue · ← back · M menu · figures to 4 Nov</div>
-
 <script>
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = s => document.querySelector(s);
@@ -554,8 +548,8 @@ const R = {
   title: () => {
     const logo = document.querySelector('.mark') ? document.querySelector('.mark').innerHTML : '';
     return `<div class="title"><div class="title-mark" aria-hidden="true">${logo}</div><div class="lockup"><div class="brand">NEXUS MODS PRESENTS</div><h1 class="ab">2026</h1><h2>THE YEAR IN REVIEW QUIZ</h2></div>
-    <p>Nine questions about the year on Nexus Mods. Guess right, collect the cards, and see how well versed you are in Nexus lore.</p>
-    <button class="start" id="start" type="button">PRESS START</button><div class="foot">© 2026 NEXUS MODS · 1 PLAYER · FIGURES TO 4 NOV</div></div>`;
+    <p>Nine questions about the year on Nexus Mods. Guess right, collect the cards, and see what rank you earn.</p>
+    <button class="start" id="start" type="button">PRESS START</button></div>`;
   },
   question: s => { const Q = QUIZ[s.i], A = answers[s.i];
     const eye = Q.boss ? 'FINAL BOSS · PLATFORM' : `Q-${String(s.i + 1).padStart(2, '0')}: ${Q.name.toUpperCase()}`;
